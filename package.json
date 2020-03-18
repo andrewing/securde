@@ -1,42 +1,51 @@
 {
-  "name": "precommithook",
-  "version": "1.0.0",
-  "description": "",
-  "main": "hello.js",
+  "name": "securde",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "micromatch": "^4.0.2",
-    "netlify-lambda": "^1.6.3"
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "netlify-lambda": "^1.6.3",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-scripts": "3.4.0"
   },
   "devDependencies": {
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-flowtype": "^4.6.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
     "husky": "^4.2.3",
-    "lint-staged": "^10.0.8",
-    "prettier": "^1.19.1"
+    "lint-staged": "^10.0.8"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "precommit": "lint-staged",
     "lambda-serve": "netlify-lambda serve functions",
     "lambda-build": "netlify-lambda build functions"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/andrewing/precommithook.git"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/andrewing/precommithook/issues"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
-  "homepage": "https://github.com/andrewing/precommithook#readme",
   "husky": {
     "hooks": {
       "pre-commit": "npm run precommit"
