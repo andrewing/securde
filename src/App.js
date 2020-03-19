@@ -11,7 +11,7 @@ function App() {
           fetch('/.netlify/functions/sample');
         }}
       >
-        Click Me!
+        Click Me! And check network
       </button>
     </div>
   );
