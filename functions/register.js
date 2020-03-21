@@ -15,7 +15,6 @@ export const handler = (event, context, callback) => {
     callback(null, CODE[400]());
     return;
   }
-  const a = ' As  dasd';
   const {id} = body;
   // Create user here
   jwt.sign({id}, SECRET, {expiresIn: '1m'}, (err, token) => {
