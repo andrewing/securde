@@ -1,10 +1,10 @@
 import router from './util/router';
-import {book} from './routes/book';
+import {admin} from './routes/admin';
 import {CODE} from './util/code';
 
 export const handler = (event, context, callback) => {
   try {
-    router(book, event, context, callback);
+    router(admin, event, context, callback);
   } catch (err) {
     const {code, message} = err;
     callback(null, CODE[code || 400](message));

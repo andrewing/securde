@@ -5,8 +5,9 @@ import {create} from './create';
 import {borrow} from './borrow';
 import {review} from './review';
 import {update} from './update';
+import {remove} from './remove';
 
-export default (route, ...rest) => {
+export const book = (route, ...rest) => {
   if (!route) def(...rest);
   else
     handlePath(
@@ -16,6 +17,7 @@ export default (route, ...rest) => {
         [borrow, 'borrow'],
         [review, 'review'],
         [update, 'update'],
+        [remove, 'remove'],
       ],
       ...rest,
     );
@@ -27,7 +29,10 @@ const def = (event, context, callback) => {
     throw new ResponseError(405, 'Method not allowed!');
   const {title} = event.queryStringParameters;
 
-  const book = 'andrew book'; // Get book from db
+  const book1 = 'andrew book'; // Get book from db
 
-  callback(null, CODE[200]('Successful in gettings user', {book, title}));
+  callback(
+    null,
+    CODE[200]('Successful in gettings user', {book: book1, title}),
+  );
 };

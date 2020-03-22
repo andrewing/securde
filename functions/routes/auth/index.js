@@ -4,7 +4,7 @@ import {register} from './register';
 import {CODE} from '../../util/code';
 import ResponseError from '../../util/error';
 
-export default (route, ...rest) => {
+export const auth = (route, ...rest) => {
   if (!route) def(...rest);
   else
     handlePath(

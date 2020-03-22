@@ -4,7 +4,7 @@ import {SECRET} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 
-export const login = (event, context, callback) => {
+export const login = (route, event, context, callback) => {
   if (event.httpMethod !== 'POST')
     throw new ResponseError(405, 'Method not allowed!');
   const body = JSON.parse(event.body);
@@ -18,7 +18,7 @@ export const login = (event, context, callback) => {
   jwt.sign(
     {id},
     SECRET,
-    {expiresIn: '1h', audience: AUDIENCE.USER},
+    {expiresIn: '7d' /* audience: user.type */},
     (err, token) => {
       if (err) throw new ResponseError(500, err.message);
 

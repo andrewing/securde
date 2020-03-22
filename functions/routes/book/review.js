@@ -4,7 +4,7 @@ import {SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 
-export const review = (event, context, callback) => {
+export const review = (route, event, context, callback) => {
   if (event.httpMethod !== 'PUT')
     throw new ResponseError(405, 'Method not allowed!');
   const body = JSON.parse(event.body);

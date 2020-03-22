@@ -1,5 +1,5 @@
 import router from './util/router';
-import auth from './routes/auth';
+import {auth} from './routes/auth';
 import {CODE} from './util/code';
 import ResponseError from './util/error';
 
