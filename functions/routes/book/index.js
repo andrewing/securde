@@ -4,6 +4,7 @@ import {CODE} from '../../util/code';
 import {create} from './create';
 import {borrow} from './borrow';
 import {review} from './review';
+import {update} from './update';
 
 export default (route, ...rest) => {
   if (!route) def(...rest);
@@ -14,6 +15,7 @@ export default (route, ...rest) => {
         [create, 'create'],
         [borrow, 'borrow'],
         [review, 'review'],
+        [update, 'update'],
       ],
       ...rest,
     );

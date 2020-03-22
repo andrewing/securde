@@ -18,7 +18,7 @@ export const create = (event, context, callback) => {
       if (err) throw jwtError(err);
       // const { title, authors, publisher, yearPublished, ISBN, reservedDate, reviews } = body
       // Create book here!
-      callback(null, CODE[200]('WOot'));
+      callback(null, CODE[200]('Successfully created book'));
     },
   );
 };
