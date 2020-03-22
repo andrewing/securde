@@ -10,6 +10,7 @@ export const handlePath = (route, paths, ...rest) => {
     }
     return true;
   });
+  if (!paths.length) return;
   if (!found) throw new ResponseError(404, 'Invalid Path!');
 };
 

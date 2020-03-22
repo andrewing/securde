@@ -1,14 +1,14 @@
 export const CODE = {
-  200: (message = 'Success', {name, data}) => ({
-    statusCode: 200,
-    body: JSON.stringify({
-      status: 'Ok',
-      message,
-      data: {
-        [name]: data
-      }
-    }),
-  }),
+  200: (message = 'Success', {data}) => {
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        status: 'Ok',
+        message,
+        data,
+      }),
+    };
+  },
   201: (message = 'Success') => ({
     statusCode: 201,
     body: JSON.stringify({
