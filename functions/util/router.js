@@ -1,6 +1,7 @@
 import ResponseError from './error';
 
 export const handlePath = (route, paths, ...rest) => {
+  if (!paths.length) return;
   const found = !paths.every(item => {
     const [func, path] = item;
 
@@ -10,7 +11,6 @@ export const handlePath = (route, paths, ...rest) => {
     }
     return true;
   });
-  if (!paths.length) return;
   if (!found) throw new ResponseError(404, 'Invalid Path!');
 };
 

@@ -1,0 +1,5 @@
+export const AUDIENCE = {
+  USER: 'USER',
+  BOOK_MANAGER: 'BOOK_MANAGER',
+  ADMIN: 'ADMIN',
+};
