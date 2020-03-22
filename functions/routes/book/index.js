@@ -8,12 +8,12 @@ export default (route, ...rest) => {
 };
 
 const def = (event, context, callback) => {
-  // This is the query "/user/?username=andrew"
+  // This is the query "/user/?title=andrew"
   if (event.httpMethod !== 'GET')
     throw new ResponseError(405, 'Method not allowed!');
   const {title} = event.queryStringParameters;
 
-  const book = 'andrew book'; // Get user from db
+  const book = 'andrew book'; // Get book from db
 
   callback(
     null,
