@@ -1,9 +1,22 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-// import {Provider} from "react-redux";
-import Routes from './routes';
+// import {BrowserRouter as Router} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
+import routes from './routes/routes';
+import './index.css';
 import './App.css';
 
-function App() {
+const App = () => {
+  const mainPages = routes.map(route => (
+    <Route
+      key={route.key}
+      exact={route.exact}
+      path={route.path}
+      component={route.component}
+      {...routes}
+    />
+  ));
+
   return (
     <div className="App">
       <button
@@ -50,8 +63,8 @@ function App() {
         }}
       >
         Click Me! And check network!
-        <Routes />
       </button>
+      <Switch>{mainPages}</Switch>
     </div>
     // <div className="App">
     //   <button
@@ -64,6 +77,6 @@ function App() {
     //   </button>
     // </div>
   );
-}
+};
 
 export default App;
