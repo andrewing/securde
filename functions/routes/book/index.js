@@ -4,6 +4,7 @@ import {CODE} from '../../util/code';
 import {create} from './create';
 import {update} from './update';
 import {remove} from './remove';
+import {borrow} from './borrow';
 import {get} from './get';
 import db from '../../db/db';
 import Book from '../../db/models/book';
@@ -17,6 +18,7 @@ export const book = (route, ...rest) => {
         [create, 'create'],
         [update, 'update'],
         [remove, 'remove'],
+        [borrow, 'borrow'],
         [get, 'get'],
       ],
       ...rest,
@@ -26,10 +28,9 @@ export const book = (route, ...rest) => {
 const def = async (event, context, callback) => {
   if (event.httpMethod !== 'GET')
     throw new ResponseError(405, 'Method not allowed!');
-  const {author} = event.queryStringParameters;
-  const {title} = event.queryStringParameters;
+  const {author, title} = event.queryStringParameters;
   let bookObj;
-  if (author === '') {
+  if (!author) {
     bookObj = await Book.findBookByTitle(title);
   } else {
     bookObj = await Book.findBookByAuthor(author);

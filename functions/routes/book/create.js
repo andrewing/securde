@@ -13,27 +13,29 @@ export const create = async (route, event, context, callback) => {
     throw new ResponseError(405, 'Method not allowed!');
 
   const data = JSON.parse(event.body);
+  const {authorization} = event.headers;
 
-  /* creating one book */
-  await Book.addBook(
-    new Book({
-      title: data.title,
-      author: data.author,
-      publisher: data.publisher,
-      yearOfPublication: data.yearOfPublication,
-      ISBN: data.ISBN,
-      callNumber: data.callNumber,
-      reviews: [],
-    }),
+  jwt.verify(
+    authorization,
+    SECRET,
+    {audience: AUDIENCE.BOOK_MANAGER},
+    async (err, decoded) => {
+      await Book.addBook(
+        new Book({
+          ...data,
+          reviews: [],
+        }),
+      );
+
+      await SystemLog.addLog(
+        new SystemLog({
+          time: moment().format(),
+          action: 'ADD',
+          content: `Book manager added a new book [${data.title}]`,
+        }),
+      );
+
+      callback(null, CODE[200]('Successfully created book'));
+    },
   );
-
-  await SystemLog.addLog(
-    new SystemLog({
-      time: moment().format(),
-      action: 'ADD',
-      content: `Book manager added a new book [${data.title}]`,
-    }),
-  );
-
-  callback(null, CODE[200]('Successfully created book'));
 };

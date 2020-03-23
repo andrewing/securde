@@ -112,4 +112,4 @@ function saltHashPassword(userpassword) {
 
 const Account = mongoose.model('accounts', accountSchema);
 
-export default Account;
+export default {Account};

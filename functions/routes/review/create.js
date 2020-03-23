@@ -16,27 +16,34 @@ export const create = async (event, context, callback) => {
     throw new ResponseError(405, 'Method not allowed!');
 
   const data = JSON.parse(event.body);
+  const {authorization} = event.headers;
 
-  /* creating one review */
-  await Review.addReview(
-    new Review({
-      time: moment().format(),
-      content: data.content,
-      bookID: data.bookID,
-      accountID: data.accountID,
-    }),
+  jwt.verify(
+    authorization,
+    SECRET,
+    {audience: AUDIENCE.USER},
+    async (err, decoded) => {
+      await Review.addReview(
+        new Review({
+          time: moment().format(),
+          content: data.content,
+          bookID: data.bookID,
+          accountID: data.accountID,
+        }),
+      );
+
+      const account = await Account.findAccountById(data.accountID);
+      const book = await Book.findBookById(data.bookID);
+
+      await SystemLog.addLog(
+        new SystemLog({
+          time: moment().format(),
+          action: 'ADD',
+          content: `[${account.lastname}, ${account.firstname}] added a review on [${book.title}]`,
+        }),
+      );
+
+      callback(null, CODE[200]('Successfully created book'));
+    },
   );
-
-  const account = await Account.findAccountById(data.accountID);
-  const book = await Book.findBookById(data.bookID);
-
-  await SystemLog.addLog(
-    new SystemLog({
-      time: moment().format(),
-      action: 'ADD',
-      content: `[${account.lastname}, ${account.firstname}] added a review on [${book.title}]`,
-    }),
-  );
-
-  callback(null, CODE[200]('Successfully created book'));
 };

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import to from '../../util/to';
 
 const {Schema} = mongoose;
 
@@ -18,7 +19,7 @@ const bookSchema = new Schema({
 });
 
 bookSchema.statics.addBook = (book, callback) => {
-  book.save().then(callback);
+  return to(book.save().then(callback));
 };
 
 bookSchema.statics.findAllBooks = async () => {
@@ -40,9 +41,11 @@ bookSchema.statics.findBookByAuthor = async name => {
 };
 
 bookSchema.statics.findBookByTitle = async booktitle => {
-  return Book.find({
-    title: {$regex: `.*${booktitle}.*`},
-  }).populate('review');
+  return to(
+    Book.find({
+      title: {$regex: `.*${booktitle}.*`},
+    }).populate('review'),
+  );
 };
 
 bookSchema.statics.updateBook = async (bookID, book) => {
