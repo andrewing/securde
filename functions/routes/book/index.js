@@ -2,10 +2,11 @@ import {handlePath} from '../../util/router';
 import ResponseError from '../../util/error';
 import {CODE} from '../../util/code';
 import {create} from './create';
-import {borrow} from './borrow';
-import {review} from './review';
 import {update} from './update';
 import {remove} from './remove';
+import {get} from './get';
+import db from '../../db/db';
+import Book from '../../db/models/book';
 
 export const book = (route, ...rest) => {
   if (!route) def(...rest);
@@ -14,25 +15,25 @@ export const book = (route, ...rest) => {
       route,
       [
         [create, 'create'],
-        [borrow, 'borrow'],
-        [review, 'review'],
         [update, 'update'],
         [remove, 'remove'],
+        [get, 'get'],
       ],
       ...rest,
     );
 };
 
-const def = (event, context, callback) => {
-  // This is the query "/user/?title=andrew"
+const def = async (event, context, callback) => {
   if (event.httpMethod !== 'GET')
     throw new ResponseError(405, 'Method not allowed!');
+  const {author} = event.queryStringParameters;
   const {title} = event.queryStringParameters;
+  let bookObj;
+  if (author === '') {
+    bookObj = await Book.findBookByTitle(title);
+  } else {
+    bookObj = await Book.findBookByAuthor(author);
+  }
 
-  const book1 = 'andrew book'; // Get book from db
-
-  callback(
-    null,
-    CODE[200]('Successful in gettings user', {book: book1, title}),
-  );
+  callback(null, CODE[200]('Successful in gettings books', {book: bookObj}));
 };
