@@ -3,8 +3,10 @@ import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
-import { Book } from '../../db/models/book'
+import { Review } from '../../db/models/review'
 import { SystemLog } from '../../db/models/system_log'
+import { Account } from '../../db/models/user'
+import { Book } from '../../db/models/book'
 import db from '../../db/db'
 import moment from 'moment'
 
@@ -14,21 +16,21 @@ export const create = async (event, context, callback) => {
 
   const data = JSON.parse(event.body);
 
-  /* creating one book */
-  await Book.addBook(new Book({
-    title: data.title,
-    author: data.author,
-    publisher: data.publisher,
-    yearOfPublication: data.yearOfPublication,
-    ISBN: data.ISBN,
-    callNumber: data.callNumber,
-    reviews: []
+  /* creating one review */
+  await Review.addReview(new Review({
+    time: moment().format(),
+    content: data.content,
+    bookID: data.bookID,
+    accountID: data.accountID
   }))
+
+  let account = await Account.findAccountById(data.accountID);
+  let book = await Book.findBookById(data.bookID);
 
   await SystemLog.addLog(new SystemLog({
     time: moment().format(),
     action: 'ADD',
-    content: 'Book manager added a new book [' + data.title + ']'
+    content: '[' + account.lastname + ", " + account.firstname + '] added a review on [' + book.title + ']'
   }))
   
   callback(null, CODE[200]('Successfully created book'));

@@ -3,23 +3,25 @@ import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
+import { Book } from '../../db/models/book'
+import { SystemLog } from '../../db/models/system_log'
+import db from '../../db/db'
+import moment from 'moment'
 
-export const update = (event, context, callback) => {
+export const update = async (event, context, callback) => {
   if (event.httpMethod !== 'PUT')
     throw new ResponseError(405, 'Method not allowed!');
-  const body = JSON.parse(event.body);
-  const {bookId} = event.queryStringParameters;
-  const {authorization} = event.headers;
 
-  jwt.verify(
-    authorization,
-    SECRET,
-    {audience: AUDIENCE.BOOK_MANAGER},
-    (err, decoded) => {
-      if (err) throw jwtError(err);
-      // const { title, authors, publisher, yearPublished, ISBN, reservedDate, reviews } = body
-      // Edit book here!
-      callback(null, CODE[200]('Successfully Updated Book'));
-    },
-  );
+  const data = JSON.parse(event.body);
+
+  /* updating one book */
+  const updated = await Book.updateBook(data._id, data);
+
+  await SystemLog.addLog(new SystemLog({
+    time: moment().format(),
+    action: 'UPDATE',
+    content: 'Book manager updates book detail [' + data.title + ']'
+  }))
+  
+  callback(null, CODE[200]('Successfully updating book', {updated}));
 };
