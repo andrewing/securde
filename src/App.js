@@ -1,4 +1,6 @@
 import React from 'react';
+// import {Provider} from "react-redux";
+import Routes from './routes';
 import './App.css';
 
 function App() {
@@ -48,8 +50,19 @@ function App() {
         }}
       >
         Click Me! And check network!
+        <Routes />
       </button>
     </div>
+    // <div className="App">
+    //   <button
+    //     type="button"
+    //     onClick={() => {
+    //       fetch('/.netlify/functions/sample');
+    //     }}
+    //   >
+    //     Click Me! And check network
+    //   </button>
+    // </div>
   );
 }
 
