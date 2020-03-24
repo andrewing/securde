@@ -1,12 +1,23 @@
-import {handlePath} from '../../util/router';
+import {handlePath, getNextPath} from '../../util/router';
 import ResponseError from '../../util/error';
 import {CODE} from '../../util/code';
+import {changepassword} from './changepassword';
+import {forgotpassword} from './forgotpassword';
+import {history} from './history/index';
 
-export default (route, ...rest) => {
-  if (!route) def(...rest);
-  else handlePath(route, [], ...rest);
+export const user = (route, ...rest) => {
+  handlePath(
+    route,
+    [
+      [changepassword, '/changepassword'],
+      [forgotpassword, '/forgotpassword'],
+      [history, '/history'],
+      [def, '/'],
+    ],
+    ...rest,
+  );
 };
 
-const def = (event, context, callback) => {
-  console.log('/user/');
+const def = (route, event, context, callback) => {
+  callback(null, CODE[200]('/user'));
 };

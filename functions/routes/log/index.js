@@ -4,8 +4,14 @@ import {CODE} from '../../util/code';
 import {get} from './get';
 
 export default (route, ...rest) => {
-  if (!route) def(...rest);
-  else handlePath(route, [[get, 'get']], ...rest);
+  handlePath(
+    route,
+    [
+      [get, '/get'],
+      [def, '/'],
+    ],
+    ...rest,
+  );
 };
 
-const def = (...rest) => {};
+const def = (route, ...rest) => {};

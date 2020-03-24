@@ -4,20 +4,20 @@ import {SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 
-export const changepassword = (route, event, context, callback) => {
-  if (event.httpMethod !== 'PUT')
+export const register = (route, event, context, callback) => {
+  if (event.httpMethod !== 'GET')
     throw new ResponseError(405, 'Method not allowed!');
-
   const {authorization} = event.headers;
 
   jwt.verify(
     authorization,
     SECRET,
-    {audience: AUDIENCE.USER},
+    {audience: AUDIENCE.ADMIN},
     (err, decoded) => {
-      if (err) throw jwtError(err);
+      if (err) jwtError(err);
+      // Get logs
 
-      callback(null, CODE[200](`Successfully changed password`));
+      callback(null, CODE[200], 'Successfully created manager!');
     },
   );
 };

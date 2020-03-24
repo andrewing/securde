@@ -6,17 +6,18 @@ import {managerToken} from './managerToken';
 import {userToken} from './userToken';
 
 export const dev = (route, ...rest) => {
-  if (!route) def(...rest);
-  else
-    handlePath(
-      route,
-      [
-        [adminToken, 'adminToken'],
-        [managerToken, 'managerToken'],
-        [userToken, 'userToken'],
-      ],
-      ...rest,
-    );
+  handlePath(
+    route,
+    [
+      [adminToken, '/adminToken'],
+      [managerToken, '/managerToken'],
+      [userToken, '/userToken'],
+      [dev, '/'],
+    ],
+    ...rest,
+  );
 };
 
-const def = (event, context, callback) => {};
+const def = (route, event, context, callback) => {
+  callback(null, CODE[200]('/dev'));
+};

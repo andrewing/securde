@@ -4,8 +4,9 @@ export const handlePath = (route, paths, ...rest) => {
   if (!paths.length) return;
   const found = !paths.every(item => {
     const [func, path] = item;
-
-    if (route.match(new RegExp(`^${path.split('/')[0]}`))) {
+    const currRoute = route.split('/')[1];
+    console.log(path === `/${currRoute}`);
+    if (path === `/${currRoute}`) {
       func(route, ...rest);
       return false;
     }
@@ -14,13 +15,14 @@ export const handlePath = (route, paths, ...rest) => {
   if (!found) throw new ResponseError(404, 'Invalid Path!');
 };
 
-export const getNextPath = (func, ...params) => {
-  const [event] = params;
-  const [, , ...restRoute] = event.path.split('/');
-  return `${restRoute.join('/')}`;
+export const getNextPath = route => {
+  const [, , ...restRoute] = route.split('/');
+  console.log(`/${restRoute.join('/')}`);
+  return `/${restRoute.join('/')}`;
 };
 
 export default (func, ...params) => {
-  const restRoute = getNextPath(func, ...params);
+  const [event] = params;
+  const restRoute = getNextPath(event.path);
   func(restRoute, ...params);
 };

@@ -10,22 +10,21 @@ import db from '../../db/db';
 import Book from '../../db/models/book';
 
 export const book = (route, ...rest) => {
-  if (!route) def(...rest);
-  else
-    handlePath(
-      route,
-      [
-        [create, 'create'],
-        [update, 'update'],
-        [remove, 'remove'],
-        [borrow, 'borrow'],
-        [get, 'get'],
-      ],
-      ...rest,
-    );
+  handlePath(
+    route,
+    [
+      [create, '/create'],
+      [update, '/update'],
+      [remove, '/remove'],
+      [borrow, '/borrow'],
+      [get, '/get'],
+      [def, '/'],
+    ],
+    ...rest,
+  );
 };
 
-const def = async (event, context, callback) => {
+const def = async (route, event, context, callback) => {
   if (event.httpMethod !== 'GET')
     throw new ResponseError(405, 'Method not allowed!');
   const {author, title} = event.queryStringParameters;
