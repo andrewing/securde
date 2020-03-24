@@ -23,61 +23,67 @@ bookSchema.statics.addBook = (book, callback) => {
 };
 
 bookSchema.statics.findAllBooks = async () => {
-  return Book.find({})
-    .populate('review')
-    .sort({title: 1});
+  return to(
+    Book.find({})
+      .populate('reviews')
+      .sort({
+        title: 1,
+      }),
+  );
 };
 
 bookSchema.statics.findBookByID = async bookID => {
-  return Book.findOne({
-    _id: bookID,
-  }).populate('review');
+  return to(
+    Book.findOne({
+      _id: bookID,
+    }).populate('reviews'),
+  );
 };
 
 bookSchema.statics.findBookByAuthor = async name => {
-  return Book.find({
-    author: name,
-  }).populate('review');
+  return to(
+    Book.find({
+      author: name,
+    }).populate('reviews'),
+  );
 };
 
 bookSchema.statics.findBookByTitle = async booktitle => {
   return to(
     Book.find({
       title: {$regex: `.*${booktitle}.*`},
-    }).populate('review'),
+    }).populate('reviews'),
   );
 };
 
 bookSchema.statics.updateBook = async (bookID, book) => {
-  return Book.updateOne(
-    {
-      _id: bookID,
-    },
-    {
-      title: book.title,
-      author: book.author,
-      publisher: book.publisher,
-      yearOfPublication: book.yearOfPublication,
-      ISBN: book.ISBN,
-      callNumber: book.callNumber,
-      reviews: book.reviews,
-    },
-    {
-      new: true,
-    },
+  return to(
+    Book.updateOne(
+      {
+        _id: bookID,
+      },
+      {
+        title: book.title,
+        author: book.author,
+        publisher: book.publisher,
+        yearOfPublication: book.yearOfPublication,
+        ISBN: book.ISBN,
+        callNumber: book.callNumber,
+        reviews: book.reviews,
+      },
+      {
+        new: true,
+      },
+    ),
   );
 };
 
 bookSchema.statics.deleteBook = async bookID => {
-  return Book.deleteOne({
-    _id: bookID,
-  });
-};
-
-bookSchema.methods.populateReviews = async () => {
-  return Book.findOne({
-    _id: this.id,
-  }).populate('review');
+  return to(
+    Book.deleteOne({
+      _id: bookID,
+    }),
+  );
 };
 
 const Book = mongoose.model('books', bookSchema);

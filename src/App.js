@@ -23,23 +23,25 @@ const App = () => {
         type="button"
         onClick={async () => {
           /* SAMPLE POST REQUEST */
-          /* 
-            await fetch('http://localhost:9000/book/create', {
-              method: 'POST',
-              body: JSON.stringify({
-                title: 'book title',
-                author: ['Stanley'],
-                publisher: 'DLSU',
-                yearOfPublication: 2020,
-                ISBN: '12930203234',
-                callNumber: '004'
-              })
-            }).then(response => {
-              console.log("response", response)
-            }).catch(err => {
-              console.log(err)
-            }) 
-          */
+          // /*
+          await fetch('http://localhost:9000/book/create', {
+            method: 'POST',
+            body: JSON.stringify({
+              title: 'book title',
+              author: ['Stanley'],
+              publisher: 'DLSU',
+              yearOfPublication: 2020,
+              ISBN: '12930203234',
+              callNumber: '004',
+            }),
+          })
+            .then(response => {
+              console.log('response', response);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+          // */
           /* SAMPLE GET REQUEST */
           /* 
             await fetch('http://localhost:9000/book/get', {

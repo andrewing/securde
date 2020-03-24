@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import crypto from 'crypto';
+import {AUDIENCE} from '../../util/constants';
+import to from '../../util/to';
 
 const {Schema} = mongoose;
 
@@ -18,66 +20,100 @@ const accountSchema = new Schema({
   idNumber: String,
   question: String,
   answer: String,
-  userType: Number, // 0 = administrator, 1 = book manager, 2 = student/teacher, 3 = anonymous user
+  userType: String,
+  bookHistory: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'LibraryLog',
+    },
+  ],
   salt: String,
 });
 
 accountSchema.statics.authenticate = async (username, password, salt) => {
   const hashed = sha512(password, salt).hashedPassword;
-  return this.findOne({
-    username,
-    password: hashed,
-  });
+  return to(
+    Account.findOne({
+      username,
+      password: hashed,
+    }),
+  );
 };
 
 accountSchema.statics.addAccount = (account, callback) => {
   const passwordData = saltHashPassword(account.password);
   account.password = passwordData.hashedPassword;
   account.salt = passwordData.salt;
-  account.save().then(callback);
+  return to(account.save().then(callback));
 };
 
 accountSchema.statics.findAllUsers = async () => {
-  return Account.find();
+  return to(Account.find().populate('librarylogs'));
 };
 
 accountSchema.statics.findNonAdminUsers = async () => {
-  return Account.find({userType: {$gt: 1}});
+  return to(
+    Account.find({
+      userType: AUDIENCE.USER,
+    }).populate('bookHistory'),
+  );
 };
 
-accountSchema.statics.findAccountById = async accountID => {
-  return this.findOne({
-    _id: accountID,
-  });
+accountSchema.statics.findUserByUsername = async username => {
+  return to(
+    Account.findOne({
+      username,
+    }).populate('bookHistory'),
+  );
 };
 
-accountSchema.statics.deleteAccount = async accountID => {
-  return this.deleteOne({
-    _id: accountID,
-  });
+accountSchema.statics.findUserById = async accountID => {
+  return to(
+    Account.findOne({
+      _id: accountID,
+    }).populate('bookHistory'),
+  );
+};
+
+accountSchema.statics.findUserByIdNumber = async idNumber => {
+  return to(
+    Account.findOne({
+      idNumber,
+    }).populate('bookHistory'),
+  );
 };
 
 accountSchema.statics.updateAccount = async (accountID, account) => {
   const hashed = saltHashPassword(account.password);
-  return this.updateOne(
-    {
+  return to(
+    Account.updateOne(
+      {
+        _id: accountID,
+      },
+      {
+        firstname: account.firstname,
+        lastname: account.lastname,
+        username: account.username,
+        password: hashed.hashedPassword,
+        salt: hashed.salt,
+        email: account.email,
+        idNumber: account.idNumber,
+        question: account.question,
+        answer: account.answer,
+        userType: account.userType,
+      },
+      {
+        new: true,
+      },
+    ),
+  );
+};
+
+accountSchema.statics.deleteAccount = async accountID => {
+  return to(
+    Account.deleteOne({
       _id: accountID,
-    },
-    {
-      firstname: account.firstname,
-      lastname: account.lastname,
-      username: account.username,
-      password: hashed.hashedPassword,
-      salt: hashed.salt,
-      email: account.email,
-      idNumber: account.idNumber,
-      question: account.question,
-      answer: account.answer,
-      userType: account.userType,
-    },
-    {
-      new: true,
-    },
+    }),
   );
 };
 
