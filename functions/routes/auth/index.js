@@ -5,18 +5,17 @@ import {CODE} from '../../util/code';
 import ResponseError from '../../util/error';
 
 export const auth = (route, ...rest) => {
-  if (!route) def(...rest);
-  else
-    handlePath(
-      route,
-      [
-        [login, 'login'],
-        [register, 'register'],
-      ],
-      ...rest,
-    );
+  handlePath(
+    route,
+    [
+      [def, '/'],
+      [login, '/login'],
+      [register, '/register'],
+    ],
+    ...rest,
+  );
 };
 
-const def = (event, context, callback) => {
-  console.log('/auth/');
+const def = (route, event, context, callback) => {
+  callback(null, CODE[200]('/auth'));
 };

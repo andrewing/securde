@@ -9,11 +9,17 @@ import {jwtError, SECRET} from '../../util/jwt';
 import {AUDIENCE} from '../../util/constants';
 
 export default (route, ...rest) => {
-  if (!route) def(...rest);
-  else handlePath(route, [[create, 'create']], ...rest);
+  handlePath(
+    route,
+    [
+      [create, '/create'],
+      [def, '/'],
+    ],
+    ...rest,
+  );
 };
 
-const def = async (event, context, callback) => {
+const def = async (route, event, context, callback) => {
   if (event.httpMethod !== 'GET')
     throw new ResponseError(405, 'Method not allowed!');
 

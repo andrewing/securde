@@ -1,5 +1,5 @@
 export const CODE = {
-  200: (message = 'Success', data) => {
+  200: (message = 'Success', data = {}) => {
     return {
       statusCode: 200,
       body: JSON.stringify({
