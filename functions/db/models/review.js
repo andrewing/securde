@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import moment from 'moment';
+import to from '../../util/to';
 
 const {Schema} = mongoose;
 
@@ -17,33 +18,55 @@ const reviewSchema = new Schema({
 });
 
 reviewSchema.statics.addReview = (review, callback) => {
-  review.save().then(callback);
+  return to(review.save().then(callback));
 };
 
 reviewSchema.statics.findReviewsByAccount = async accountID => {
-  return this.find({
-    accountID,
-  });
+  return to(
+    Review.find({
+      accountID,
+    }).populate('bookID accountID'),
+  );
 };
 
-reviewSchema.statics.deleteReview = async reviewID => {
-  return Review.deleteOne({
-    _id: reviewID,
-  });
+reviewSchema.statics.findReviewsByBook = async bookID => {
+  return to(
+    Review.find({
+      bookID,
+    }).populate('bookID accountID'),
+  );
 };
 
 reviewSchema.statics.updateReview = async (reviewID, content) => {
-  return Review.updateOne(
-    {
+  return to(
+    Review.updateOne(
+      {
+        _id: reviewID,
+      },
+      {
+        content,
+        time: moment().format(),
+      },
+      {
+        new: true,
+      },
+    ),
+  );
+};
+
+reviewSchema.statics.deleteReview = async reviewID => {
+  return to(
+    Review.deleteOne({
       _id: reviewID,
-    },
-    {
-      content,
-      time: moment().format(),
-    },
-    {
-      new: true,
-    },
+    }),
+  );
+};
+
+reviewSchema.statics.deleteReviewByAccount = async accountID => {
+  return to(
+    Review.deleteMany({
+      accountID,
+    }),
   );
 };
 

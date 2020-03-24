@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import to from '../../util/to';
 
 const {Schema} = mongoose;
 
@@ -9,11 +10,11 @@ const systemLogSchema = new Schema({
 });
 
 systemLogSchema.statics.addLog = (systemLog, callback) => {
-  systemLog.save().then(callback);
+  return to(systemLog.save().then(callback));
 };
 
 systemLogSchema.statics.findAllLogs = async () => {
-  return this.find();
+  return to(SystemLog.find());
 };
 
 const SystemLog = mongoose.model('systemlogs', systemLogSchema);

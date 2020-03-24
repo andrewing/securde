@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
+import to from '../../util/to';
 
 const {Schema} = mongoose;
 
 const bookInstanceSchema = new Schema({
-  book: {
+  bookID: {
     type: Schema.Types.ObjectId,
     ref: 'Book',
   },
@@ -11,42 +12,54 @@ const bookInstanceSchema = new Schema({
 });
 
 bookInstanceSchema.statics.addBookIntance = (bookInstance, callback) => {
-  bookInstance.save().then(callback);
+  return to(bookInstance.save().then(callback));
 };
 
-bookInstanceSchema.statics.getAllBookInstances = async () => {
-  return this.find();
+bookInstanceSchema.statics.findAllBookInstances = async () => {
+  return to(BookInstance.find().populate('bookID'));
 };
 
-bookInstanceSchema.statics.getAllAvailable = async () => {
-  return this.find({status: 'Available'});
+bookInstanceSchema.statics.findAllAvailable = async () => {
+  return to(
+    BookInstance.find({
+      status: 'Available',
+    }).populate('bookID'),
+  );
 };
 
-bookInstanceSchema.statics.getAllReserved = async () => {
-  return this.find({status: 'Reserved'});
+bookInstanceSchema.statics.findAllReserved = async () => {
+  return to(
+    BookInstance.find({
+      status: 'Reserved',
+    }).populate('bookID'),
+  );
 };
 
 bookInstanceSchema.statics.updateBookInstance = async (
   bookInstanceID,
   book,
 ) => {
-  return this.updateOne(
-    {
-      _id: bookInstanceID,
-    },
-    {
-      status: book.status,
-    },
-    {
-      new: true,
-    },
+  return to(
+    BookInstance.updateOne(
+      {
+        _id: bookInstanceID,
+      },
+      {
+        status: book.status,
+      },
+      {
+        new: true,
+      },
+    ),
   );
 };
 
 bookInstanceSchema.statics.deleteBookInstance = async bookInstanceID => {
-  return this.deleteOne({
-    _id: bookInstanceID,
-  });
+  return to(
+    BookInstance.deleteOne({
+      _id: bookInstanceID,
+    }),
+  );
 };
 
 const BookInstance = mongoose.model('bookinstances', bookInstanceSchema);
