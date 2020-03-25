@@ -1,4 +1,4 @@
-import Login from '../common/main-pages/LoginPage';
+import Login from '../modules/access';
 import User from '../modules/user';
 import Admin from '../modules/admin';
 import BookManager from '../modules/manager';

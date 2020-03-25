@@ -1,0 +1,10 @@
+.custom-col {
+  display: flex;
+  justify-content: space-between;
+}
+
+.image-placement {
+  width: 600px;
+  height: 400px;
+  margin-right: 160px;
+}
