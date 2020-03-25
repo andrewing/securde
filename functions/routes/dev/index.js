@@ -19,5 +19,5 @@ export const dev = (route, ...rest) => {
 };
 
 const def = (route, event, context, callback) => {
-  callback(null, CODE[200]('/dev'));
+  callback(null, CODE(200, '/dev'));
 };

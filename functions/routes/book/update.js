@@ -25,5 +25,5 @@ export const update = async (route, event, context, callback) => {
     }),
   );
 
-  callback(null, CODE[200]('Successfully updating book', {updated}));
+  callback(null, CODE(200, 'Successfully updating book', {updated}));
 };

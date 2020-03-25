@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
+import moment from 'moment';
 import {CODE} from '../../util/code';
-import {SECRET} from '../../util/jwt';
+import {SECRET, REFRESH_SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 
@@ -15,17 +16,20 @@ export const login = (route, event, context, callback) => {
   // use 500 when server fails
 
   const id = 'sample'; // get userid from db???
-  jwt.sign(
-    {id},
-    SECRET,
-    {expiresIn: '7d' /* audience: user.type */},
-    (err, token) => {
-      if (err) throw new ResponseError(500, err.message);
+  const tokenPromise = jwt.sign({id}, SECRET, {
+    expiresIn: '30m' /* audience: user.type */,
+  });
 
+  const refreshTokenPromise = jwt.sign({}, REFRESH_SECRET, {expiresIn: '30m'});
+
+  Promise.all([tokenPromise, refreshTokenPromise])
+    .then(([token, refreshToken]) => {
       callback(
         null,
-        CODE[200]('Successfully Registered', {name: 'token', data: token}),
+        CODE(200, 'Successfully logged in', {token, refreshToken}),
       );
-    },
-  );
+    })
+    .catch(err => {
+      throw jwtError(err);
+    });
 };

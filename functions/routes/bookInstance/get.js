@@ -1,23 +1,24 @@
 import jwt from 'jsonwebtoken';
+import moment from 'moment';
 import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 
-export const register = (route, event, context, callback) => {
+export const edit = async (route, event, context, callback) => {
   if (event.httpMethod !== 'GET')
     throw new ResponseError(405, 'Method not allowed!');
+
+  const {bookId} = event.queryStringParams;
   const {authorization} = event.headers;
 
   jwt.verify(
     authorization,
     SECRET,
-    {audience: AUDIENCE.ADMIN},
-    (err, decoded) => {
+    {audience: AUDIENCE.BOOK_MANAGER},
+    async (err, decoded) => {
       if (err) jwtError(err);
-      // Get logs
-
-      callback(null, CODE(200, 'Successfully created manager!'));
+      callback(null, CODE(200, 'Successfully got book instance'));
     },
   );
 };

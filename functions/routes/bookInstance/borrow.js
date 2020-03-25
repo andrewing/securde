@@ -20,7 +20,7 @@ export const borrow = (route, event, context, callback) => {
       // Update book reserved field
       // const {userId} = decoded
       // reserved date: new Date()
-      callback(null, CODE[200](`Successfully borrowed book`, {book: bookId}));
+      callback(null, CODE(200, `Successfully borrowed book`, {book: bookId}));
     },
   );
 };

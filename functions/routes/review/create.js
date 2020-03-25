@@ -43,7 +43,7 @@ export const create = async (event, context, callback) => {
         }),
       );
 
-      callback(null, CODE[200]('Successfully created book'));
+      callback(null, CODE(200, 'Successfully created book'));
     },
   );
 };

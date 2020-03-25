@@ -18,7 +18,7 @@ export const adminToken = (route, event, context, callback) => {
 
       callback(
         null,
-        CODE[200]('Successfully Registered', {name: 'token', data: token}),
+        CODE(200, 'Successfully Registered', {name: 'token', data: token}),
       );
     },
   );

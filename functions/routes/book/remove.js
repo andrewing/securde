@@ -26,5 +26,5 @@ export const remove = async (route, event, context, callback) => {
     }),
   );
 
-  callback(null, CODE[200]('Successfully delete book'));
+  callback(null, CODE(200, 'Successfully delete book'));
 };

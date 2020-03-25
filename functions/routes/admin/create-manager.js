@@ -20,7 +20,7 @@ export const register = (route, event, context, callback) => {
       if (!body.password) throw new ResponseError(400, 'No Password');
       // Check if user exists. throw error if it does
 
-      callback(null, CODE[200], 'Successfully created manager!');
+      callback(null, CODE(200, 'Successfully created manager!'));
     },
   );
 };

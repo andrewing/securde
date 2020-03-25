@@ -7,5 +7,5 @@ export const admin = (route, ...rest) => {
 };
 
 const def = (route, event, context, callback) => {
-  callback(null, CODE[200]('/admin'));
+  callback(null, CODE(200, '/admin'));
 };

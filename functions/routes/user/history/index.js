@@ -18,5 +18,5 @@ export const history = (route, ...rest) => {
 };
 
 const def = (route, event, context, callback) => {
-  callback(null, CODE[200]('/user/history'));
+  callback(null, CODE(200, '/user/history'));
 };

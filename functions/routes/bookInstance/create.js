@@ -18,7 +18,7 @@ export const create = async (route, event, context, callback) => {
     {audience: AUDIENCE.BOOK_MANAGER},
     async (err, decoded) => {
       if (err) jwtError(err);
-      callback(null, CODE[200]('Successfully created book instance'));
+      callback(null, CODE(200, 'Successfully created book instance'));
     },
   );
 };

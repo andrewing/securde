@@ -5,7 +5,6 @@ export const handlePath = (route, paths, ...rest) => {
   const found = !paths.every(item => {
     const [func, path] = item;
     const currRoute = route.split('/')[1];
-    console.log(path === `/${currRoute}`);
     if (path === `/${currRoute}`) {
       func(route, ...rest);
       return false;
@@ -17,7 +16,6 @@ export const handlePath = (route, paths, ...rest) => {
 
 export const getNextPath = route => {
   const [, , ...restRoute] = route.split('/');
-  console.log(`/${restRoute.join('/')}`);
   return `/${restRoute.join('/')}`;
 };
 

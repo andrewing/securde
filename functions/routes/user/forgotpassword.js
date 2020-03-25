@@ -17,7 +17,7 @@ export const forgotpassword = (route, event, context, callback) => {
     (err, decoded) => {
       if (err) throw jwtError(err);
 
-      callback(null, CODE[200](`Successfully changed password`));
+      callback(null, CODE(200, `Successfully changed password`));
     },
   );
 };

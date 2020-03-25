@@ -17,7 +17,7 @@ export const book = (route, event, context, callback) => {
     (err, decoded) => {
       if (err) throw jwtError(err);
 
-      callback(null, CODE[200](`Successfully retrieved book history`));
+      callback(null, CODE(200, `Successfully retrieved book history`));
     },
   );
 };

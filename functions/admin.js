@@ -7,6 +7,6 @@ export const handler = (event, context, callback) => {
     router(admin, event, context, callback);
   } catch (err) {
     const {code, message} = err;
-    callback(null, CODE[code || 400](message));
+    callback(null, CODE(code || 400, message));
   }
 };

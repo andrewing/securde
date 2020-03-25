@@ -11,5 +11,5 @@ export const get = async (event, context, callback) => {
     throw new ResponseError(405, 'Method not allowed!');
 
   const logs = await SystemLog.findAllLogs();
-  callback(null, CODE[200]('Successfully retrieved logs', {logs}));
+  callback(null, CODE(200, 'Successfully retrieved logs', {logs}));
 };

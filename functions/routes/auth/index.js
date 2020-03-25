@@ -17,5 +17,5 @@ export const auth = (route, ...rest) => {
 };
 
 const def = (route, event, context, callback) => {
-  callback(null, CODE[200]('/auth'));
+  callback(null, CODE(200, '/auth'));
 };

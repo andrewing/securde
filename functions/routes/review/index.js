@@ -33,7 +33,7 @@ const def = async (route, event, context, callback) => {
       const {id} = decoded;
       const reviews = await Review.findReviewsByAccount(id);
 
-      callback(null, CODE[200]('Successful in user reviews', {reviews}));
+      callback(null, CODE(200, 'Successful in user reviews', {reviews}));
     },
   );
 };

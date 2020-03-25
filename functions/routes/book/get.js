@@ -11,5 +11,5 @@ export const get = async (event, context, callback) => {
     throw new ResponseError(405, 'Method not allowed!');
 
   const book = await Book.findAllBooks();
-  callback(null, CODE[200]('Successfully retrieved books', {book}));
+  callback(null, CODE(200, 'Successfully retrieved books', {book}));
 };
