@@ -9,7 +9,7 @@ export const edit = async (route, event, context, callback) => {
   if (event.httpMethod !== 'GET')
     throw new ResponseError(405, 'Method not allowed!');
 
-  const {bookId} = event.queryStringParams;
+  const {q: bookId} = event.queryStringParams;
   const {authorization} = event.headers;
 
   jwt.verify(
@@ -18,7 +18,7 @@ export const edit = async (route, event, context, callback) => {
     {audience: AUDIENCE.BOOK_MANAGER},
     async (err, decoded) => {
       if (err) jwtError(err);
-      callback(null, CODE(200, 'Successfully got book instance'));
+      callback(null, CODE(200, 'Successfully got all book instance by book'));
     },
   );
 };
