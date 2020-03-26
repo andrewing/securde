@@ -4,11 +4,12 @@ import to from '../../util/to';
 const {Schema} = mongoose;
 
 const bookInstanceSchema = new Schema({
-  bookId: {
+  time: String,
+  book: {
     type: Schema.Types.ObjectId,
     ref: 'Book',
   },
-  status: String,
+  isAvailable: Boolean,
 });
 
 bookInstanceSchema.statics.addBookIntance = (bookInstance, callback) => {
@@ -16,22 +17,22 @@ bookInstanceSchema.statics.addBookIntance = (bookInstance, callback) => {
 };
 
 bookInstanceSchema.statics.findAllBookInstances = async () => {
-  return to(BookInstance.find().populate('bookID'));
+  return to(BookInstance.find().populate('book'));
 };
 
 bookInstanceSchema.statics.findAllAvailable = async () => {
   return to(
     BookInstance.find({
-      status: 'Available',
-    }).populate('bookID'),
+      isAvailable: true,
+    }).populate('book'),
   );
 };
 
 bookInstanceSchema.statics.findAllReserved = async () => {
   return to(
     BookInstance.find({
-      status: 'Reserved',
-    }).populate('bookID'),
+      isAvailable: false,
+    }).populate('book'),
   );
 };
 
