@@ -16,6 +16,14 @@ bookInstanceSchema.statics.addBookIntance = (bookInstance, callback) => {
   return to(bookInstance.save().then(callback));
 };
 
+bookInstanceSchema.statics.findBookInstanceById = async bookInstanceID => {
+  return to(
+    BookInstance.findOne({
+      _id: bookInstanceID,
+    }).populate('book'),
+  );
+};
+
 bookInstanceSchema.statics.findAllBookInstances = async () => {
   return to(BookInstance.find().populate('book'));
 };

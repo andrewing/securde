@@ -6,11 +6,11 @@ const {Schema} = mongoose;
 const libraryLogSchema = new Schema({
   timeBorrowed: String,
   timeReturned: String,
-  bookId: {
+  book: {
     type: Schema.Types.ObjectId,
     ref: 'Book',
   },
-  accountId: {
+  account: {
     type: Schema.Types.ObjectId,
     ref: 'Account',
   },
@@ -23,15 +23,15 @@ libraryLogSchema.statics.addLog = (libraryLog, callback) => {
 libraryLogSchema.statics.findLibraryLogsByAccount = async accountId => {
   return to(
     LibraryLog.find({
-      accountId,
-    }),
+      account: accountID,
+    }).populate('book account'),
   );
 };
 
 libraryLogSchema.statics.deleteLibraryLogsByAccount = accountId => {
   return to(
     LibraryLog.deleteMany({
-      accountId,
+      account: accountID,
     }),
   );
 };
