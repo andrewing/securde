@@ -20,7 +20,7 @@ const accountSchema = new Schema({
   idNumber: String,
   question: String,
   answer: String,
-  userType: String,
+  type: String,
   bookHistory: [
     {
       type: Schema.Types.ObjectId,
@@ -30,7 +30,7 @@ const accountSchema = new Schema({
   salt: String,
 });
 
-accountSchema.statics.authenticate = async (username, password, salt) => {
+accountSchema.statics.authenticate = (username, password, salt) => {
   const hashed = sha512(password, salt).hashedPassword;
   return to(
     Account.findOne({
@@ -44,14 +44,14 @@ accountSchema.statics.addAccount = (account, callback) => {
   const passwordData = saltHashPassword(account.password);
   account.password = passwordData.hashedPassword;
   account.salt = passwordData.salt;
-  return to(account.save().then(callback));
+  account.save().then(callback);
 };
 
-accountSchema.statics.findAllUsers = async () => {
+accountSchema.statics.findAllUsers = () => {
   return to(Account.find().populate('librarylogs'));
 };
 
-accountSchema.statics.findNonAdminUsers = async () => {
+accountSchema.statics.findNonAdminUsers = () => {
   return to(
     Account.find({
       userType: AUDIENCE.USER,
@@ -59,15 +59,15 @@ accountSchema.statics.findNonAdminUsers = async () => {
   );
 };
 
-accountSchema.statics.findUserByUsername = async username => {
+accountSchema.statics.findUserByUsername = username => {
   return to(
     Account.findOne({
       username,
-    }).populate('bookHistory'),
+    }),
   );
 };
 
-accountSchema.statics.findUserById = async accountID => {
+accountSchema.statics.findUserById = accountID => {
   return to(
     Account.findOne({
       _id: accountID,
@@ -75,7 +75,7 @@ accountSchema.statics.findUserById = async accountID => {
   );
 };
 
-accountSchema.statics.findUserByIdNumber = async idNumber => {
+accountSchema.statics.findUserByIdNumber = idNumber => {
   return to(
     Account.findOne({
       idNumber,
@@ -83,7 +83,7 @@ accountSchema.statics.findUserByIdNumber = async idNumber => {
   );
 };
 
-accountSchema.statics.updateAccount = async (accountID, account) => {
+accountSchema.statics.updateAccount = (accountID, account) => {
   const hashed = saltHashPassword(account.password);
   return to(
     Account.updateOne(
@@ -109,7 +109,7 @@ accountSchema.statics.updateAccount = async (accountID, account) => {
   );
 };
 
-accountSchema.statics.deleteAccount = async accountID => {
+accountSchema.statics.deleteAccount = accountID => {
   return to(
     Account.deleteOne({
       _id: accountID,
@@ -148,4 +148,4 @@ function saltHashPassword(userpassword) {
 
 const Account = mongoose.model('accounts', accountSchema);
 
-export default {Account};
+export default Account;
