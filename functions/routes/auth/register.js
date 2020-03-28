@@ -16,7 +16,6 @@ export const register = (route, event, context, callback) => {
       Account.addAccount(
         new Account({
           ...body,
-          type: AUDIENCE.USER,
         }),
         callback(null, CODE(200, 'Successfully registered')),
       );

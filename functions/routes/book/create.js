@@ -27,11 +27,11 @@ export const create = async (route, event, context, callback) => {
         }),
       );
 
-      await SystemLog.addLog(
+      SystemLog.addLog(
         new SystemLog({
           time: moment().format(),
-          action: 'ADD',
-          content: `Book manager added a new book [${data.title}]`,
+          action: 'CREATE BOOK',
+          content: `Created a book [${data.title}]`,
         }),
       );
 

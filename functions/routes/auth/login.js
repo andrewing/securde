@@ -20,7 +20,7 @@ export const login = (route, event, context, callback) => {
         .then(({data: user}) => {
           if (!user) throw new ResponseError(404, 'Incorrect Password');
           const {_id, type} = user;
-          const tokenPromise = jwt.sign({_id}, SECRET, {
+          const tokenPromise = jwt.sign({userId: _id}, SECRET, {
             expiresIn: '30m',
             audience: type,
           });
