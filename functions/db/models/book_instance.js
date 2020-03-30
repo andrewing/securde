@@ -8,7 +8,7 @@ const bookInstanceSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Book',
   },
-  status: String,
+  isReserved: Boolean,
 });
 
 bookInstanceSchema.statics.addBookIntance = (bookInstance, callback) => {
@@ -22,7 +22,7 @@ bookInstanceSchema.statics.findAllBookInstances = async () => {
 bookInstanceSchema.statics.findAllAvailable = async () => {
   return to(
     BookInstance.find({
-      status: 'Available',
+      isReserved: false,
     }).populate('bookID'),
   );
 };
@@ -30,7 +30,7 @@ bookInstanceSchema.statics.findAllAvailable = async () => {
 bookInstanceSchema.statics.findAllReserved = async () => {
   return to(
     BookInstance.find({
-      status: 'Reserved',
+      isReserved: true,
     }).populate('bookID'),
   );
 };
@@ -45,7 +45,7 @@ bookInstanceSchema.statics.updateBookInstance = async (
         _id: bookInstanceID,
       },
       {
-        status: book.status,
+        isReserved: book.isReserved,
       },
       {
         new: true,
