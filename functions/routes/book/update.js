@@ -9,21 +9,40 @@ import SystemLog from '../../db/models/system_log';
 import db from '../../db/db';
 
 export const update = async (route, event, context, callback) => {
-  if (event.httpMethod !== 'PUT')
-    throw new ResponseError(405, 'Method not allowed!');
-
+  if (event.httpMethod !== 'PUT') {
+    callback(null, CODE(405, 'Method not allowed'));
+    return;
+  }
   const data = JSON.parse(event.body);
+  const {authorization} = event.headers;
 
-  /* updating one book */
-  const updated = await Book.updateBook(data._id, data);
-
-  await SystemLog.addLog(
-    new SystemLog({
-      time: moment().format(),
-      action: 'UPDATE',
-      content: `Book manager updates book detail [ ${data.title}]`,
-    }),
+  jwt.verify(
+    authorization,
+    SECRET,
+    {audience: AUDIENCE.BOOK_MANAGER},
+    (err, decoded) => {
+      if (err) {
+        callback(
+          null,
+          jwtError(err, decoded && decoded.user.username, 'UPDATE BOOK'),
+        );
+        return;
+      }
+      Book.updateBook(data._id, data)
+        .then(updated => {
+          SystemLog.addLog(
+            new SystemLog({
+              time: moment().format(),
+              action: 'UPDATE',
+              content: `Book manager updates book detail [ ${data.title}]`,
+            }),
+          );
+          callback(null, CODE(200, 'Successfully updating book', {updated}));
+        })
+        .catch(bookErr => {
+          const {code, message} = bookErr;
+          callback(null, CODE(code || 500, message));
+        });
+    },
   );
-
-  callback(null, CODE(200, 'Successfully updating book', {updated}));
 };

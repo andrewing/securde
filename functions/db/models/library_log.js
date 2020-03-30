@@ -4,12 +4,13 @@ import to from '../../util/to';
 const {Schema} = mongoose;
 
 const libraryLogSchema = new Schema({
-  time: String,
-  bookID: {
+  timeBorrowed: String,
+  timeReturned: String,
+  bookId: {
     type: Schema.Types.ObjectId,
     ref: 'Book',
   },
-  accountID: {
+  accountId: {
     type: Schema.Types.ObjectId,
     ref: 'Account',
   },
@@ -19,19 +20,35 @@ libraryLogSchema.statics.addLog = (libraryLog, callback) => {
   return to(libraryLog.save().then(callback));
 };
 
-libraryLogSchema.statics.findLibraryLogsByAccount = async accountID => {
+libraryLogSchema.statics.findLibraryLogsByAccount = async accountId => {
   return to(
     LibraryLog.find({
-      accountID,
+      accountId,
     }),
   );
 };
 
-libraryLogSchema.statics.deleteLibraryLogsByAccount = async accountID => {
+libraryLogSchema.statics.deleteLibraryLogsByAccount = accountId => {
   return to(
     LibraryLog.deleteMany({
-      accountID,
+      accountId,
     }),
+  );
+};
+
+libraryLogSchema.statics.logReturn = (logId, timeReturned) => {
+  return to(
+    LibraryLog.updateOne(
+      {
+        _id: logId,
+      },
+      {
+        timeReturned,
+      },
+      {
+        new: true,
+      },
+    ),
   );
 };
 

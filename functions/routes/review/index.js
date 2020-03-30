@@ -30,7 +30,7 @@ const def = async (route, event, context, callback) => {
     {audience: AUDIENCE.USER},
     async (err, decoded) => {
       if (err) jwtError(err);
-      const {id} = decoded;
+      const {id} = decoded.user;
       const reviews = await Review.findReviewsByAccount(id);
 
       callback(null, CODE(200, 'Successful in user reviews', {reviews}));

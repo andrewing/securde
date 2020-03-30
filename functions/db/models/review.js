@@ -7,11 +7,11 @@ const {Schema} = mongoose;
 const reviewSchema = new Schema({
   time: String,
   content: String,
-  bookID: {
+  bookId: {
     type: Schema.Types.ObjectId,
     ref: 'Book',
   },
-  accountID: {
+  accountId: {
     type: Schema.Types.ObjectId,
     ref: 'Account',
   },
@@ -21,27 +21,27 @@ reviewSchema.statics.addReview = (review, callback) => {
   return to(review.save().then(callback));
 };
 
-reviewSchema.statics.findReviewsByAccount = async accountID => {
+reviewSchema.statics.findReviewsByAccount = async accountId => {
   return to(
     Review.find({
-      accountID,
-    }).populate('bookID accountID'),
+      accountId,
+    }).populate('bookId accountId'),
   );
 };
 
-reviewSchema.statics.findReviewsByBook = async bookID => {
+reviewSchema.statics.findReviewsByBook = async bookId => {
   return to(
     Review.find({
-      bookID,
-    }).populate('bookID accountID'),
+      bookId,
+    }).populate('bookId accountId'),
   );
 };
 
-reviewSchema.statics.updateReview = async (reviewID, content) => {
+reviewSchema.statics.updateReview = async (reviewId, content) => {
   return to(
     Review.updateOne(
       {
-        _id: reviewID,
+        _id: reviewId,
       },
       {
         content,
@@ -54,18 +54,18 @@ reviewSchema.statics.updateReview = async (reviewID, content) => {
   );
 };
 
-reviewSchema.statics.deleteReview = async reviewID => {
+reviewSchema.statics.deleteReview = async reviewId => {
   return to(
     Review.deleteOne({
-      _id: reviewID,
+      _id: reviewId,
     }),
   );
 };
 
-reviewSchema.statics.deleteReviewByAccount = async accountID => {
+reviewSchema.statics.deleteReviewByAccount = async accountId => {
   return to(
     Review.deleteMany({
-      accountID,
+      accountId,
     }),
   );
 };

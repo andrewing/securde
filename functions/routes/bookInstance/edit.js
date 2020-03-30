@@ -6,9 +6,10 @@ import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 
 export const edit = async (route, event, context, callback) => {
-  if (event.httpMethod !== 'PUT')
-    throw new ResponseError(405, 'Method not allowed!');
-
+  if (event.httpMethod !== 'PUT') {
+    callback(null, CODE(405, 'Method not allowed'));
+    return;
+  }
   const data = JSON.parse(event.body);
   const {id} = event.queryStringParams;
   const {authorization} = event.headers;
@@ -18,7 +19,13 @@ export const edit = async (route, event, context, callback) => {
     SECRET,
     {audience: AUDIENCE.BOOK_MANAGER},
     async (err, decoded) => {
-      if (err) jwtError(err);
+      if (err) {
+        callback(
+          null,
+          jwtError(err, decoded && decoded.user.username, 'EDIT BOOK INSTANCE'),
+        );
+        return;
+      }
       callback(null, CODE(200, 'Successfully edited book instance'));
     },
   );

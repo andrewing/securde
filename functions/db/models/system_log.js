@@ -13,7 +13,7 @@ systemLogSchema.statics.addLog = (systemLog, callback) => {
   return to(systemLog.save().then(callback));
 };
 
-systemLogSchema.statics.findAllLogs = async () => {
+systemLogSchema.statics.findAllLogs = () => {
   return to(SystemLog.find());
 };
 

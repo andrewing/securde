@@ -5,15 +5,16 @@ import ResponseError from '../../../util/error';
 import {AUDIENCE} from '../../../util/constants';
 
 export const book = (route, event, context, callback) => {
-  if (event.httpMethod !== 'GET')
-    throw new ResponseError(405, 'Method not allowed!');
-
+  if (event.httpMethod !== 'GET') {
+    callback(null, CODE(405, 'Method not allowed'));
+    return;
+  }
   const {authorization} = event.headers;
 
   jwt.verify(
     authorization,
     SECRET,
-    {audience: AUDIENCE.USER},
+    {audience: [AUDIENCE.USER_STUDENT, AUDIENCE.USER_TEACHER]},
     (err, decoded) => {
       if (err) throw jwtError(err);
 

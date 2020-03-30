@@ -11,39 +11,44 @@ import Account from '../../db/models/user';
 import Book from '../../db/models/book';
 import db from '../../db/db';
 
-export const create = async (event, context, callback) => {
-  if (event.httpMethod !== 'POST')
-    throw new ResponseError(405, 'Method not allowed!');
-
+export const create = (route, event, context, callback) => {
+  if (event.httpMethod !== 'POST') {
+    callback(null, CODE(405, 'Method not allowed'));
+    return;
+  }
   const data = JSON.parse(event.body);
   const {authorization} = event.headers;
 
   jwt.verify(
     authorization,
     SECRET,
-    {audience: AUDIENCE.USER},
-    async (err, decoded) => {
-      await Review.addReview(
+    {audience: [AUDIENCE.USER_STUDENT, AUDIENCE.USER_TEACHER]},
+    (err, decoded) => {
+      if (err) {
+        callback(null, jwtError(err, decoded && decoded.user.username, ''));
+        return;
+      }
+      Review.addReview(
         new Review({
           time: moment().format(),
-          content: data.content,
-          bookID: data.bookID,
-          accountID: data.accountID,
+          accountId: decoded.user._id,
+          ...data,
         }),
-      );
-
-      const account = await Account.findAccountById(data.accountID);
-      const book = await Book.findBookById(data.bookID);
-
-      await SystemLog.addLog(
-        new SystemLog({
-          time: moment().format(),
-          action: 'ADD',
-          content: `[${account.lastname}, ${account.firstname}] added a review on [${book.title}]`,
-        }),
-      );
-
-      callback(null, CODE(200, 'Successfully created book'));
+      )
+        .then(() => {
+          SystemLog.addLog(
+            new SystemLog({
+              time: moment().format(),
+              action: 'BOOK REVIEW',
+              content: `${decoded.user.username} added a review on book ID [${data.bookId}]`,
+            }),
+          );
+          callback(null, CODE(200, 'Successfully created review'));
+        })
+        .catch(reviewErr => {
+          const {code, message} = reviewErr;
+          callback(null, CODE(code || 500, message));
+        });
     },
   );
 };

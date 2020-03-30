@@ -4,7 +4,7 @@ import to from '../../util/to';
 const {Schema} = mongoose;
 
 const bookInstanceSchema = new Schema({
-  bookID: {
+  bookId: {
     type: Schema.Types.ObjectId,
     ref: 'Book',
   },

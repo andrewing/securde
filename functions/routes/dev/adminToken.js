@@ -5,12 +5,15 @@ import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 
 export const adminToken = (route, event, context, callback) => {
-  if (event.httpMethod !== 'GET')
-    throw new ResponseError(405, 'Method not allowed!');
-
-  const id = 'sample'; // get userid from db???
+  if (event.httpMethod !== 'GET') {
+    callback(null, CODE(405, 'Method not allowed'));
+    return;
+  }
+  const user = {
+    username: 'devAdmin',
+  };
   jwt.sign(
-    {id},
+    {user},
     SECRET,
     {expiresIn: '7d', audience: AUDIENCE.ADMIN},
     (err, token) => {

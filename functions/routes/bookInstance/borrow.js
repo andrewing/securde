@@ -5,8 +5,10 @@ import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 
 export const borrow = (route, event, context, callback) => {
-  if (event.httpMethod !== 'PUT')
-    throw new ResponseError(405, 'Method not allowed!');
+  if (event.httpMethod !== 'PUT') {
+    callback(null, CODE(405, 'Method not allowed'));
+    return;
+  }
   const {bookId} = event.queryStringParameters;
 
   const {authorization} = event.headers;
@@ -14,9 +16,19 @@ export const borrow = (route, event, context, callback) => {
   jwt.verify(
     authorization,
     SECRET,
-    {audience: AUDIENCE.USER},
+    {audience: [AUDIENCE.USER_STUDENT, AUDIENCE.USER_TEACHER]},
     (err, decoded) => {
-      if (err) throw jwtError(err);
+      if (err) {
+        callback(
+          null,
+          jwtError(
+            err,
+            decoded && decoded.user.username,
+            'BORROW BOOK INSTANCE',
+          ),
+        );
+        return;
+      }
       // Update book reserved field
       // const {userId} = decoded
       // reserved date: new Date()

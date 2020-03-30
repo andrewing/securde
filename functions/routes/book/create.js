@@ -9,9 +9,10 @@ import SystemLog from '../../db/models/system_log';
 import db from '../../db/db';
 
 export const create = async (route, event, context, callback) => {
-  if (event.httpMethod !== 'POST')
-    throw new ResponseError(405, 'Method not allowed!');
-
+  if (event.httpMethod !== 'POST') {
+    callback(null, CODE(405, 'Method not allowed'));
+    return;
+  }
   const data = JSON.parse(event.body);
   const {authorization} = event.headers;
 
@@ -20,21 +21,33 @@ export const create = async (route, event, context, callback) => {
     SECRET,
     {audience: AUDIENCE.BOOK_MANAGER},
     async (err, decoded) => {
-      await Book.addBook(
+      if (err) {
+        callback(
+          null,
+          jwtError(err, decoded && decoded.user.username, 'CREATE BOOK'),
+        );
+        return;
+      }
+      const {user} = decoded;
+      Book.addBook(
         new Book({
           ...data,
           reviews: [],
         }),
-      );
-
-      SystemLog.addLog(
-        new SystemLog({
-          time: moment().format(),
-          action: 'CREATE BOOK',
-          content: `Created a book [${data.title}]`,
-        }),
-      );
-
+      )
+        .then(() => {
+          SystemLog.addLog(
+            new SystemLog({
+              time: moment().format(),
+              action: 'CREATE BOOK',
+              content: `${user.username} created a book:${data.title}`,
+            }),
+          );
+        })
+        .catch(bookErr => {
+          const {code, message} = bookErr;
+          callback(null, CODE(code || 500, message));
+        });
       callback(null, CODE(200, 'Successfully created book'));
     },
   );

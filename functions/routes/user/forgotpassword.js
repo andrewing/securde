@@ -5,19 +5,9 @@ import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 
 export const forgotpassword = (route, event, context, callback) => {
-  if (event.httpMethod !== 'PUT')
-    throw new ResponseError(405, 'Method not allowed!');
-
+  if (event.httpMethod !== 'PUT') {
+    callback(null, CODE(405, 'Method not allowed'));
+    return;
+  }
   const {authorization} = event.headers;
-
-  jwt.verify(
-    authorization,
-    SECRET,
-    {audience: AUDIENCE.USER},
-    (err, decoded) => {
-      if (err) throw jwtError(err);
-
-      callback(null, CODE(200, `Successfully changed password`));
-    },
-  );
 };
