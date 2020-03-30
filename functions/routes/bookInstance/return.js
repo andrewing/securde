@@ -8,12 +8,12 @@ import BookInstance from '../../db/models/book_instance';
 import SystemLog from '../../db/models/system_log';
 import LibraryLog from '../../db/models/library_log';
 
-export const borrow = (route, event, context, callback) => {
+export const ret = (route, event, context, callback) => {
   if (event.httpMethod !== 'PUT') {
     callback(null, CODE(405, 'Method not allowed'));
     return;
   }
-  const {bookId} = event.queryStringParameters;
+  const {bookInstanceId} = event.queryStringParameters;
   const {authorization} = event.headers;
 
   jwt.verify(
@@ -33,24 +33,22 @@ export const borrow = (route, event, context, callback) => {
         return;
       }
 
-      BookInstance.borrowBookInstance(bookId).then(() => {
-        LibraryLog.addLog(
-          new LibraryLog({
-            timeBorrowed: moment().format(),
-            timeReturned: null,
-            bookId,
-            accountId: decoded.user._id,
-          }),
-        );
+      BookInstance.returnBookInstance(bookInstanceId).then(() => {
+        LibraryLog.findLibraryLogsByBook(bookInstanceId).then(log => {
+          LibraryLog.logReturn(log._id, moment().format());
+        });
 
         SystemLog.addLog(
           new SystemLog({
             time: moment().format(),
-            action: 'BORROW BOOK',
-            content: `${decoded.user.username} borrowed bookId [${bookId}]`,
+            action: 'RETURN BOOK',
+            content: `${decoded.user.username} returned bookId [${bookInstanceId}]`,
           }),
         );
-        callback(null, CODE(200, `Successfully borrowed book`, {book: bookId}));
+        callback(
+          null,
+          CODE(200, `Successfully borrowed book`, {book: bookInstanceId}),
+        );
       });
     },
   );

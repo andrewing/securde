@@ -6,9 +6,9 @@ const {Schema} = mongoose;
 const libraryLogSchema = new Schema({
   timeBorrowed: String,
   timeReturned: String,
-  bookId: {
+  bookInstanceId: {
     type: Schema.Types.ObjectId,
-    ref: 'Book',
+    ref: 'BookInstance',
   },
   accountId: {
     type: Schema.Types.ObjectId,
@@ -18,6 +18,14 @@ const libraryLogSchema = new Schema({
 
 libraryLogSchema.statics.addLog = (libraryLog, callback) => {
   return to(libraryLog.save().then(callback));
+};
+
+libraryLogSchema.statics.findLibraryLogsByBook = bookInstanceId => {
+  return to(
+    LibraryLog.find({
+      bookInstanceId,
+    }),
+  );
 };
 
 libraryLogSchema.statics.findLibraryLogsByAccount = async accountId => {
@@ -52,6 +60,6 @@ libraryLogSchema.statics.logReturn = (logId, timeReturned) => {
   );
 };
 
-const LibraryLog = mongoose.model('librarylogs', libraryLogSchema);
+const LibraryLog = mongoose.model('LibraryLog', libraryLogSchema);
 
 export default LibraryLog;

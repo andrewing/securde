@@ -7,7 +7,7 @@ import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 import Review from '../../db/models/review';
 import SystemLog from '../../db/models/system_log';
-import Account from '../../db/models/user';
+import Account from '../../db/models/account';
 import Book from '../../db/models/book';
 import db from '../../db/db';
 

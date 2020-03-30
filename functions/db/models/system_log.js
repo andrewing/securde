@@ -17,6 +17,6 @@ systemLogSchema.statics.findAllLogs = () => {
   return to(SystemLog.find());
 };
 
-const SystemLog = mongoose.model('systemlogs', systemLogSchema);
+const SystemLog = mongoose.model('SystemLog', systemLogSchema);
 
 export default SystemLog;

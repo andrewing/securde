@@ -11,15 +11,15 @@ const bookInstanceSchema = new Schema({
   isReserved: Boolean,
 });
 
-bookInstanceSchema.statics.addBookIntance = (bookInstance, callback) => {
+bookInstanceSchema.statics.addBookInstance = (bookInstance, callback) => {
   return to(bookInstance.save().then(callback));
 };
 
-bookInstanceSchema.statics.findAllBookInstances = async () => {
+bookInstanceSchema.statics.findAllBookInstances = () => {
   return to(BookInstance.find().populate('bookID'));
 };
 
-bookInstanceSchema.statics.findAllAvailable = async () => {
+bookInstanceSchema.statics.findAllAvailable = () => {
   return to(
     BookInstance.find({
       isReserved: false,
@@ -27,7 +27,7 @@ bookInstanceSchema.statics.findAllAvailable = async () => {
   );
 };
 
-bookInstanceSchema.statics.findAllReserved = async () => {
+bookInstanceSchema.statics.findAllReserved = () => {
   return to(
     BookInstance.find({
       isReserved: true,
@@ -35,17 +35,14 @@ bookInstanceSchema.statics.findAllReserved = async () => {
   );
 };
 
-bookInstanceSchema.statics.updateBookInstance = async (
-  bookInstanceID,
-  book,
-) => {
+bookInstanceSchema.statics.borrowBookInstance = bookInstanceID => {
   return to(
     BookInstance.updateOne(
       {
         _id: bookInstanceID,
       },
       {
-        isReserved: book.isReserved,
+        isReserved: true,
       },
       {
         new: true,
@@ -54,7 +51,23 @@ bookInstanceSchema.statics.updateBookInstance = async (
   );
 };
 
-bookInstanceSchema.statics.deleteBookInstance = async bookInstanceID => {
+bookInstanceSchema.statics.returnBookInstance = bookInstanceID => {
+  return to(
+    BookInstance.updateOne(
+      {
+        _id: bookInstanceID,
+      },
+      {
+        isReserved: false,
+      },
+      {
+        new: true,
+      },
+    ),
+  );
+};
+
+bookInstanceSchema.statics.deleteBookInstance = bookInstanceID => {
   return to(
     BookInstance.deleteOne({
       _id: bookInstanceID,
@@ -62,6 +75,6 @@ bookInstanceSchema.statics.deleteBookInstance = async bookInstanceID => {
   );
 };
 
-const BookInstance = mongoose.model('bookinstances', bookInstanceSchema);
+const BookInstance = mongoose.model('BookInstance', bookInstanceSchema);
 
 export default BookInstance;

@@ -4,7 +4,7 @@ import {CODE} from '../../util/code';
 import {SECRET, REFRESH_SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
-import Account from '../../db/models/user';
+import Account from '../../db/models/account';
 import db from '../../db/db';
 import SystemLog from '../../db/models/system_log';
 

@@ -70,6 +70,6 @@ reviewSchema.statics.deleteReviewByAccount = async accountId => {
   );
 };
 
-const Review = mongoose.model('reviews', reviewSchema);
+const Review = mongoose.model('Review', reviewSchema);
 
 export default Review;

@@ -33,27 +33,29 @@ bookSchema.statics.findAllBooks = async () => {
 };
 
 bookSchema.statics.findBookByID = async bookID => {
-  return to(
-    Book.findOne({
-      _id: bookID,
-    }).populate('reviews'),
-  );
+  Book.findOne({
+    _id: bookID,
+  })
+    .populate('reviews')
+    .exec((err, res) => {
+      console.log(res);
+    });
 };
 
 bookSchema.statics.findBookByAuthor = async name => {
-  return to(
-    Book.find({
-      author: name,
-    }).populate('reviews'),
-  );
+  Book.find({
+    author: name,
+  })
+    .populate('reviews')
+    .exec((err, res) => {
+      console.log(res);
+    });
 };
 
 bookSchema.statics.findBookByTitle = async booktitle => {
-  return to(
-    Book.find({
-      title: {$regex: `.*${booktitle}.*`},
-    }).populate('reviews'),
-  );
+  return Book.find({
+    title: {$regex: `.*${booktitle}.*`},
+  }).populate('reviews');
 };
 
 bookSchema.statics.updateBook = async (bookID, book) => {
@@ -86,6 +88,6 @@ bookSchema.statics.deleteBook = async bookID => {
   );
 };
 
-const Book = mongoose.model('books', bookSchema);
+const Book = mongoose.model('Book', bookSchema);
 
 export default Book;
