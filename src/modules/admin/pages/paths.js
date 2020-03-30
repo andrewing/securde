@@ -1,5 +1,5 @@
 import ViewLogs from './logs';
-import CreateManager from './create';
+import BookManager from './book-manager';
 import PageNotFound from '../../../common/main-pages/PageNotFound';
 
 const subpages = [
@@ -9,9 +9,9 @@ const subpages = [
     component: ViewLogs,
   },
   {
-    key: '/create-manager',
-    path: '/create-manager',
-    component: CreateManager,
+    key: '/book-manager',
+    path: '/book-manager',
+    component: BookManager,
   },
   {
     key: '/*',

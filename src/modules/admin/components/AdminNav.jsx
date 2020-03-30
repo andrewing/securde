@@ -14,11 +14,11 @@ const AdminPageNavbar = ({url}) => (
       </NavLink>
       <Nav className="mr-auto">
         <NavLink
-          to={`${url}/create-manager`}
+          to={`${url}/book-manager`}
           style={{color: 'white', textDecoration: 'none', margin: 10}}
           activeStyle={{textDecoration: 'underline'}}
         >
-          Create Book Manager
+          Book Managers
         </NavLink>
         <NavLink
           to={`${url}/view-logs`}
