@@ -10,11 +10,12 @@
 }
 
 .input-fields {
-  border: none;
-  border-bottom: #a7a1ff 1.5px solid;
-  border-radius: 2px;
-  padding: 5px;
-  margin: 5px;
+  border: #a7a1ff 0.5px solid;
+  border-radius: 3px;
   outline: none;
-  width: 200px;
+  width: 300px;
+}
+
+.ant-form-item-explain {
+  font-size: 8pt;
 }

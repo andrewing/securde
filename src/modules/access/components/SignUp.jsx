@@ -1,126 +1,126 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {Button, Form, Modal} from 'react-bootstrap';
+import {Form, Input, Modal} from 'antd';
+import {Button} from 'react-bootstrap';
 
-const SignUp = ({showModal, handleClose}) => {
-  const [validated, setValidated] = useState(false);
+const SignUpForm = ({showModal, handleClose, form}) => {
+  const {getFieldDecorator} = form;
 
   const onSubmit = event => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setValidated(true);
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
+    // setValidated(true);
   };
 
   return (
     <Modal
-      show={showModal}
-      onHide={handleClose}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      size="sm"
+      title="Sign Up"
+      visible={showModal}
+      onOk={onSubmit}
+      onCancel={handleClose}
+      okText="Submit"
+      centered={true}
+      footer={null}
+      width={350}
     >
-      <Modal.Header closeButton style={{textAlign: 'center'}}>
-        <Modal.Title id="contained-modal-title-vcenter">Sign Up!</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form noValidate validated={validated} style={{textAlign: 'center'}}>
-          <Form.Group controlId="fname">
-            <Form.Group controlId="id_number">
-              <Form.Control
-                required
-                type="number"
-                autoComplete="off"
-                placeholder="ID Number"
-                bsPrefix="input-fields"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide an ID Number.
-              </Form.Control.Feedback>
-            </Form.Group>
+      <Form size="small">
+        <Form.Item style={{fontSize: '8pt'}} name="id_number">
+          {getFieldDecorator('id_number', {
+            rules: [
+              {
+                required: true,
+                message: 'Please input your ID number',
+              },
+            ],
+          })(
+            <Input
+              style={{fontSize: 13, fontWeight: 5, padding: 3}}
+              placeholder="ID Number"
+            />,
+          )}
+        </Form.Item>
 
-            <Form.Control
-              required
-              autoComplete="off"
-              placeholder="First Name"
-              bsPrefix="input-fields"
-            />
-            <Form.Control.Feedback type="invalid">
-              Please provide a First Name.
-            </Form.Control.Feedback>
-          </Form.Group>
+        <Form.Item
+          name="firstname"
+          rules={[{required: true, message: 'Please input your first name'}]}
+        >
+          <Input
+            style={{fontSize: 13, fontWeight: 5, padding: 3}}
+            placeholder="First Name"
+          />
+        </Form.Item>
 
-          <Form.Group controlId="lname">
-            <Form.Control
-              required
-              autoComplete="off"
-              placeholder="Last Name"
-              bsPrefix="input-fields"
-            />
-            <Form.Control.Feedback type="invalid">
-              Please provide a Last Name.
-            </Form.Control.Feedback>
-          </Form.Group>
+        <Form.Item
+          name="lastname"
+          rules={[{required: true, message: 'Please input your last name'}]}
+        >
+          <Input
+            style={{fontSize: 13, fontWeight: 5, padding: 3}}
+            placeholder="Last Name"
+          />
+        </Form.Item>
 
-          <Form.Group controlId="email">
-            <Form.Control
-              required
-              type="email"
-              autoComplete="off"
-              placeholder="Email"
-              bsPrefix="input-fields"
-            />
-            <Form.Control.Feedback type="invalid">
-              Please provide an Email.
-            </Form.Control.Feedback>
-          </Form.Group>
+        <Form.Item
+          name="username"
+          rules={[{required: true, message: 'Please input your username'}]}
+        >
+          <Input
+            style={{fontSize: 13, fontWeight: 5, padding: 3}}
+            placeholder="Username"
+          />
+        </Form.Item>
 
-          <Form.Group controlId="password">
-            <Form.Control
-              required
-              type="password"
-              placeholder="Password"
-              bsPrefix="input-fields"
-            />
-            <Form.Control.Feedback type="invalid">
-              Please input a valid password.
-            </Form.Control.Feedback>
-          </Form.Group>
+        <Form.Item
+          name="password"
+          rules={[{required: true, message: 'Please input your password'}]}
+        >
+          <Input
+            style={{fontSize: 13, fontWeight: 5, padding: 3}}
+            placeholder="Password"
+            minLength={8}
+          />
+        </Form.Item>
 
-          <Form.Group controlId="confirm_password">
-            <Form.Control
-              required
-              type="password"
-              placeholder="Confirm Password"
-              bsPrefix="input-fields"
-            />
-            <Form.Control.Feedback type="invalid">
-              Passwords do not match.
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer style={{justifyContent: 'center'}}>
+        <Form.Item
+          name="confirm_password"
+          rules={[
+            {required: true, message: 'Please input confirm your password'},
+          ]}
+        >
+          <Input
+            style={{fontSize: 13, fontWeight: 5, padding: 3}}
+            placeholder="Confirm Password"
+          />
+        </Form.Item>
+      </Form>
+
+      <div style={{textAlign: 'center'}}>
         <Button
           bsPrefix="primary-button"
+          style={{margin: '0px 20px'}}
           onClick={onSubmit}
-          style={{margin: '0 15px'}}
         >
-          Submit
+          Confirm
         </Button>
-        <Button bsPrefix="secondary-button" onClick={handleClose}>
+
+        <Button
+          bsPrefix="secondary-button"
+          style={{margin: '0px 20px'}}
+          onClick={handleClose}
+        >
           Cancel
         </Button>
-      </Modal.Footer>
+      </div>
     </Modal>
   );
 };
 
-SignUp.propTypes = {
+SignUpForm.propTypes = {
   showModal: PropTypes.bool,
   handleClose: PropTypes.func,
 };
 
-export default SignUp;
+export default Form.create()(SignUpForm);

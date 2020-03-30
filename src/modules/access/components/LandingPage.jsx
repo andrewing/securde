@@ -10,29 +10,25 @@ const LoginPage = props => {
     <Jumbotron fluid>
       <Container>
         <h1>Welcome To Online Library</h1>
-        <p>You can access the online library as follows</p>
-        {/* <Link to="/user"> */}
+        <p>You can access the online library as follows</p>{' '}
         <Button
           style={{backgroundColor: '#6C63FF'}}
           onClick={e => props.onClickAccess(e.target.innerText)}
         >
           Access as a User
-        </Button>
-        {/* </Link> */} {/* <Link to="/admin"> */}
+        </Button>{' '}
         <Button
           style={{backgroundColor: '#6C63FF'}}
           onClick={e => props.onClickAccess(e.target.innerText)}
         >
           Access as an Admin
-        </Button>
-        {/* </Link> */} {/* <Link to="/manager"> */}
+        </Button>{' '}
         <Button
           style={{backgroundColor: '#6C63FF'}}
           onClick={e => props.onClickAccess(e.target.innerText)}
         >
           Access as a Book Manager
         </Button>
-        {/* </Link> */}
       </Container>
     </Jumbotron>
   );

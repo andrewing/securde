@@ -7,13 +7,13 @@ const UserLogin = ({selectedAccess, onClickShow}) => {
     <div className="custom-col">
       <div
         style={{
-          paddingTop: 40,
+          paddingTop: 10,
           marginLeft: 190,
           width: 350,
         }}
       >
         <h1>Login as {selectedAccess}</h1>
-        <Form style={{paddingTop: 30}}>
+        <Form style={{paddingTop: 10}}>
           <Form.Group controlId="email">
             <Form.Label>Email address</Form.Label>
             <Form.Control

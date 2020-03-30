@@ -1,6 +1,6 @@
 import React, {useState, Component} from 'react';
 import {Container, Col} from 'react-bootstrap';
-import LoginPage from './components/LandingPage';
+import LandingPage from './components/LandingPage';
 import Login from './components/Login';
 import './index.css';
 import SignUp from './components/SignUp';
@@ -29,14 +29,10 @@ const Page = () => {
 
   return (
     <>
-      <LoginPage onClickAccess={onClickAccess} />
+      <LandingPage onClickAccess={onClickAccess} />
 
       {!!selectedAccess && (
-        <Login
-          selectedAccess={selectedAccess}
-          showModal={showModal}
-          onClickShow={onClickShow}
-        />
+        <Login selectedAccess={selectedAccess} onClickShow={onClickShow} />
       )}
 
       <SignUp showModal={showModal} handleClose={handleClose} />
