@@ -75,6 +75,10 @@ bookInstanceSchema.statics.deleteBookInstance = bookInstanceID => {
   );
 };
 
-const BookInstance = mongoose.model('BookInstance', bookInstanceSchema);
+const BookInstance = mongoose.model(
+  'BookInstance',
+  bookInstanceSchema,
+  'bookinstances',
+);
 
 export default BookInstance;

@@ -23,16 +23,16 @@ const def = async (route, event, context, callback) => {
   if (event.httpMethod !== 'GET')
     throw new ResponseError(405, 'Method not allowed!');
 
+  const {q: bookId} = event.queryStringParameters;
+
   const {authorization} = event.headers;
   jwt.verify(
     authorization,
     SECRET,
-    {audience: AUDIENCE.USER},
+    {audience: [AUDIENCE.USER_TEACHER, AUDIENCE.USER_STUDENT]},
     async (err, decoded) => {
       if (err) jwtError(err);
-      const {id} = decoded.user;
-      const reviews = await Review.findReviewsByAccount(id);
-
+      const reviews = await Review.findReviewsByBook(bookId);
       callback(null, CODE(200, 'Successful in user reviews', {reviews}));
     },
   );

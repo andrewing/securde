@@ -60,6 +60,10 @@ libraryLogSchema.statics.logReturn = (logId, timeReturned) => {
   );
 };
 
-const LibraryLog = mongoose.model('LibraryLog', libraryLogSchema);
+const LibraryLog = mongoose.model(
+  'LibraryLog',
+  libraryLogSchema,
+  'librarylogs',
+);
 
 export default LibraryLog;

@@ -16,7 +16,10 @@ export const book = (route, event, context, callback) => {
     SECRET,
     {audience: [AUDIENCE.USER_STUDENT, AUDIENCE.USER_TEACHER]},
     (err, decoded) => {
-      if (err) throw jwtError(err);
+      if (err) {
+        callback(null, jwtError(err, decoded && decoded.user.username, ''));
+        return;
+      }
 
       callback(null, CODE(200, `Successfully retrieved book history`));
     },

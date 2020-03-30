@@ -21,20 +21,19 @@ reviewSchema.statics.addReview = (review, callback) => {
   return to(review.save().then(callback));
 };
 
-reviewSchema.statics.findReviewsByAccount = async accountId => {
+reviewSchema.statics.findReviewsByAccount = id => {
+  const accountId = mongoose.Types.ObjectId(id);
   return to(
     Review.find({
       accountId,
-    }).populate('bookId accountId'),
+    }),
   );
 };
 
 reviewSchema.statics.findReviewsByBook = async bookId => {
-  return to(
-    Review.find({
-      bookId,
-    }).populate('bookId accountId'),
-  );
+  return Review.find({
+    bookId,
+  }).populate('bookId accountId');
 };
 
 reviewSchema.statics.updateReview = async (reviewId, content) => {
@@ -70,6 +69,6 @@ reviewSchema.statics.deleteReviewByAccount = async accountId => {
   );
 };
 
-const Review = mongoose.model('Review', reviewSchema);
+const Review = mongoose.model('Review', reviewSchema, 'reviews');
 
 export default Review;
