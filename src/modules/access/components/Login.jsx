@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Container, Jumbotron, Button, Form, Row, Col} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-const UserLogin = ({selectedAccess}) => {
+const UserLogin = ({selectedAccess, onClickShow}) => {
   return (
     <div className="custom-col">
       <div
@@ -14,21 +14,37 @@ const UserLogin = ({selectedAccess}) => {
       >
         <h1>Login as {selectedAccess}</h1>
         <Form style={{paddingTop: 30}}>
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group controlId="email">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              autoComplete="off"
+            />
           </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
+          <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          <div style={{display: 'flex'}}>
-            <Button style={{backgroundColor: '#6C63FF'}} type="submit">
-              Log In
-            </Button>
+
             {selectedAccess !== 'Manager' && (
               <Button style={{color: '#6C63FF'}} variant="link">
+                Forgot Password?
+              </Button>
+            )}
+          </Form.Group>
+
+          <div style={{display: 'flex', paddingTop: 10}}>
+            <Button bsPrefix="primary-button" type="submit">
+              Log In
+            </Button>
+
+            {selectedAccess !== 'Manager' && (
+              <Button
+                style={{color: '#6C63FF'}}
+                variant="link"
+                onClick={onClickShow}
+              >
                 Sign Up
               </Button>
             )}
@@ -53,6 +69,7 @@ const UserLogin = ({selectedAccess}) => {
 
 UserLogin.propTypes = {
   selectedAccess: PropTypes.string,
+  onClickShow: PropTypes.func,
 };
 
 export default UserLogin;
