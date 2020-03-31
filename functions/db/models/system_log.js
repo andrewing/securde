@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import to from '../../util/to';
 
 const {Schema} = mongoose;
+const Account = require('./account');
 
 const systemLogSchema = new Schema({
   time: String,

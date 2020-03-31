@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import to from '../../util/to';
 
 const {Schema} = mongoose;
+const Book = require('./book_instance');
+const Account = require('./account');
 
 const libraryLogSchema = new Schema({
   timeBorrowed: String,
@@ -24,7 +26,7 @@ libraryLogSchema.statics.findLibraryLogsByBook = bookInstanceId => {
   return to(
     LibraryLog.find({
       bookInstanceId,
-    }),
+    }).populate('book account'),
   );
 };
 

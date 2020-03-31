@@ -3,15 +3,17 @@ import moment from 'moment';
 import to from '../../util/to';
 
 const {Schema} = mongoose;
+const Book = require('./book');
+const Account = require('./account');
 
 const reviewSchema = new Schema({
   time: String,
   content: String,
-  bookId: {
+  book: {
     type: Schema.Types.ObjectId,
     ref: 'Book',
   },
-  accountId: {
+  account: {
     type: Schema.Types.ObjectId,
     ref: 'Account',
   },
@@ -21,28 +23,19 @@ reviewSchema.statics.addReview = (review, callback) => {
   return to(review.save().then(callback));
 };
 
-// TODO: stanley
 reviewSchema.statics.findReviewsByAccount = id => {
-  const accountId = mongoose.Types.ObjectId(id);
   return to(
-    Review.find().populate({
-      path: 'accountId',
-      match: {
-        _id: accountId,
-      },
-    }),
+    Review.find({
+      account: id,
+    }).populate('book account'),
   );
 };
 
 reviewSchema.statics.findReviewsByBook = id => {
-  const bookId = mongoose.Types.ObjectId(id);
   return to(
-    Review.find().populate({
-      path: 'bookId',
-      match: {
-        _id: bookId,
-      },
-    }),
+    Review.find({
+      book: id,
+    }).populate('book account'),
   );
 };
 

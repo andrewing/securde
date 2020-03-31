@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import to from '../../util/to';
 
 const {Schema} = mongoose;
+const Book = require('./book');
 
 const bookInstanceSchema = new Schema({
   time: String,

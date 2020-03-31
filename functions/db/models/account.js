@@ -4,6 +4,7 @@ import {AUDIENCE} from '../../util/constants';
 import to from '../../util/to';
 
 const {Schema} = mongoose;
+const LibraryLog = require('./library_log');
 
 const validateEmail = email => {
   // eslint-disable-next-line no-useless-escape
@@ -48,7 +49,7 @@ accountSchema.statics.addAccount = (account, callback) => {
 };
 
 accountSchema.statics.findAllUsers = () => {
-  return to(Account.find().populate('librarylogs'));
+  return to(Account.find().populate('bookHistory'));
 };
 
 accountSchema.statics.findNonAdminUsers = () => {
@@ -63,7 +64,7 @@ accountSchema.statics.findUserByUsername = username => {
   return to(
     Account.findOne({
       username,
-    }),
+    }).populate('bookHistory'),
   );
 };
 
