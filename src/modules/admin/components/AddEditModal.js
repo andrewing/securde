@@ -13,7 +13,6 @@ const questions = [
 ];
 
 const AddEditModal = prop => {
-  console.log(prop.user)
   const [show, setShow] = useState(false);
 
   const onCreate = (value) => {
