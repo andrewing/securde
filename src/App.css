@@ -58,3 +58,16 @@
   line-height: 1.5;
   border-radius: 0.25rem;
 }
+
+.page-header {
+  height: 100px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #efefef;
+}
+
+.page-content {
+  display: block;
+  margin: auto;
+  width: 92%;
+}

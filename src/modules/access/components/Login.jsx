@@ -27,7 +27,7 @@ const UserLogin = ({
     if (selectedAccess === 'Admin') {
       setPath('/admin');
     } else if (selectedAccess === 'Manager') {
-      setPath('/manager');
+      setPath('/manager/manage-books');
     } else {
       setPath('/user');
     }

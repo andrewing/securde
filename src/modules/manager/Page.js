@@ -6,21 +6,12 @@ import Subpages from './pages';
 
 const Page = () => {
   const {url, path} = useRouteMatch();
+
   return (
     <>
       <BookManagerNav url={url} />
 
-      <Jumbotron fluid>
-        <Container>
-          <h1>Welcome Username!</h1>
-          <p>Manage books and book instances here!</p>
-        </Container>
-      </Jumbotron>
-
-      <Container>
-        <h1>Welcome Book Manager!</h1>
-        <Subpages path={path} />
-      </Container>
+      <Subpages path={path} />
     </>
   );
 };
