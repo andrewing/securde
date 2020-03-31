@@ -10,12 +10,6 @@ const bookSchema = new Schema({
   yearOfPublication: Number,
   ISBN: String,
   callNumber: String,
-  reviews: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Review',
-    },
-  ],
 });
 
 bookSchema.statics.addBook = (book, callback) => {
@@ -24,19 +18,17 @@ bookSchema.statics.addBook = (book, callback) => {
 
 bookSchema.statics.findAllBooks = async () => {
   return to(
-    Book.find({})
-      .populate('reviews')
-      .sort({
-        title: 1,
-      }),
+    Book.find({}).sort({
+      title: 1,
+    }),
   );
 };
 
-bookSchema.statics.findBookByID = async bookID => {
+bookSchema.statics.findBookByID = async bookId => {
   return to(
     Book.findOne({
-      _id: bookID,
-    }).populate('reviews'),
+      _id: bookId,
+    }),
   );
 };
 
@@ -44,7 +36,7 @@ bookSchema.statics.findBookByAuthor = async name => {
   return to(
     Book.find({
       author: name,
-    }).populate('reviews'),
+    }),
   );
 };
 
@@ -52,7 +44,7 @@ bookSchema.statics.findBookByTitle = async booktitle => {
   return to(
     Book.find({
       title: {$regex: `.*${booktitle}.*`},
-    }).populate('reviews'),
+    }),
   );
 };
 
@@ -69,7 +61,6 @@ bookSchema.statics.updateBook = async (bookID, book) => {
         yearOfPublication: book.yearOfPublication,
         ISBN: book.ISBN,
         callNumber: book.callNumber,
-        reviews: book.reviews,
       },
       {
         new: true,
@@ -86,6 +77,6 @@ bookSchema.statics.deleteBook = async bookID => {
   );
 };
 
-const Book = mongoose.model('books', bookSchema);
+const Book = mongoose.model('Book', bookSchema, 'books');
 
 export default Book;

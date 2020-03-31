@@ -29,6 +29,6 @@ systemLogSchema.statics.findLogsByAccount = async accountID => {
   );
 };
 
-const SystemLog = mongoose.model('systemlogs', systemLogSchema);
+const SystemLog = mongoose.model('SystemLog', systemLogSchema, 'systemlogs');
 
 export default SystemLog;

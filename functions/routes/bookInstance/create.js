@@ -4,6 +4,7 @@ import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
+import BookInstance from '../../db/models/book_instance';
 
 export const create = async (route, event, context, callback) => {
   if (event.httpMethod !== 'POST') {
@@ -11,6 +12,7 @@ export const create = async (route, event, context, callback) => {
     return;
   }
   const data = JSON.parse(event.body);
+  const {bookId} = data;
   const {authorization} = event.headers;
 
   jwt.verify(
@@ -29,7 +31,20 @@ export const create = async (route, event, context, callback) => {
         );
         return;
       }
-      callback(null, CODE(200, 'Successfully created book instance'));
+
+      BookInstance.addBookInstance(
+        new BookInstance({
+          bookId,
+          isReserved: false,
+        }),
+      )
+        .then(() => {
+          callback(null, CODE(200, 'Successfully created book instance'));
+        })
+        .catch(bookInstanceErr => {
+          const {code, message} = bookInstanceErr;
+          callback(null, CODE(code || 500, message));
+        });
     },
   );
 };

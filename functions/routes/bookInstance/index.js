@@ -5,6 +5,7 @@ import {create} from './create';
 import {edit} from './edit';
 import {remove} from './remove';
 import {borrow} from './borrow';
+import {ret} from './return';
 import ResponseError from '../../util/error';
 import {SECRET, jwtError} from '../../util/jwt';
 import {AUDIENCE} from '../../util/constants';
@@ -19,6 +20,7 @@ export const bookInstance = (route, ...rest) => {
         [edit, '/edit'],
         [remove, '/remove'],
         [borrow, '/borrow'],
+        [ret, '/return'],
         [def, '/'],
       ],
       ...rest,

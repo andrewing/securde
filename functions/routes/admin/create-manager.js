@@ -3,7 +3,7 @@ import moment from 'moment';
 import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
-import Account from '../../db/models/user';
+import Account from '../../db/models/account';
 import {AUDIENCE} from '../../util/constants';
 import SystemLog from '../../db/models/system_log';
 
@@ -21,7 +21,10 @@ export const createManager = (route, event, context, callback) => {
     {audience: AUDIENCE.ADMIN},
     (err, decoded) => {
       if (err) {
-        callback(null, jwtError(err, decoded && decoded.user.username, ''));
+        callback(
+          null,
+          jwtError(err, decoded && decoded.user.username, 'CREATE MANAGER'),
+        );
         return;
       }
       const {user} = decoded;
@@ -30,7 +33,7 @@ export const createManager = (route, event, context, callback) => {
         type: AUDIENCE.BOOK_MANAGER,
       };
       Account.findUserByUsername(body.username)
-        .then(found => {
+        .then(({data: found}) => {
           if (found) throw new ResponseError(409, 'Username already exists');
           Account.addAccount(
             new Account({...body}),

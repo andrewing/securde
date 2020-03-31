@@ -12,7 +12,7 @@ const bookInstanceSchema = new Schema({
   isAvailable: Boolean,
 });
 
-bookInstanceSchema.statics.addBookIntance = (bookInstance, callback) => {
+bookInstanceSchema.statics.addBookInstance = (bookInstance, callback) => {
   return to(bookInstance.save().then(callback));
 };
 
@@ -28,7 +28,7 @@ bookInstanceSchema.statics.findAllBookInstances = async () => {
   return to(BookInstance.find().populate('book'));
 };
 
-bookInstanceSchema.statics.findAllAvailable = async () => {
+bookInstanceSchema.statics.findAllAvailable = () => {
   return to(
     BookInstance.find({
       isAvailable: true,
@@ -36,7 +36,7 @@ bookInstanceSchema.statics.findAllAvailable = async () => {
   );
 };
 
-bookInstanceSchema.statics.findAllReserved = async () => {
+bookInstanceSchema.statics.findAllReserved = () => {
   return to(
     BookInstance.find({
       isAvailable: false,
@@ -44,17 +44,14 @@ bookInstanceSchema.statics.findAllReserved = async () => {
   );
 };
 
-bookInstanceSchema.statics.updateBookInstance = async (
-  bookInstanceID,
-  book,
-) => {
+bookInstanceSchema.statics.borrowBookInstance = bookInstanceID => {
   return to(
     BookInstance.updateOne(
       {
         _id: bookInstanceID,
       },
       {
-        status: book.status,
+        isReserved: true,
       },
       {
         new: true,
@@ -63,7 +60,23 @@ bookInstanceSchema.statics.updateBookInstance = async (
   );
 };
 
-bookInstanceSchema.statics.deleteBookInstance = async bookInstanceID => {
+bookInstanceSchema.statics.returnBookInstance = bookInstanceID => {
+  return to(
+    BookInstance.updateOne(
+      {
+        _id: bookInstanceID,
+      },
+      {
+        isReserved: false,
+      },
+      {
+        new: true,
+      },
+    ),
+  );
+};
+
+bookInstanceSchema.statics.deleteBookInstance = bookInstanceID => {
   return to(
     BookInstance.deleteOne({
       _id: bookInstanceID,
@@ -71,6 +84,10 @@ bookInstanceSchema.statics.deleteBookInstance = async bookInstanceID => {
   );
 };
 
-const BookInstance = mongoose.model('bookinstances', bookInstanceSchema);
+const BookInstance = mongoose.model(
+  'BookInstance',
+  bookInstanceSchema,
+  'bookinstances',
+);
 
 export default BookInstance;

@@ -74,13 +74,20 @@
 //   }),
 // };
 
-export const CODE = (statusCode, message = null, data = {}) => {
+export const CODE = (
+  statusCode,
+  message = null,
+  data = {},
+  isSuccess = null,
+) => {
   if (!message) message = TYPES[statusCode.toString().charAt(0)];
-
+  if (isSuccess === null && statusCode.toString().charAt(0) === '2')
+    isSuccess = true;
   return {
     statusCode,
     body: JSON.stringify({
       message,
+      isSuccess: !!isSuccess,
       data,
     }),
   };

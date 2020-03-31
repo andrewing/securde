@@ -3,7 +3,7 @@ import moment from 'moment';
 import {CODE} from '../../util/code';
 import {SECRET} from '../../util/jwt';
 import ResponseError from '../../util/error';
-import Account from '../../db/models/user';
+import Account from '../../db/models/account';
 import {AUDIENCE} from '../../util/constants';
 import db from '../../db/db';
 import SystemLog from '../../db/models/system_log';
