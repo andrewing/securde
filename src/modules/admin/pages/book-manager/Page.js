@@ -1,5 +1,5 @@
-import React from 'react';
-import {Button, Container, Table} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Button, Table } from 'antd'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
 import AddEditModal from '../../components/AddEditModal';
@@ -14,7 +14,7 @@ const data = [
     password: '',
     email: 'bookmanager@email.com',
     idNumber: '12312312',
-    question: '',
+    question: 'In what city did you have your first ever birthday party?',
     answer: '',
     userType: 'BOOK_MANAGER',
     bookHistory: [],
@@ -278,69 +278,90 @@ const data = [
   },
 ];
 
-const Page = () => {
-  const handleAdd = account => {
+export default class Page extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      selectedRow: {}
+    }
+
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleSelectedRow = this.handleSelectedRow.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+
+    this.columns = [
+      {
+        title: 'ID Number',
+        dataIndex: 'idNumber',
+        key: 'idNumber',
+      },
+      {
+        title: 'First Name',
+        dataIndex: 'firstname',
+        key: 'firstname',
+      },
+      {
+        title: 'Last Name',
+        dataIndex: 'lastname',
+        key: 'lastname',
+      },
+      {
+        title: 'Username',
+        dataIndex: 'username',
+        key: 'username'
+      },
+      {
+        title: 'Email Address',
+        dataIndex: 'email',
+        key: 'email'
+      },
+      {
+        title: 'Action',
+        key: 'action',
+        render: (record) => (
+          <div className='button-wrapper-table'>
+            <AddEditModal command="Edit" user={record} handleUpdate={this.handleUpdate} />
+            <DeleteModal user={record} handleDelete={this.handleDelete} />
+          </div>
+        )
+      }
+    ]
+  }
+
+  handleAdd = account => {
     // call to back end and pass the account to add
   };
 
-  const handleUpdate = account => {
+  handleUpdate = account => {
     // call to back end and pass the account to update
   };
 
-  const handleDelete = accountID => {
+  handleDelete = accountID => {
     // call to back end passing the accountID to delete
   };
 
-  const bookManagerList = () => {
-    // back end call to get all book managers
+  handleSelectedRow = (object, index) => {
+    this.setState({
+      selectedRow: data[index]
+    })
+  }
 
-    return data.map((value, index) => {
-      return (
-        <tr key={value._id}>
-          <td className="table-cell">{value.idNumber}</td>
-          <td className="table-cell">{value.firstname}</td>
-          <td className="table-cell">{value.lastname}</td>
-          <td className="table-cell">{value.username}</td>
-          <td className="table-cell">{value.email}</td>
-          <td className="table-cell">
-            <div>
-              <AddEditModal
-                command="Edit"
-                user={value}
-                handleUpdate={handleUpdate}
-              />
-              <DeleteModal user={value} handleDelete={handleDelete} />
-            </div>
-          </td>
-        </tr>
-      );
-    });
-  };
-
-  return (
-    <>
-      <div className="header-wrapper">
-        <h2>Book Managers</h2>
-        <AddEditModal command="Add" handleAdd={handleAdd} />
-      </div>
-
-      <Container className="table-wrapper">
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th className="table-cell">ID Number</th>
-              <th className="table-cell">First Name</th>
-              <th className="table-cell">Last Name</th>
-              <th className="table-cell">Username</th>
-              <th className="table-cell">Email Address</th>
-              <th className="table-cell">Action</th>
-            </tr>
-          </thead>
-          <tbody>{bookManagerList()}</tbody>
-        </Table>
-      </Container>
-    </>
-  );
+  render() {
+    return (
+      <>
+        <div className="header-wrapper">
+          <h2>Book Managers</h2>
+          <AddEditModal command="Add" handleAdd={this.handleAdd} />
+        </div>
+  
+        <Table 
+          columns={this.columns} 
+          dataSource={data} 
+          bordered 
+          pagination={{ position: ['bottomCenter', 'bottomCenter'] }} />
+        
+      </>
+    );
+  }
 };
-
-export default Page;

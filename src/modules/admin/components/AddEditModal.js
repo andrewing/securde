@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {Button, Form, Modal} from 'react-bootstrap';
+import { Button, Col, Form, Modal, Row } from 'antd'
+import InputField from '../components/InputField'
+import SelectField from '../components/SelectField'
 
 const questions = [
   'In what city did you have your first ever birthday party?',
@@ -11,249 +13,123 @@ const questions = [
 ];
 
 const AddEditModal = prop => {
+  console.log(prop.user)
   const [show, setShow] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [validated, setValidated] = useState(false);
 
-  /**
-   * States for elements inside the form
-   */
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [idNumber, setIDNumber] = useState('');
-  const [selectedQuestion, setSelectedQuestion] = useState(questions[0]);
-  const [answer, setAnswer] = useState('');
-
+  const onCreate = (value) => {
+    if(prop.command === 'Add') {
+      prop.handleAdd({
+        username: value.username,
+        password: value.password,
+        firstname: value.firstname,
+        lastname: value.lastname,
+        email: value.email,
+        idNumber: value.idNumber,
+        question: value.question,
+        answer: value.answer,
+        bookHistory: [],
+      });
+    } else if(prop.command === 'Edit') {
+      const user = {...prop.user};
+        user.firstname = value.firstname;
+        user.lastname = value.lastname;
+        user.password = value.password;
+        user.email = value.email;
+        user.idNumber = value.idNumber;
+        user.question = value.question;
+        user.answer = value.answer;
+        prop.handleUpdate(user);
+    }
+    setShow(false);
+  }
+  
   /**
    * This function handles closing the modal and resetting the form.
    */
-  const handleClose = () => {
-    setShow(false);
-    setValidated(false);
-  };
+  const handleClose = () => setShow(false);
 
   /**
    * This function handles showing the modal.
    */
   const handleShow = () => setShow(true);
 
-  /**
-   * This function handles submission of form.
-   * @param { event } event - onSubmit event
-   */
-  const handleSubmit = event => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === true) {
-      if (prop.command === 'Add') {
-        prop.handleAdd({
-          firstname,
-          lastname,
-          username,
-          password,
-          email,
-          idNumber,
-          question: selectedQuestion,
-          answer,
-          bookHistory: [],
-        });
-      } else if (prop.command === 'Edit') {
-        const user = {...prop.user};
-        user.firstname = firstname;
-        user.lastname = lastname;
-        user.password = password;
-        user.email = email;
-        user.idNumber = idNumber;
-        user.question = selectedQuestion;
-        user.answer = answer;
-        prop.handleUpdate(user);
-      }
-      handleClose();
-    }
-    event.preventDefault();
-    event.stopPropagation();
-
-    setValidated(true);
-  };
-
-  useEffect(() => {
-    if (prop.command === 'Edit' && !edit) {
-      setFirstName(prop.user.firstname);
-      setLastName(prop.user.lastname);
-      setUsername(prop.user.username);
-      setIDNumber(prop.user.idNumber);
-      setEmail(prop.user.email);
-      setSelectedQuestion(prop.user.question);
-      setAnswer(prop.user.answer);
-      setEdit(true);
-    }
-  });
+  const AddEditForm = ({ visible, onCreate, onCancel }) => {
+    const [form] = Form.useForm();
+    return (
+      <Modal
+        visible={visible}
+        title={prop.command === 'Add' ? 'New Book Manager' : 'Edit Book Manager'}
+        okText={prop.command === 'Add' ? 'Create' : 'Save'}
+        cancelText="Cancel"
+        onCancel={onCancel}
+        onOk={() => {
+          form
+            .validateFields()
+            .then(values => {
+              form.resetFields();
+              onCreate(values);
+            })
+            .catch(info => {
+              console.log('Validate Failed:', info);
+            });
+        }}
+      >
+        <Form
+          form={form}
+          layout="vertical"
+          initialValues={{
+            modifier: 'public',
+          }}
+        >
+          <Row gutter={10}>
+            <Col span={12}>
+              <InputField name='firstname' message='Please input a valid name' placeholder='First Name' value={prop.command === 'Edit' ? prop.user.firstname : ""} />
+            </Col>
+            <Col span={12}>
+              <InputField name='lastname' message='Please input a valid name' placeholder='Last Name' value={prop.command === 'Edit' ? prop.user.lastname : ""} />
+            </Col>
+          </Row>
+          <Row gutter={10}>
+            <Col span={12}>
+              <InputField name='idNumber' message='Please input a valid ID Number' placeholder='ID Number' value={prop.command === 'Edit' ? prop.user.idNumber : ""} />
+            </Col>
+            <Col span={12}>
+              <InputField name='email' message='Please input a valid email' placeholder='Email Address' value={prop.command === 'Edit' ? prop.user.email : ""} />
+            </Col>
+          </Row>
+          <Row gutter={10}>
+            <Col span={12}>
+              <InputField name='username' message='Please input a valid username' placeholder='Username' value={prop.command === 'Edit' ? prop.user.username : ""} />
+            </Col>
+            <Col span={12}>
+              <InputField name='password' message='Password should be at least 8 characters' placeholder='Password' value="" />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              <SelectField name='question' data={questions} message='This field is required' placeholder='Choose a security question' value={prop.command === 'Edit' ? prop.user.question : ""} />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              <InputField name='answer' message='This field is required' placeholder='Answer' value={prop.command === 'Edit' ? prop.user.answer : ""} />
+            </Col>
+          </Row>
+        </Form>
+      </Modal>
+    )
+  }
 
   return (
     <>
-      {prop.command === 'Add' ? (
-        <Button variant="primary" onClick={handleShow} className="add-button">
-          Add
-        </Button>
-      ) : (
-        <Button variant="primary" onClick={handleShow} className="button-table">
-          Edit
-        </Button>
-      )}
+      {prop.command === 'Add' ? 
+        <Button type='primary' onClick={handleShow} className='add-button'>Add</Button>
+      : <Button type='primary' onClick={handleShow} className='button-table'>Edit</Button>}
 
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          {prop.command === 'Add' ? (
-            <Modal.Title>Add Book Manager</Modal.Title>
-          ) : (
-            <Modal.Title>Edit Book Manager</Modal.Title>
-          )}
-        </Modal.Header>
-        <Modal.Body>
-          <Form
-            className="form"
-            noValidate
-            validated={validated}
-            onSubmit={handleSubmit}
-          >
-            <Form.Group>
-              <Form.Control
-                required
-                type="text"
-                placeholder="First Name"
-                className="field"
-                value={firstname}
-                onChange={event => setFirstName(event.target.value)}
-              />
-              <Modal.Footer className="divider" />
-              <Form.Control.Feedback type="invalid">
-                Please input a valid name
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Last Name"
-                className="field"
-                value={lastname}
-                onChange={event => setLastName(event.target.value)}
-              />
-              <Modal.Footer className="divider" />
-              <Form.Control.Feedback type="invalid">
-                Please input a valid name
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                required
-                type="text"
-                placeholder="ID Number"
-                className="field"
-                value={idNumber}
-                onChange={event => setIDNumber(event.target.value)}
-              />
-              <Modal.Footer className="divider" />
-              <Form.Control.Feedback type="invalid">
-                Please input a valid ID number
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                required
-                type="email"
-                placeholder="Email Address"
-                className="field"
-                value={email}
-                onChange={event => setEmail(event.target.value)}
-              />
-              <Modal.Footer className="divider" />
-              <Form.Control.Feedback type="invalid">
-                Please input a valid email address
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Username"
-                className="field"
-                value={username}
-                onChange={event => setUsername(event.target.value)}
-              />
-              <Modal.Footer className="divider" />
-              <Form.Control.Feedback type="invalid">
-                Please input a valid username
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                required
-                type="password"
-                placeholder="Password"
-                className="field"
-                value={password}
-                onChange={event => setPassword(event.target.value)}
-              />
-              <Modal.Footer className="divider" />
-              <Form.Control.Feedback type="invalid">
-                Password should be at least 8 characters
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                required
-                as="select"
-                placeholder="Security Question"
-                value={selectedQuestion}
-                onChange={event => setSelectedQuestion(event.target.value)}
-                className="field"
-              >
-                {questions.map((value, index) => {
-                  return (
-                    <option key={value} value={value}>
-                      {value}
-                    </option>
-                  );
-                })}
-              </Form.Control>
-              <Modal.Footer className="divider" />
-              <Form.Control.Feedback type="invalid">
-                This field is required
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                required
-                type="text"
-                value={answer}
-                onChange={event => setAnswer(event.target.value)}
-                placeholder="Answer"
-                className="field"
-              />
-              <Modal.Footer className="divider" />
-              <Form.Control.Feedback type="invalid">
-                This field is required
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <div className="button-wrapper">
-              <Button variant="primary" type="submit" className="button">
-                {prop.command === 'Add' ? 'Add' : 'Save Changes'}
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={handleClose}
-                className="button"
-              >
-                Cancel
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      <AddEditForm 
+        visible={show}
+        onCreate={onCreate}
+        onCancel={handleClose}  />
     </>
   );
 };

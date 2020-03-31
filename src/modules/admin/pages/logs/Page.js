@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Table} from 'react-bootstrap';
+import { Table } from 'antd'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
 import moment from 'moment';
@@ -154,33 +154,35 @@ const data = [
 const logList = () => {
   // back end call
 
-  return data.map((value, index) => {
-    return (
-      <tr key={value._id}>
-        <td className="table-cell">
-          {moment(value.time).format('YYYY-MM-DD HH:mm')}
-        </td>
-        <td className="table-cell">{value.content}</td>
-      </tr>
-    );
-  });
+  
 };
 
 const Page = () => {
+  const columns = [
+    {
+      title: 'Date/Time',
+      dataIndex: 'time',
+      key: 'time',
+      render: time => <span>{moment(time).format('YYYY-MM-DD HH:mm')}</span>
+    },
+    {
+      title: 'Action',
+      dataIndex: 'action',
+      key: 'action',
+    },
+    {
+      title: 'Logs',
+      dataIndex: 'content',
+      key: 'content',
+    }
+  ]
   return (
     <>
-      <h2>Activity Logs</h2>
-      <Container className="table-wrapper">
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th className="table-cell">Time</th>
-              <th className="table-cell">Logs</th>
-            </tr>
-          </thead>
-          <tbody>{logList()}</tbody>
-        </Table>
-      </Container>
+      <Table 
+        columns={columns} 
+        dataSource={data} 
+        bordered 
+        pagination={{ position: ['bottomCenter', 'bottomCenter'] }} />
     </>
   );
 };
