@@ -3,33 +3,37 @@ import React, {useState} from 'react';
 import {Form, Input, Modal, Row, Select, Divider} from 'antd';
 import {Button} from 'react-bootstrap';
 
-const ForgotPassword = ({showModal, handleClose, form}) => {
-  const {getFieldDecorator} = form;
+const ForgotPassword = ({showModal, handleClose}) => {
+  const [form] = Form.useForm();
   const {Option} = Select;
 
   const [disableReset, setDisableReset] = useState(false);
 
   const onSubmit = event => {
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
+    form
+      .validateFields()
+      .then(values => {
+        values = {
+          password: values.password,
+          question: values.question,
+          answer: values.answer,
+        };
 
-      values = {
-        password: values.password,
-        question: values.question,
-        answer: values.answer,
-      };
+        console.log(values);
 
-      form.resetFields();
-      handleClose();
-    });
+        form.resetFields();
+        handleClose();
+      })
+      .catch(info => {
+        console.log('Validate Failed:', info);
+      });
   };
 
-  const matchPassword = (rule, value, callback) => {
-    if (value.length && form.getFieldValue('password') !== value) {
-      callback('Password do not match.');
-    } else callback();
+  const matchPassword = (rule, value) => {
+    if (!value && form.getFieldValue('password') !== value) {
+      return Promise.reject('Password do not match.');
+    }
+    return Promise.resolve();
   };
 
   const questions = [
@@ -54,56 +58,55 @@ const ForgotPassword = ({showModal, handleClose, form}) => {
         handleClose();
       }}
     >
-      <Form size="small">
+      <Form form={form} initialValues={{question: questions[0]}}>
         <div style={{textAlign: 'center', padding: 10}}>
           <h4 style={{margin: 0}}>
             Step 1 : Answer the security question you chose during sign up.
           </h4>
         </div>
         <Row type="flex">
-          <Form.Item style={{margin: '5px 10px'}}>
-            {getFieldDecorator('question', {
-              initialValue: questions[0],
-              rules: [
-                {
-                  required: true,
-                  message: 'Please choose a security question',
-                },
-              ],
-            })(
-              <Select
-                placholder="Choose a security question"
-                style={{fontSize: 11, width: 280}}
-              >
-                {questions.map((item, i) => (
-                  <Option
-                    style={{fontSize: 10}}
-                    key={i}
-                    title={item}
-                    value={item}
-                  >
-                    {item}
-                  </Option>
-                ))}
-              </Select>,
-            )}
+          <Form.Item
+            style={{margin: '5px 10px'}}
+            name="question"
+            rules={[
+              {
+                required: true,
+                message: 'Please choose a security question',
+              },
+            ]}
+          >
+            <Select
+              placholder="Choose a security question"
+              style={{fontSize: 12, width: 280}}
+            >
+              {questions.map((item, i) => (
+                <Option
+                  style={{fontSize: 11}}
+                  key={i}
+                  title={item}
+                  value={item}
+                >
+                  {item}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
 
-          <Form.Item style={{margin: '5px 10px'}}>
-            {getFieldDecorator('answer', {
-              rules: [
-                {
-                  required: true,
-                  message: 'This field is required.',
-                },
-              ],
-            })(
-              <Input
-                style={{fontSize: 11, padding: '3px 10px', width: 280}}
-                autoComplete="off"
-                placeholder="Answer"
-              />,
-            )}
+          <Form.Item
+            style={{margin: '5px 10px'}}
+            name="answer"
+            rules={[
+              {
+                required: true,
+                message: 'This field is required.',
+              },
+            ]}
+          >
+            <Input
+              style={{fontSize: 13, padding: '3px 10px', width: 280}}
+              autoComplete="off"
+              placeholder="Answer"
+            />
           </Form.Item>
         </Row>
 
@@ -113,48 +116,48 @@ const ForgotPassword = ({showModal, handleClose, form}) => {
           <h4 style={{margin: 0}}>Step 2 : Reset Your Password</h4>
         </div>
         <Row type="flex">
-          <Form.Item style={{margin: '5px 10px'}}>
-            {getFieldDecorator('password', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input your password',
-                },
-                {
-                  min: 8,
-                  message: 'It should be at least 8 characters',
-                },
-              ],
-            })(
-              <Input
-                style={{fontSize: 11, padding: '3px 10px', width: 280}}
-                autoComplete="off"
-                type="password"
-                placeholder="New Password"
-                minLength={8}
-                disabled={disableReset}
-              />,
-            )}
+          <Form.Item
+            style={{margin: '5px 10px'}}
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your password',
+              },
+              {
+                min: 8,
+                message: 'It should be at least 8 characters',
+              },
+            ]}
+          >
+            <Input
+              style={{fontSize: 13, padding: '3px 10px', width: 280}}
+              autoComplete="off"
+              type="password"
+              placeholder="New Password"
+              minLength={8}
+              disabled={disableReset}
+            />
           </Form.Item>
 
-          <Form.Item style={{margin: '5px 10px'}}>
-            {getFieldDecorator('confirm', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please confirm your password',
-                },
-                {validator: matchPassword},
-              ],
-            })(
-              <Input
-                style={{fontSize: 11, padding: '3px 10px', width: 280}}
-                autoComplete="off"
-                type="password"
-                placeholder="Confirm Password"
-                disabled={disableReset}
-              />,
-            )}
+          <Form.Item
+            style={{margin: '5px 10px'}}
+            name="confirm"
+            rules={[
+              {
+                required: true,
+                message: 'Please confirm your password',
+              },
+              {validator: matchPassword},
+            ]}
+          >
+            <Input
+              style={{fontSize: 13, padding: '3px 10px', width: 280}}
+              autoComplete="off"
+              type="password"
+              placeholder="Confirm Password"
+              disabled={disableReset}
+            />
           </Form.Item>
         </Row>
       </Form>
@@ -184,4 +187,4 @@ const ForgotPassword = ({showModal, handleClose, form}) => {
   );
 };
 
-export default Form.create()(ForgotPassword);
+export default ForgotPassword;

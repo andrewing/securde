@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Icon, Tooltip} from 'antd';
+import {Row, Tooltip} from 'antd';
 
 const bookColumns = props => [
   {
@@ -24,7 +24,7 @@ const bookColumns = props => [
     render: () => {
       return (
         <Row>
-          <Tooltip title="View Book">
+          {/* <Tooltip title="View Book">
             <Icon style={{color: '#6c63ff'}} type="eye" />
           </Tooltip>
           <Tooltip title="Edit Book">
@@ -32,7 +32,7 @@ const bookColumns = props => [
           </Tooltip>
           <Tooltip title="Delete Book">
             <Icon style={{color: '#6c63ff'}} type="delete" />
-          </Tooltip>
+          </Tooltip> */}
         </Row>
       );
     },

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Icon, Tooltip} from 'antd';
+import {Row, Tooltip} from 'antd';
 
 const bookColumns = ({editBook, deleteBook}) => [
   {
@@ -46,25 +46,25 @@ const bookColumns = ({editBook, deleteBook}) => [
   },
   {
     title: 'Actions',
-    render: () => {
-      return (
-        <Row type="flex" justify="space-between">
-          <Tooltip title="View Book">
-            <Icon style={{color: '#6c63ff'}} type="eye" />
-          </Tooltip>
-          <Tooltip title="Edit Book">
-            <Icon style={{color: '#6c63ff'}} type="edit" onClick={editBook} />
-          </Tooltip>
-          <Tooltip title="Delete Book">
-            <Icon
-              style={{color: '#fc6681'}}
-              type="delete"
-              onClick={deleteBook}
-            />
-          </Tooltip>
-        </Row>
-      );
-    },
+    // render: () => {
+    //   return (
+    // <Row type="flex" justify="space-between">
+    //   <Tooltip title="View Book">
+    //     <Icon style={{color: '#6c63ff'}} type="eye" />
+    //   </Tooltip>
+    //   <Tooltip title="Edit Book">
+    //     <Icon style={{color: '#6c63ff'}} type="edit" onClick={editBook} />
+    //   </Tooltip>
+    //   <Tooltip title="Delete Book">
+    //     <Icon
+    //       style={{color: '#fc6681'}}
+    //       type="delete"
+    //       onClick={deleteBook}
+    //     />
+    //   </Tooltip>
+    // </Row>
+    //   );
+    // },
   },
 ];
 

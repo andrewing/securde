@@ -3,24 +3,23 @@ import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import {Form, Input} from 'antd';
 
-const UserLogin = ({
-  selectedAccess,
-  onClickShowSignUp,
-  onClickShowForgot,
-  form,
-}) => {
-  const {getFieldDecorator} = form;
+const UserLogin = ({selectedAccess, onClickShowSignUp, onClickShowForgot}) => {
+  const [form] = Form.useForm();
   const [path, setPath] = useState('');
 
   useEffect(() => loginPath());
 
   const onClickLogin = () => {
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      console.log(values);
-    });
+    form
+      .validateFields()
+      .then(values => {
+        console.log(values);
+
+        form.resetFields();
+      })
+      .catch(info => {
+        console.log('Validate Failed:', info);
+      });
   };
 
   const loginPath = () => {
@@ -43,44 +42,26 @@ const UserLogin = ({
         }}
       >
         <h1>Login as {selectedAccess}</h1>
-        <Form>
+        <Form form={form}>
           <span>Username</span>
-          <Form.Item style={{margin: 0}}>
-            {getFieldDecorator('username', {
-              rules: [
-                {
-                  required: true,
-                  // message: '',
-                },
-              ],
-            })(
-              <Input
-                style={{fontSize: 11}}
-                autoComplete="off"
-                placeholder="Your Username"
-              />,
-            )}
+          <Form.Item style={{margin: 0}} name="username">
+            <Input
+              style={{fontSize: 13}}
+              autoComplete="off"
+              placeholder="Your Username"
+            />
           </Form.Item>
 
           <br />
 
           <span>Password</span>
-          <Form.Item style={{margin: 0}}>
-            {getFieldDecorator('password', {
-              rules: [
-                {
-                  required: true,
-                  // message: '',
-                },
-              ],
-            })(
-              <Input
-                style={{fontSize: 11}}
-                autoComplete="off"
-                type="password"
-                placeholder="Your Password"
-              />,
-            )}
+          <Form.Item style={{margin: 0}} name="password">
+            <Input
+              style={{fontSize: 13}}
+              autoComplete="off"
+              type="password"
+              placeholder="Your Password"
+            />
           </Form.Item>
 
           {selectedAccess !== 'Manager' && (
@@ -132,4 +113,4 @@ const UserLogin = ({
   );
 };
 
-export default Form.create()(UserLogin);
+export default UserLogin;
