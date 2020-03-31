@@ -1,13 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Form, Select } from 'antd';
 const { Option } = Select;
 
 const SelectField = (prop) => {
-
-  const onChange = (value) => {
-    
-  }
 
   return (
     <Form.Item
@@ -22,8 +18,6 @@ const SelectField = (prop) => {
         <Select
           className='select-field'
           placeholder={prop.placeholder}
-          onChange={onChange}
-          defaultValue={prop.value}
         >
           {prop.data.map((value) => (
             <Option key={value} value={value}>{value}</Option>

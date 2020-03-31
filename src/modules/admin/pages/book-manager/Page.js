@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Table } from 'antd'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../index.css';
 import AddEditModal from '../../components/AddEditModal';
 import DeleteModal from '../../components/DeleteModal';
 

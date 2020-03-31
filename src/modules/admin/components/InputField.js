@@ -14,7 +14,7 @@ const InputField = (prop) => {
       ]}
       >
         {prop.name !== 'password' ? 
-          <Input placeholder={prop.placeholder} className='field' defaultValue={prop.value} value={prop.value}/>
+          <Input placeholder={prop.placeholder} className='field' />
         : <Input.Password placeholder={prop.placeholder} className='field' />}
     </Form.Item>
   )
@@ -24,7 +24,6 @@ InputField.propType = {
   name: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
 }
 
 export default InputField;

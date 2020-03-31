@@ -1,7 +1,6 @@
 import React from 'react';
 import { Table } from 'antd'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../index.css';
 import moment from 'moment';
 
 const data = [
@@ -151,12 +150,6 @@ const data = [
   },
 ];
 
-const logList = () => {
-  // back end call
-
-  
-};
-
 const Page = () => {
   const columns = [
     {
@@ -178,6 +171,7 @@ const Page = () => {
   ]
   return (
     <>
+      <h2 className='header-wrapper'>System Logs</h2>
       <Table 
         columns={columns} 
         dataSource={data} 

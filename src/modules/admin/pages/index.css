@@ -5,6 +5,12 @@
 .ant-table-cell {
   text-align: center;
 }
+.container {
+  margin-top: 30px;
+}
+.logout {
+  filter: brightness(0) invert(1);
+}
 
 /* SCROLLBAR */
 /* width */
@@ -40,6 +46,10 @@
 }
 .add-button {
   width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
   margin-left: auto;
 }
 .field {
@@ -51,7 +61,12 @@
 .button-table {
   margin-left: 5px;
   margin-right: 5px;
+  border-radius: 5px;
   text-align: center;
   width: 75px;
 }
+.delete-header {
+  font-weight: bold;
+}
+
 /* SYSTEM LOGS */

@@ -1,20 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button } from 'antd';
+import { Button, Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const { confirm } = Modal;
 
 const DeleteModal = prop => {
-  
+
   /**
    * This function handles showing the modal.
    */
   const handleShow = () => {
     confirm({
-      title: 'Do you want to delete these items?',
+      title: 'Do you want to delete the following user?',
       icon: <ExclamationCircleOutlined />,
-      content: 'Some descriptions',
+      centered: true,
       okType: 'danger',
       onOk() {
         handleDelete()

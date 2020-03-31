@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const AdminPageNavbar = ({url}) => (
   <>
     <Navbar expand="lg" bg="dark" variant="dark" style={{height: '60px'}}>
-      <NavLink to={`${url}`}>
+      <NavLink to={`${url}/home`}>
         <Navbar.Brand>
           <img alt="" src="/book.png" width="20" height="20" />
         </Navbar.Brand>
@@ -28,6 +28,11 @@ const AdminPageNavbar = ({url}) => (
           View Logs
         </NavLink>
       </Nav>
+      <NavLink to={'/'}>
+        <Navbar.Brand>
+          <img alt="" src="/logout.png" width="20" height="20" className='logout' />
+        </Navbar.Brand>
+      </NavLink>
     </Navbar>
   </>
 );

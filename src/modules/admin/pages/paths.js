@@ -1,8 +1,14 @@
 import ViewLogs from './logs';
 import BookManager from './book-manager';
+import Home from './home';
 import PageNotFound from '../../../common/main-pages/PageNotFound';
 
 const subpages = [
+  {
+    key: '/home',
+    path: '/home',
+    component: Home,
+  },
   {
     key: '/view-logs',
     path: '/view-logs',
