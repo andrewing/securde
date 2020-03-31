@@ -23,6 +23,7 @@
     "no-param-reassign": "off",
     "import/prefer-default-export": "off",
     "no-underscore-dangle": "off",
+    "no-unused-expressions": "off",
     "import/no-named-as-default-member": "off",
     "import/no-named-as-default": "off",
     "react/require-default-props": "off",

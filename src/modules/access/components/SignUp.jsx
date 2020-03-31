@@ -1,106 +1,264 @@
-import React, {useState} from 'react';
-import PropTypes from 'prop-types';
-import {Form, Input, Modal} from 'antd';
+/* eslint-disable react/no-array-index-key */
+import React from 'react';
+import {Form, Input, Modal, Row, Select, notification, Icon} from 'antd';
 import {Button} from 'react-bootstrap';
 
 const SignUpForm = ({showModal, handleClose, form}) => {
   const {getFieldDecorator} = form;
+  const {Option} = Select;
 
   const onSubmit = event => {
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
-    // setValidated(true);
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+
+      values = {
+        username: values.username,
+        password: values.password,
+        firstname: values.firstname,
+        lastname: values.lastname,
+        email: values.email,
+        idnumber: values.id_number,
+        question: values.question,
+        answer: values.answer,
+        bookHistory: [],
+      };
+
+      notification.open({
+        icon: (
+          <Icon type="check-circle" theme="twoTone" twoToneColor="#52C41A" />
+        ),
+        message: 'Successfully Signed Up!',
+        description: 'You can now log int with your new account.',
+      });
+
+      form.resetFields();
+      handleClose();
+    });
   };
+
+  const matchPassword = (rule, value, callback) => {
+    if (value.length && form.getFieldValue('password') !== value) {
+      callback('Password do not match.');
+    } else callback();
+  };
+
+  const questions = [
+    'In what city did you have your first ever birthday party?',
+    'What is the last name of your Science class teacher in high school?',
+    'Which company manufactured your first mobile phone?',
+    'Who was your childhood hero?',
+    'Where was your best family vacation?',
+  ];
 
   return (
     <Modal
-      title="Sign Up"
+      title="Sign Up!"
       visible={showModal}
-      onOk={onSubmit}
-      onCancel={handleClose}
       okText="Submit"
       centered={true}
       footer={null}
-      width={350}
+      width={650}
+      onOk={onSubmit}
+      onCancel={() => {
+        form.resetFields();
+        handleClose();
+      }}
     >
       <Form size="small">
-        <Form.Item style={{fontSize: '8pt'}} name="id_number">
-          {getFieldDecorator('id_number', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your ID number',
-              },
-            ],
-          })(
-            <Input
-              style={{fontSize: 13, fontWeight: 5, padding: 3}}
-              placeholder="ID Number"
-            />,
-          )}
-        </Form.Item>
+        <div style={{display: 'flex', alignItems: 'stretch'}}>
+          <Form.Item style={{margin: '5px 10px'}}>
+            {getFieldDecorator('id_number', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input valid ID number',
+                },
+              ],
+            })(
+              <Input
+                type="number"
+                min="0"
+                max="9"
+                style={{fontSize: 11, padding: '3px 10px', width: 180}}
+                autoComplete="off"
+                placeholder="ID Number"
+              />,
+            )}
+          </Form.Item>
 
-        <Form.Item
-          name="firstname"
-          rules={[{required: true, message: 'Please input your first name'}]}
-        >
-          <Input
-            style={{fontSize: 13, fontWeight: 5, padding: 3}}
-            placeholder="First Name"
-          />
-        </Form.Item>
+          <Form.Item style={{margin: '5px 10px'}}>
+            {getFieldDecorator('firstname', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your first name',
+                },
+              ],
+            })(
+              <Input
+                style={{fontSize: 11, padding: '3px 10px', width: 180}}
+                autoComplete="off"
+                placeholder="First Name"
+              />,
+            )}
+          </Form.Item>
 
-        <Form.Item
-          name="lastname"
-          rules={[{required: true, message: 'Please input your last name'}]}
-        >
-          <Input
-            style={{fontSize: 13, fontWeight: 5, padding: 3}}
-            placeholder="Last Name"
-          />
-        </Form.Item>
+          <Form.Item style={{margin: '5px 10px'}}>
+            {getFieldDecorator('lastname', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your last name',
+                },
+              ],
+            })(
+              <Input
+                style={{fontSize: 11, padding: '3px 10px', width: 180}}
+                autoComplete="off"
+                placeholder="Last Name"
+              />,
+            )}
+          </Form.Item>
+        </div>
 
-        <Form.Item
-          name="username"
-          rules={[{required: true, message: 'Please input your username'}]}
-        >
-          <Input
-            style={{fontSize: 13, fontWeight: 5, padding: 3}}
-            placeholder="Username"
-          />
-        </Form.Item>
+        <Row type="flex">
+          <Form.Item style={{margin: '5px 10px'}}>
+            {getFieldDecorator('email', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your email',
+                },
+                {
+                  type: 'email',
+                  message: 'Please input valid email',
+                },
+              ],
+            })(
+              <Input
+                style={{fontSize: 11, padding: '3px 10px', width: 280}}
+                autoComplete="off"
+                placeholder="Email"
+              />,
+            )}
+          </Form.Item>
 
-        <Form.Item
-          name="password"
-          rules={[{required: true, message: 'Please input your password'}]}
-        >
-          <Input
-            style={{fontSize: 13, fontWeight: 5, padding: 3}}
-            placeholder="Password"
-            minLength={8}
-          />
-        </Form.Item>
+          <Form.Item style={{margin: '5px 10px'}}>
+            {getFieldDecorator('username', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your username',
+                },
+              ],
+            })(
+              <Input
+                style={{fontSize: 11, padding: '3px 10px', width: 280}}
+                autoComplete="off"
+                placeholder="Username"
+              />,
+            )}
+          </Form.Item>
+        </Row>
 
-        <Form.Item
-          name="confirm_password"
-          rules={[
-            {required: true, message: 'Please input confirm your password'},
-          ]}
-        >
-          <Input
-            style={{fontSize: 13, fontWeight: 5, padding: 3}}
-            placeholder="Confirm Password"
-          />
-        </Form.Item>
+        <Row type="flex">
+          <Form.Item style={{margin: '5px 10px'}}>
+            {getFieldDecorator('password', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your password',
+                },
+                {
+                  min: 8,
+                  message: 'It should be at least 8 characters',
+                },
+              ],
+            })(
+              <Input
+                style={{fontSize: 11, padding: '3px 10px', width: 280}}
+                autoComplete="off"
+                type="password"
+                placeholder="Password"
+                minLength={8}
+              />,
+            )}
+          </Form.Item>
+
+          <Form.Item style={{margin: '5px 10px'}}>
+            {getFieldDecorator('confirm', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please confirm your password',
+                },
+                {validator: matchPassword},
+              ],
+            })(
+              <Input
+                style={{fontSize: 11, padding: '3px 10px', width: 280}}
+                autoComplete="off"
+                type="password"
+                placeholder="Confirm Password"
+              />,
+            )}
+          </Form.Item>
+        </Row>
+
+        <Row type="flex">
+          <Form.Item style={{margin: '5px 10px'}}>
+            {getFieldDecorator('question', {
+              initialValue: questions[0],
+              rules: [
+                {
+                  required: true,
+                  message: 'Please choose a security question',
+                },
+              ],
+            })(
+              <Select
+                placholder="Choose a security question"
+                style={{fontSize: 11, width: 280}}
+              >
+                {questions.map((item, i) => (
+                  <Option
+                    style={{fontSize: 10}}
+                    key={i}
+                    title={item}
+                    value={item}
+                  >
+                    {item}
+                  </Option>
+                ))}
+              </Select>,
+            )}
+          </Form.Item>
+
+          <Form.Item style={{margin: '5px 10px'}}>
+            {getFieldDecorator('answer', {
+              rules: [
+                {
+                  required: true,
+                  message: 'This field is required.',
+                },
+              ],
+            })(
+              <Input
+                style={{fontSize: 11, padding: '3px 10px', width: 280}}
+                autoComplete="off"
+                placeholder="Answer"
+              />,
+            )}
+          </Form.Item>
+        </Row>
       </Form>
 
-      <div style={{textAlign: 'center'}}>
+      <div style={{textAlign: 'center', paddingTop: 20}}>
         <Button
           bsPrefix="primary-button"
-          style={{margin: '0px 20px'}}
+          style={{margin: '0px 17px'}}
           onClick={onSubmit}
         >
           Confirm
@@ -108,19 +266,17 @@ const SignUpForm = ({showModal, handleClose, form}) => {
 
         <Button
           bsPrefix="secondary-button"
-          style={{margin: '0px 20px'}}
-          onClick={handleClose}
+          style={{margin: '0px 19px'}}
+          onClick={() => {
+            form.resetFields();
+            handleClose();
+          }}
         >
           Cancel
         </Button>
       </div>
     </Modal>
   );
-};
-
-SignUpForm.propTypes = {
-  showModal: PropTypes.bool,
-  handleClose: PropTypes.func,
 };
 
 export default Form.create()(SignUpForm);

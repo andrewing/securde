@@ -1,8 +1,38 @@
-import React, {Component} from 'react';
-import {Button, Form} from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import {Button} from 'react-bootstrap';
+import {Form, Input} from 'antd';
 
-const UserLogin = ({selectedAccess, onClickShow}) => {
+const UserLogin = ({
+  selectedAccess,
+  onClickShowSignUp,
+  onClickShowForgot,
+  form,
+}) => {
+  const {getFieldDecorator} = form;
+  const [path, setPath] = useState('');
+
+  useEffect(() => loginPath());
+
+  const onClickLogin = () => {
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      console.log(values);
+    });
+  };
+
+  const loginPath = () => {
+    if (selectedAccess === 'Admin') {
+      setPath('/admin');
+    } else if (selectedAccess === 'Manager') {
+      setPath('/manager');
+    } else {
+      setPath('/user');
+    }
+  };
+
   return (
     <div className="custom-col">
       <div
@@ -13,37 +43,72 @@ const UserLogin = ({selectedAccess, onClickShow}) => {
         }}
       >
         <h1>Login as {selectedAccess}</h1>
-        <Form style={{paddingTop: 10}}>
-          <Form.Group controlId="email">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              autoComplete="off"
-            />
-          </Form.Group>
-
-          <Form.Group controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
-
-            {selectedAccess !== 'Manager' && (
-              <Button style={{color: '#6C63FF'}} variant="link">
-                Forgot Password?
-              </Button>
+        <Form>
+          <span>Username</span>
+          <Form.Item style={{margin: 0}}>
+            {getFieldDecorator('username', {
+              rules: [
+                {
+                  required: true,
+                  // message: '',
+                },
+              ],
+            })(
+              <Input
+                style={{fontSize: 11}}
+                autoComplete="off"
+                placeholder="Your Username"
+              />,
             )}
-          </Form.Group>
+          </Form.Item>
 
-          <div style={{display: 'flex', paddingTop: 10}}>
-            <Button bsPrefix="primary-button" type="submit">
-              Log In
+          <br />
+
+          <span>Password</span>
+          <Form.Item style={{margin: 0}}>
+            {getFieldDecorator('password', {
+              rules: [
+                {
+                  required: true,
+                  // message: '',
+                },
+              ],
+            })(
+              <Input
+                style={{fontSize: 11}}
+                autoComplete="off"
+                type="password"
+                placeholder="Your Password"
+              />,
+            )}
+          </Form.Item>
+
+          {selectedAccess !== 'Manager' && (
+            <Button
+              style={{color: '#6C63FF'}}
+              variant="link"
+              onClick={onClickShowForgot}
+            >
+              Forgot Password?
             </Button>
+          )}
+
+          <div style={{display: 'flex', paddingTop: 20}}>
+            <Link to={path}>
+              <Button
+                bsPrefix="primary-button"
+                type="submit"
+                onClick={onClickLogin}
+              >
+                Log In
+              </Button>
+            </Link>
 
             {selectedAccess !== 'Manager' && (
               <Button
                 style={{color: '#6C63FF'}}
                 variant="link"
-                onClick={onClickShow}
+                onClick={onClickShowSignUp}
               >
                 Sign Up
               </Button>
@@ -67,9 +132,4 @@ const UserLogin = ({selectedAccess, onClickShow}) => {
   );
 };
 
-UserLogin.propTypes = {
-  selectedAccess: PropTypes.string,
-  onClickShow: PropTypes.func,
-};
-
-export default UserLogin;
+export default Form.create()(UserLogin);

@@ -7,15 +7,11 @@
   width: 600px;
   height: 400px;
   margin-right: 160px;
+  margin-top: -20px;
 }
 
 .input-fields {
-  border: #a7a1ff 0.5px solid;
-  border-radius: 3px;
-  outline: none;
-  width: 300px;
-}
-
-.ant-form-item-explain {
-  font-size: 8pt;
+  font-size: 11pt;
+  padding: 3px 10px;
+  margin: 0px, 10px;
 }

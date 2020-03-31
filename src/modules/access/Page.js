@@ -4,10 +4,12 @@ import LandingPage from './components/LandingPage';
 import Login from './components/Login';
 import './index.css';
 import SignUp from './components/SignUp';
+import ForgotPassword from './components/ForgotPassword';
 
 const Page = () => {
   const [selectedAccess, setAccess] = useState('User');
-  const [showModal, setShowModal] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const onClickAccess = e => {
     if (e.includes('User')) {
@@ -19,12 +21,17 @@ const Page = () => {
     }
   };
 
-  const onClickShow = () => {
-    setShowModal(true);
+  const onClickShowSignUp = () => {
+    setShowSignUp(true);
+  };
+
+  const onClickShowForgot = () => {
+    setShowForgotPassword(true);
   };
 
   const handleClose = () => {
-    setShowModal(false);
+    setShowSignUp(false);
+    setShowForgotPassword(false);
   };
 
   return (
@@ -32,10 +39,18 @@ const Page = () => {
       <LandingPage onClickAccess={onClickAccess} />
 
       {!!selectedAccess && (
-        <Login selectedAccess={selectedAccess} onClickShow={onClickShow} />
+        <Login
+          selectedAccess={selectedAccess}
+          onClickShowSignUp={onClickShowSignUp}
+          onClickShowForgot={onClickShowForgot}
+        />
       )}
 
-      <SignUp showModal={showModal} handleClose={handleClose} />
+      <SignUp showModal={showSignUp} handleClose={handleClose} />
+      <ForgotPassword
+        showModal={showForgotPassword}
+        handleClose={handleClose}
+      />
     </>
   );
 };
