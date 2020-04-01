@@ -1,34 +1,96 @@
-import React, {Component} from 'react';
-import {Container, Jumbotron, Button, Form, Row, Col} from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import {Button} from 'react-bootstrap';
+import {Form, Input} from 'antd';
 
-const UserLogin = ({selectedAccess}) => {
+const UserLogin = ({selectedAccess, onClickShowSignUp, onClickShowForgot}) => {
+  const [form] = Form.useForm();
+  const [path, setPath] = useState('');
+
+  useEffect(() => loginPath());
+
+  const onClickLogin = () => {
+    form
+      .validateFields()
+      .then(values => {
+        console.log(values);
+
+        form.resetFields();
+      })
+      .catch(info => {
+        console.log('Validate Failed:', info);
+      });
+  };
+
+  const loginPath = () => {
+    if (selectedAccess === 'Admin') {
+      setPath('/admin');
+    } else if (selectedAccess === 'Manager') {
+      setPath('/manager/manage-books');
+    } else {
+      setPath('/user');
+    }
+  };
+
   return (
     <div className="custom-col">
       <div
         style={{
-          paddingTop: 40,
+          paddingTop: 10,
           marginLeft: 190,
           width: 350,
         }}
       >
         <h1>Login as {selectedAccess}</h1>
-        <Form style={{paddingTop: 30}}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
-          </Form.Group>
+        <Form form={form}>
+          <span>Username</span>
+          <Form.Item style={{margin: 0}} name="username">
+            <Input
+              style={{fontSize: 13}}
+              autoComplete="off"
+              placeholder="Your Username"
+            />
+          </Form.Item>
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          <div style={{display: 'flex'}}>
-            <Button style={{backgroundColor: '#6C63FF'}} type="submit">
-              Log In
+          <br />
+
+          <span>Password</span>
+          <Form.Item style={{margin: 0}} name="password">
+            <Input
+              style={{fontSize: 13}}
+              autoComplete="off"
+              type="password"
+              placeholder="Your Password"
+            />
+          </Form.Item>
+
+          {selectedAccess !== 'Manager' && (
+            <Button
+              style={{color: '#6C63FF'}}
+              variant="link"
+              onClick={onClickShowForgot}
+            >
+              Forgot Password?
             </Button>
+          )}
+
+          <div style={{display: 'flex', paddingTop: 20}}>
+            <Link to={path}>
+              <Button
+                bsPrefix="primary-button"
+                type="submit"
+                onClick={onClickLogin}
+              >
+                Log In
+              </Button>
+            </Link>
+
             {selectedAccess !== 'Manager' && (
-              <Button style={{color: '#6C63FF'}} variant="link">
+              <Button
+                style={{color: '#6C63FF'}}
+                variant="link"
+                onClick={onClickShowSignUp}
+              >
                 Sign Up
               </Button>
             )}
@@ -49,10 +111,6 @@ const UserLogin = ({selectedAccess}) => {
       )}
     </div>
   );
-};
-
-UserLogin.propTypes = {
-  selectedAccess: PropTypes.string,
 };
 
 export default UserLogin;
