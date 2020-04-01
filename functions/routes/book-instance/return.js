@@ -56,7 +56,6 @@ export const ret = (route, event, context, callback) => {
       BookInstance.returnBookInstance(q)
         .then(() => {
           LibraryLog.findLibraryLogsByBook(q).then(({data: log}) => {
-            console.log(log);
             LibraryLog.logReturn(log._id, moment().format());
           });
 
