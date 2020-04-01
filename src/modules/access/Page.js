@@ -1,5 +1,4 @@
-import React, {useState, Component} from 'react';
-import {Container, Col} from 'react-bootstrap';
+import React, {useState} from 'react';
 import LandingPage from './components/LandingPage';
 import Login from './components/Login';
 import './index.css';

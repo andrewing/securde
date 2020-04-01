@@ -1,0 +1,87 @@
+const bookInstanceData = [
+  {
+    key: 1,
+    title: 'Roots',
+    author: ['Rae Kun'],
+    status: 'Available',
+    available: '5-21-2018',
+  },
+  {
+    key: 2,
+    title: 'Roots',
+    author: ['Rae Kun'],
+    status: 'Reserved',
+    available: '5-21-2018',
+  },
+  {
+    key: 3,
+    title: 'Roots',
+    author: ['Rae Kun'],
+    status: 'Available',
+    available: '5-21-2018',
+  },
+  {
+    key: 4,
+    title: 'Roots',
+    author: [
+      'Rae Kun',
+      'Anne Kun',
+      'Raeanne Villanueva',
+      'Andrew Ing',
+      'Stanley Sie',
+    ],
+    status: 'Available',
+    available: '5-21-2018',
+  },
+  {
+    key: 5,
+    title: 'Roots',
+    author: ['Rae Kun'],
+    status: 'Available',
+    available: '5-21-2018',
+  },
+  {
+    key: 6,
+    title: 'Roots',
+    author: ['Rae Kun', 'Anne Kun', 'Raeanne', 'Andrew'],
+    status: 'Reserved',
+    available: '5-21-2018',
+  },
+  {
+    key: 7,
+    title: 'Roots',
+    author: ['Rae Kun'],
+    status: 'Available',
+    available: '5-21-2018',
+  },
+  {
+    key: 8,
+    title: 'Roots',
+    author: ['Rae Kun'],
+    status: 'Reserved',
+    available: '5-21-2018',
+  },
+  {
+    key: 9,
+    title: 'Roots',
+    author: ['Rae Kun'],
+    status: 'Available',
+    available: '5-21-2018',
+  },
+  {
+    key: 10,
+    title: 'Roots',
+    author: ['Rae Kun'],
+    status: 'Available',
+    available: '5-21-2018',
+  },
+  {
+    key: 11,
+    title: 'Roots',
+    author: ['Rae Kun'],
+    status: 'Available',
+    available: '5-21-2018',
+  },
+];
+
+export default bookInstanceData;

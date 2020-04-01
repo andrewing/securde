@@ -12,7 +12,7 @@ const UserPageNavbar = ({url}) => {
       <Navbar expand="lg" bg="dark" variant="dark" style={{height: '60px'}}>
         <NavLink to={`${url}`}>
           <Navbar.Brand>
-            <img alt="book" src="/book.png" width="20" height="20" />
+            <img alt="" src="/logo.png" width="45" height="45" />
           </Navbar.Brand>
         </NavLink>
         <Nav className="mr-auto">

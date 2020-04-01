@@ -62,7 +62,7 @@
 .page-header {
   height: 100px;
   padding: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   background-color: #efefef;
 }
 
@@ -73,8 +73,7 @@
 }
 
 .column-style {
-  background-color: #a7a1ff;
-  color: white;
+  font-size: 9pt;
 }
 
 /* SCROLLBAR */

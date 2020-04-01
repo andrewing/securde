@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import {Container, Jumbotron, Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
