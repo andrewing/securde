@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Jumbotron, Button} from 'react-bootstrap';
+import {Jumbotron, Button} from 'react-bootstrap';
 import {Table} from 'antd';
 import bookInstancesColumns from '../../components/table/bookInstanceColumns';
 import bookInstancesData from '../../components/table/bookInstanceData';
@@ -20,13 +20,11 @@ const Page = () => {
   return (
     <>
       <Jumbotron bsPrefix="page-header" fluid>
-        <Container>
-          <h1 style={{color: '#6C4CC5'}}>All Book Instances</h1>
-          <p>
-            Manage the book instances you created. You can add, edit, and delete
-            book instances!
-          </p>
-        </Container>
+        <h1 style={{color: '#6C4CC5'}}>All Book Instances</h1>
+        <p>
+          Manage the book instances you created. You can add, edit, and delete
+          book instances!
+        </p>
       </Jumbotron>
       <div className="page-content">
         <div

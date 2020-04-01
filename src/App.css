@@ -62,6 +62,7 @@
 .page-header {
   height: 100px;
   padding: 20px;
+  padding-left: 50px;
   margin-bottom: 5px;
   background-color: #efefef;
 }
