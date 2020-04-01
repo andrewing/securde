@@ -18,6 +18,7 @@
         "args": "none"
       }
     ],
+    "no-console": "error",
     "react/jsx-filename-extension": "off",
     "no-use-before-define": "off",
     "no-param-reassign": "off",
