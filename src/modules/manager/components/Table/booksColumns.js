@@ -1,15 +1,20 @@
 import React from 'react';
 import {Row, Tooltip} from 'antd';
+import {EyeOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons';
 
-const bookColumns = ({editBook, deleteBook}) => [
+const bookColumns = ({viewBook, editBook, deleteBook}) => [
   {
     title: 'Title',
     dataIndex: 'title',
+    width: 250,
+    align: 'left',
+    ellipsis: true,
   },
   {
     title: 'Author/s',
     dataIndex: 'author',
-    width: 200,
+    width: 300,
+    align: 'left',
     ellipsis: true,
     render: record => {
       return (
@@ -30,6 +35,8 @@ const bookColumns = ({editBook, deleteBook}) => [
   {
     title: 'Publisher',
     dataIndex: 'publisher',
+    width: 250,
+    align: 'left',
     ellipsis: true,
   },
   {
@@ -46,25 +53,22 @@ const bookColumns = ({editBook, deleteBook}) => [
   },
   {
     title: 'Actions',
-    // render: () => {
-    //   return (
-    // <Row type="flex" justify="space-between">
-    //   <Tooltip title="View Book">
-    //     <Icon style={{color: '#6c63ff'}} type="eye" />
-    //   </Tooltip>
-    //   <Tooltip title="Edit Book">
-    //     <Icon style={{color: '#6c63ff'}} type="edit" onClick={editBook} />
-    //   </Tooltip>
-    //   <Tooltip title="Delete Book">
-    //     <Icon
-    //       style={{color: '#fc6681'}}
-    //       type="delete"
-    //       onClick={deleteBook}
-    //     />
-    //   </Tooltip>
-    // </Row>
-    //   );
-    // },
+    width: 100,
+    render: () => {
+      return (
+        <Row type="flex" justify="space-between">
+          <Tooltip title="View Book">
+            <EyeOutlined style={{color: '#6c63ff'}} onClick={viewBook} />
+          </Tooltip>
+          <Tooltip title="Edit Book">
+            <EditOutlined style={{color: '#6c63ff'}} onClick={editBook} />
+          </Tooltip>
+          <Tooltip title="Delete Book">
+            <DeleteOutlined style={{color: '#fc6681'}} onClick={deleteBook} />
+          </Tooltip>
+        </Row>
+      );
+    },
   },
 ];
 

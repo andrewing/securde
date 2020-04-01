@@ -1,7 +1,8 @@
 import React from 'react';
 import {Row, Tooltip} from 'antd';
+import {EyeOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons';
 
-const bookColumns = props => [
+const bookColumns = ({viewBook, editBook, deleteBook}) => [
   {
     title: 'Title',
     dataIndex: 'title',
@@ -24,15 +25,15 @@ const bookColumns = props => [
     render: () => {
       return (
         <Row>
-          {/* <Tooltip title="View Book">
-            <Icon style={{color: '#6c63ff'}} type="eye" />
+          <Tooltip title="View Book">
+            <EyeOutlined style={{color: '#6c63ff'}} onClick={viewBook} />
           </Tooltip>
           <Tooltip title="Edit Book">
-            <Icon style={{color: '#6c63ff'}} type="edit" />
+            <EditOutlined style={{color: '#6c63ff'}} onClick={editBook} />
           </Tooltip>
           <Tooltip title="Delete Book">
-            <Icon style={{color: '#6c63ff'}} type="delete" />
-          </Tooltip> */}
+            <DeleteOutlined style={{color: '#fc6681'}} onClick={deleteBook} />
+          </Tooltip>
         </Row>
       );
     },

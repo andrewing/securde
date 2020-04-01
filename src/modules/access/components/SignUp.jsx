@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import {Form, Input, Modal, Row, Select, notification, Icon} from 'antd';
+import {Form, Input, Modal, Row, Select, notification} from 'antd';
+import {CheckCircleTwoTone} from '@ant-design/icons';
 import {Button} from 'react-bootstrap';
 
 const SignUpForm = ({showModal, handleClose}) => {
@@ -23,9 +24,7 @@ const SignUpForm = ({showModal, handleClose}) => {
           bookHistory: [],
         };
         notification.open({
-          // icon: (
-          //   <Icon type="check-circle" theme="twoTone" twoToneColor="#52C41A" />
-          // ),
+          icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
           message: 'Successfully Signed Up!',
           description: 'You can now log int with your new account.',
         });

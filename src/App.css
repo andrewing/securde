@@ -71,3 +71,8 @@
   margin: auto;
   width: 92%;
 }
+
+.column-style {
+  background-color: #a7a1ff;
+  color: white;
+}
