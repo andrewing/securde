@@ -1,22 +1,53 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Jumbotron, Button} from 'react-bootstrap';
-import {Table} from 'antd';
+import {Table, notification} from 'antd';
+import {CheckCircleTwoTone} from '@ant-design/icons';
 import bookInstancesColumns from '../../components/table/bookInstanceColumns';
-import bookInstancesData from '../../components/table/bookInstanceData';
+import bookInstanceData from '../../components/table/bookInstanceData';
+import AddEditInstance from '../../components/modals/AddEditInstance';
 
 const Page = () => {
-  const viewBook = data => {
+  const [showAddBook, setShowAddBook] = useState(false);
+  const [selectedAction, setSelectedAction] = useState('add');
+  const [tableData, setTableData] = useState();
+
+  const showAddModal = () => {
+    setSelectedAction('add');
+    setShowAddBook(true);
+    setTableData();
+  };
+
+  const showEditModal = data => {
+    setSelectedAction('edit');
+    setShowAddBook(true);
+    setTableData(data);
+  };
+
+  const deleteBook = data => {
     console.log(data);
   };
 
-  const editBook = () => {
-    console.log('edit');
+  const onCreateBook = values => {
+    notification.open({
+      icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
+      message: 'Successfully added a book!',
+      description: 'The book is automatically added in the table.',
+    });
+    console.log(values);
   };
 
-  const deleteBook = () => {
-    console.log('delete');
+  const onEditBook = values => {
+    notification.open({
+      icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
+      message: 'Successfully edited a book!',
+      description: 'The book is automatically added in the table.',
+    });
+    console.log(values);
   };
 
+  const handleClose = () => {
+    setShowAddBook(false);
+  };
   return (
     <>
       <Jumbotron bsPrefix="page-header" fluid>
@@ -34,14 +65,25 @@ const Page = () => {
             padding: '10px 0',
           }}
         >
-          <Button bsPrefix="primary-button">Add Book</Button>
+          <Button bsPrefix="primary-button" onClick={showAddModal}>
+            Add Book
+          </Button>
         </div>
         <Table
           bordered
-          dataSource={bookInstancesData}
-          columns={bookInstancesColumns({viewBook, editBook, deleteBook})}
+          dataSource={bookInstanceData}
+          columns={bookInstancesColumns({showEditModal, deleteBook})}
         />
       </div>
+
+      <AddEditInstance
+        showAddBook={showAddBook}
+        handleClose={handleClose}
+        action={selectedAction}
+        data={tableData}
+        onCreateBook={onCreateBook}
+        onEditBook={onEditBook}
+      />
     </>
   );
 };

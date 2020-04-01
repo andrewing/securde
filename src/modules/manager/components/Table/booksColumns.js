@@ -1,8 +1,8 @@
 import React from 'react';
 import {Row, Tooltip} from 'antd';
-import {EyeOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons';
+import {EditOutlined, DeleteOutlined} from '@ant-design/icons';
 
-const bookColumns = ({viewBook, editBook, deleteBook}) => [
+const bookColumns = ({showEditModal, deleteBook}) => [
   {
     title: 'Title',
     className: 'column-style',
@@ -14,7 +14,7 @@ const bookColumns = ({viewBook, editBook, deleteBook}) => [
   {
     title: 'Author/s',
     className: 'column-style',
-    dataIndex: 'author',
+    dataIndex: 'authors',
     width: 300,
     align: 'left',
     ellipsis: true,
@@ -63,17 +63,13 @@ const bookColumns = ({viewBook, editBook, deleteBook}) => [
     width: 100,
     render: record => {
       return (
-        <Row type="flex" justify="space-between">
-          <Tooltip title="View Book">
-            <EyeOutlined
-              style={{color: '#6c63ff'}}
-              onClick={() => viewBook(record)}
-            />
-          </Tooltip>
+        <Row type="flex" justify="space-around">
           <Tooltip title="Edit Book">
             <EditOutlined
               style={{color: '#6c63ff'}}
-              onClick={e => editBook(record)}
+              onClick={e => {
+                showEditModal(record);
+              }}
             />
           </Tooltip>
           <Tooltip title="Delete Book">

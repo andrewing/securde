@@ -2,7 +2,7 @@ import React from 'react';
 import {Row, Tooltip, Tag} from 'antd';
 import {EyeOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons';
 
-const bookColumns = ({viewBook, editBook, deleteBook}) => [
+const bookColumns = ({showEditModal, deleteBook}) => [
   {
     title: 'Title',
     className: 'column-style',
@@ -12,7 +12,7 @@ const bookColumns = ({viewBook, editBook, deleteBook}) => [
   {
     title: 'Author/s',
     className: 'column-style',
-    dataIndex: 'author',
+    dataIndex: 'authors',
     align: 'left',
     ellipsis: true,
     render: record => {
@@ -57,18 +57,26 @@ const bookColumns = ({viewBook, editBook, deleteBook}) => [
   },
   {
     title: 'Actions',
+    className: 'column-style',
     width: 100,
-    render: () => {
+    render: record => {
       return (
-        <Row type="flex" justify="space-between">
-          <Tooltip title="View Book">
-            <EyeOutlined style={{color: '#6c63ff'}} onClick={viewBook} />
-          </Tooltip>
+        <Row type="flex" justify="space-around">
           <Tooltip title="Edit Book">
-            <EditOutlined style={{color: '#6c63ff'}} onClick={editBook} />
+            <EditOutlined
+              style={{color: '#6c63ff'}}
+              onClick={() => {
+                showEditModal(record);
+              }}
+            />
           </Tooltip>
           <Tooltip title="Delete Book">
-            <DeleteOutlined style={{color: '#fc6681'}} onClick={deleteBook} />
+            <DeleteOutlined
+              style={{color: '#fc6681'}}
+              onClick={() => {
+                deleteBook(record);
+              }}
+            />
           </Tooltip>
         </Row>
       );

@@ -2,7 +2,7 @@ const bookData = [
   {
     key: 1,
     title: 'Roots',
-    author: ['Rae Kun'],
+    authors: ['Rae Kun'],
     publisher: 'Liwayway Publishing Corp.',
     year_published: '04-20-1999',
     ISBN: '123456789',
@@ -11,7 +11,7 @@ const bookData = [
   {
     key: 2,
     title: 'Roots',
-    author: ['Rae Kun'],
+    authors: ['Rae Kun'],
     publisher: 'Liwayway Publishing Corp.',
     year_published: '04-20-1999',
     ISBN: '123456789',
@@ -20,7 +20,7 @@ const bookData = [
   {
     key: 3,
     title: 'Roots',
-    author: ['Rae Kun', 'Anne Kun', 'Raeanne', 'Andrew'],
+    authors: ['Rae Kun', 'Anne Kun', 'Raeanne', 'Andrew'],
     publisher: 'Liwayway Publishing Corp.',
     year_published: '04-20-1999',
     ISBN: '123456789',
@@ -29,7 +29,7 @@ const bookData = [
   {
     key: 4,
     title: 'Roots',
-    author: [
+    authors: [
       'Rae Kun',
       'Anne Kun',
       'Raeanne Villanueva',
@@ -44,7 +44,7 @@ const bookData = [
   {
     key: 5,
     title: 'Roots',
-    author: ['Rae Kun'],
+    authors: ['Rae Kun'],
     publisher: 'Liwayway Publishing Corp.',
     year_published: '04-20-1999',
     ISBN: '123456789',
@@ -53,7 +53,7 @@ const bookData = [
   {
     key: 6,
     title: 'Roots',
-    author: ['Rae Kun'],
+    authors: ['Rae Kun'],
     publisher: 'Liwayway Publishing Corp.',
     year_published: '04-20-1999',
     ISBN: '123456789',
@@ -62,7 +62,7 @@ const bookData = [
   {
     key: 7,
     title: 'Roots',
-    author: ['Rae Kun'],
+    authors: ['Rae Kun'],
     publisher: 'Liwayway Publishing Corp.',
     year_published: '04-20-1999',
     ISBN: '123456789',
@@ -71,7 +71,7 @@ const bookData = [
   {
     key: 8,
     title: 'Roots',
-    author: ['Rae Kun'],
+    authors: ['Rae Kun'],
     publisher: 'Liwayway Publishing Corp.',
     year_published: '04-20-1999',
     ISBN: '123456789',
@@ -80,7 +80,7 @@ const bookData = [
   {
     key: 9,
     title: 'Roots',
-    author: ['Rae Kun'],
+    authors: ['Rae Kun'],
     publisher: 'Liwayway Publishing Corp.',
     year_published: '04-20-1999',
     ISBN: '123456789',
@@ -89,7 +89,7 @@ const bookData = [
   {
     key: 10,
     title: 'Roots',
-    author: ['Rae Kun'],
+    authors: ['Rae Kun'],
     publisher: 'Liwayway Publishing Corp.',
     year_published: '04-20-1999',
     ISBN: '123456789',

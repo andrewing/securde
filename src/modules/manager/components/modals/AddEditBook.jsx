@@ -1,23 +1,30 @@
-import React from 'react';
-import {Form, Modal, Input, notification, Select} from 'antd';
-import {CheckCircleTwoTone} from '@ant-design/icons';
+import React, {useEffect, useState} from 'react';
+import {Form, Modal, Input, Select} from 'antd';
 import {Button} from 'react-bootstrap';
 
-const AddBookModal = ({showAddBook, handleClose}) => {
+const AddEditBook = ({
+  showAddBook,
+  handleClose,
+  action,
+  onCreateBook,
+  onEditBook,
+  data,
+}) => {
   const {Option} = Select;
   const [form] = Form.useForm();
+  const [formRef, setFormRef] = useState();
   const items = ['Andrew Ing', 'Stanley Sie'];
 
-  const onSubmit = event => {
+  useEffect(() => {
+    if (action === 'edit') setValues();
+    else if (action === 'add') form.resetFields();
+  });
+
+  const onSubmit = () => {
     form
       .validateFields()
       .then(values => {
-        notification.open({
-          icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
-          message: 'Successfully added a book!',
-          description: 'The book is automatically added in the table.',
-        });
-        console.log(values);
+        action === 'add' ? onCreateBook(values) : onEditBook(values);
 
         form.resetFields();
         handleClose();
@@ -27,9 +34,20 @@ const AddBookModal = ({showAddBook, handleClose}) => {
       });
   };
 
+  const setValues = () => {
+    if (formRef && data)
+      form.setFieldsValue({
+        title: data.title,
+        authors: data.authors,
+        publisher: data.publisher,
+        year_published: data.year_published,
+        ISBN: data.ISBN,
+      });
+  };
+
   return (
     <Modal
-      title="Add a Book"
+      title={action === 'add' ? 'Add Book' : 'Edit Book'}
       visible={showAddBook}
       okText="Submit"
       centered={true}
@@ -41,7 +59,7 @@ const AddBookModal = ({showAddBook, handleClose}) => {
         handleClose();
       }}
     >
-      <Form form={form}>
+      <Form ref={setFormRef} form={form}>
         <Form.Item
           name="title"
           style={{margin: '5px 10px'}}
@@ -112,7 +130,7 @@ const AddBookModal = ({showAddBook, handleClose}) => {
           <Input
             style={{fontSize: 13, padding: '3px 10px'}}
             autoComplete="off"
-            placeholder="Publisher of the Book"
+            placeholder="Year of the publication"
           />
         </Form.Item>
 
@@ -139,13 +157,23 @@ const AddBookModal = ({showAddBook, handleClose}) => {
         </Form.Item>
 
         <div style={{textAlign: 'center', paddingTop: 20}}>
-          <Button
-            bsPrefix="primary-button"
-            style={{margin: '0px 17px'}}
-            onClick={onSubmit}
-          >
-            Confirm
-          </Button>
+          {action === 'add' ? (
+            <Button
+              bsPrefix="primary-button"
+              style={{margin: '0px 17px'}}
+              onClick={onSubmit}
+            >
+              Confirm
+            </Button>
+          ) : (
+            <Button
+              bsPrefix="primary-button"
+              style={{margin: '0px 17px'}}
+              onClick={onSubmit}
+            >
+              Edit
+            </Button>
+          )}
 
           <Button
             bsPrefix="secondary-button"
@@ -163,4 +191,4 @@ const AddBookModal = ({showAddBook, handleClose}) => {
   );
 };
 
-export default AddBookModal;
+export default AddEditBook;
