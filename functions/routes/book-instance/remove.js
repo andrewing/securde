@@ -19,7 +19,14 @@ export const remove = async (route, event, context, callback) => {
     {audience: AUDIENCE.BOOK_MANAGER},
     async (err, decoded) => {
       if (err) {
-        callback(null, jwtError(err, decoded && decoded.user.username, ''));
+        callback(
+          null,
+          jwtError(
+            err,
+            decoded && decoded.user.username,
+            'DELETE BOOK INSTANCE',
+          ),
+        );
         return;
       }
       callback(null, CODE(200, 'Successfully deleted book instance'));

@@ -11,27 +11,26 @@ import {SECRET, jwtError} from '../../util/jwt';
 import {AUDIENCE} from '../../util/constants';
 
 export const bookInstance = (route, ...rest) => {
-  if (route === '/') def(...rest);
-  else
-    handlePath(
-      route,
-      [
-        [create, '/create'],
-        [edit, '/edit'],
-        [remove, '/remove'],
-        [borrow, '/borrow'],
-        [ret, '/return'],
-        [def, '/'],
-      ],
-      ...rest,
-    );
+  handlePath(
+    route,
+    [
+      [create, '/create'],
+      [edit, '/edit'],
+      [remove, '/remove'],
+      [borrow, '/borrow'],
+      [ret, '/return'],
+      [def, '/'],
+    ],
+    ...rest,
+  );
 };
 
 const def = (route, event, context, callback) => {
-  if (event.httpMethod !== 'GET') {
-    callback(null, CODE(405, 'Method not allowed'));
-    return;
-  }
-  const {q: bookInstanceId} = event.queryStringParams;
-  const {authorization} = event.headers;
+  // if (event.httpMethod !== 'GET') {
+  //   callback(null, CODE(405, 'Method not allowed'));
+  //   return;
+  // }
+  // const {q: bookInstanceId} = event.queryStringParams;
+  // const {authorization} = event.headers;
+  callback(null, CODE(200, 'Success!'));
 };

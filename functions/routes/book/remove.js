@@ -30,12 +30,14 @@ export const remove = async (route, event, context, callback) => {
       }
       const {user} = decoded;
       Book.deleteBook(data.id)
-        .then(() => {
+        .then(async () => {
+          const book = await Book.findById(data.id);
           SystemLog.addLog(
             new SystemLog({
               time: moment().format(),
               action: 'DELETE',
-              content: `${user.username} deleted a book [${data.id}] ${data.title}`,
+              content: `Deleted a book [${book._id}] ${book.title}`,
+              account: user._id,
             }),
           );
           callback(null, CODE(200, 'Successfully delete book'));

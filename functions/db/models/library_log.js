@@ -22,10 +22,11 @@ libraryLogSchema.statics.addLog = (libraryLog, callback) => {
   return to(libraryLog.save().then(callback));
 };
 
-libraryLogSchema.statics.findLibraryLogsByBook = bookInstanceId => {
+libraryLogSchema.statics.findLibraryLogsByBook = id => {
   return to(
-    LibraryLog.find({
-      bookInstanceId,
+    LibraryLog.findOne({
+      book: id,
+      timeReturned: null,
     }).populate('book account'),
   );
 };
@@ -53,10 +54,9 @@ libraryLogSchema.statics.logReturn = (logId, timeReturned) => {
         _id: logId,
       },
       {
-        timeReturned,
-      },
-      {
-        new: true,
+        $set: {
+          timeReturned,
+        },
       },
     ),
   );

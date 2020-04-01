@@ -5,6 +5,9 @@ import {SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 import BookInstance from '../../db/models/book_instance';
+import Book from '../../db/models/book';
+import SystemLog from '../../db/models/system_log';
+import db from '../../db/db';
 
 export const create = async (route, event, context, callback) => {
   if (event.httpMethod !== 'POST') {
@@ -31,14 +34,24 @@ export const create = async (route, event, context, callback) => {
         );
         return;
       }
+      const {_id} = decoded.user;
 
-      BookInstance.addBookInstance(
-        new BookInstance({
-          bookId,
-          isReserved: false,
-        }),
-      )
-        .then(() => {
+      const bookInstance = new BookInstance({
+        book: bookId,
+        isAvailable: true,
+      });
+      bookInstance
+        .save()
+        .then(async () => {
+          const book = await Book.findById(bookId);
+          SystemLog.addLog(
+            new SystemLog({
+              time: moment().format(),
+              action: 'CREATE BOOK INSTANCE',
+              content: `created a book instance of [${book._id}] ${book.title}`,
+              account: _id,
+            }),
+          );
           callback(null, CODE(200, 'Successfully created book instance'));
         })
         .catch(bookInstanceErr => {

@@ -29,18 +29,18 @@ export const create = async (route, event, context, callback) => {
         return;
       }
       const {user} = decoded;
-      Book.addBook(
-        new Book({
-          ...data,
-          reviews: [],
-        }),
-      )
+      const book = new Book({
+        ...data,
+        reviews: [],
+      });
+      Book.addBook(book)
         .then(() => {
           SystemLog.addLog(
             new SystemLog({
               time: moment().format(),
               action: 'CREATE BOOK',
-              content: `${user.username} created a book:${data.title}`,
+              content: `Created a book [${book._id}] ${book.title}`,
+              account: user._id,
             }),
           );
         })

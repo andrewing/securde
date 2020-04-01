@@ -44,7 +44,7 @@ export const login = (route, event, context, callback) => {
 
           const {type} = user;
           const tokenPromise = jwt.sign({user}, SECRET, {
-            expiresIn: '30m',
+            expiresIn: '7d',
             audience: type,
           });
 
@@ -59,6 +59,7 @@ export const login = (route, event, context, callback) => {
                   time: moment().format(),
                   action: 'LOG IN',
                   content: `${username} logged in`,
+                  account: user._id,
                 }),
               );
               callback(

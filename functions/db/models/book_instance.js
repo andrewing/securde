@@ -45,33 +45,31 @@ bookInstanceSchema.statics.findAllReserved = () => {
   );
 };
 
-bookInstanceSchema.statics.borrowBookInstance = bookInstanceID => {
+bookInstanceSchema.statics.borrowBookInstance = _id => {
   return to(
     BookInstance.updateOne(
       {
-        _id: bookInstanceID,
+        _id,
       },
       {
-        isReserved: true,
-      },
-      {
-        new: true,
+        $set: {
+          isAvailable: false,
+        },
       },
     ),
   );
 };
 
-bookInstanceSchema.statics.returnBookInstance = bookInstanceID => {
+bookInstanceSchema.statics.returnBookInstance = _id => {
   return to(
     BookInstance.updateOne(
       {
-        _id: bookInstanceID,
+        _id,
       },
       {
-        isReserved: false,
-      },
-      {
-        new: true,
+        $set: {
+          isAvailable: true,
+        },
       },
     ),
   );

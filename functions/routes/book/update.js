@@ -29,13 +29,16 @@ export const update = async (route, event, context, callback) => {
         );
         return;
       }
+      const {user} = decoded;
       Book.updateBook(_id, data)
-        .then(updated => {
+        .then(async updated => {
+          const book = await Book.findById(_id);
           SystemLog.addLog(
             new SystemLog({
               time: moment().format(),
               action: 'UPDATE',
-              content: `Book manager updates book detail [ ${data.title}]`,
+              content: `Updated book [${book._id}] ${book.title}`,
+              account: user._id,
             }),
           );
           callback(

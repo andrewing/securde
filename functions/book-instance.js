@@ -1,5 +1,5 @@
 import router from './util/router';
-import {bookInstance} from './routes/bookInstance';
+import {bookInstance} from './routes/book-instance';
 import {CODE} from './util/code';
 
 export const handler = (event, context, callback) => {

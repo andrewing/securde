@@ -24,8 +24,20 @@ const accountSchema = new Schema({
   type: String,
   bookHistory: [
     {
+      book: {
+        type: Schema.Types.ObjectId,
+        ref: 'Book',
+      },
+      log: {
+        type: Schema.Types.ObjectId,
+        ref: 'LibraryLog',
+      },
+    },
+  ],
+  reviewHistory: [
+    {
       type: Schema.Types.ObjectId,
-      ref: 'LibraryLog',
+      ref: 'Review',
     },
   ],
   salt: String,
@@ -115,6 +127,39 @@ accountSchema.statics.deleteAccount = accountID => {
     Account.deleteOne({
       _id: accountID,
     }),
+  );
+};
+
+accountSchema.statics.addBookHistory = (accountId, bookId, logId) => {
+  return to(
+    Account.updateOne(
+      {
+        _id: accountId,
+      },
+      {
+        $push: {
+          bookHistory: {
+            book: bookId,
+            log: logId,
+          },
+        },
+      },
+    ),
+  );
+};
+
+accountSchema.statics.addReviewHistory = (accountId, reviewId) => {
+  return to(
+    Account.updateOne(
+      {
+        _id: accountId,
+      },
+      {
+        $push: {
+          reviewHistory: reviewId,
+        },
+      },
+    ),
   );
 };
 
