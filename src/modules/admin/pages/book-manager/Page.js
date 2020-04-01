@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { Button, Table } from 'antd'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, {Component} from 'react';
+import {Row, Table} from 'antd';
+import {Container, Jumbotron} from 'react-bootstrap';
 import AddEditModal from '../../components/AddEditModal';
 import DeleteModal from '../../components/DeleteModal';
+import ViewModal from '../../components/ViewModal';
 
 const data = [
   {
@@ -277,90 +278,90 @@ const data = [
   },
 ];
 
-export default class Page extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      selectedRow: {}
-    }
+const Page = () => {
+  const columns = [
+    {
+      title: 'ID Number',
+      dataIndex: 'idNumber',
+      key: 'idNumber',
+      width: 150,
+    },
+    {
+      title: 'First Name',
+      dataIndex: 'firstname',
+      key: 'firstname',
+    },
+    {
+      title: 'Last Name',
+      dataIndex: 'lastname',
+      key: 'lastname',
+    },
+    {
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
+    },
+    {
+      title: 'Email Address',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Action',
+      width: 100,
+      key: 'action',
+      render: record => (
+        <Row type="flex" justify="space-between">
+          <ViewModal user={record} />
+          <AddEditModal
+            command="Edit"
+            user={record}
+            handleUpdate={handleUpdate}
+          />
+          <DeleteModal user={record} handleDelete={handleDelete} />
+        </Row>
+      ),
+    },
+  ];
 
-    this.handleAdd = this.handleAdd.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleSelectedRow = this.handleSelectedRow.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
-
-    this.columns = [
-      {
-        title: 'ID Number',
-        dataIndex: 'idNumber',
-        key: 'idNumber',
-      },
-      {
-        title: 'First Name',
-        dataIndex: 'firstname',
-        key: 'firstname',
-      },
-      {
-        title: 'Last Name',
-        dataIndex: 'lastname',
-        key: 'lastname',
-      },
-      {
-        title: 'Username',
-        dataIndex: 'username',
-        key: 'username'
-      },
-      {
-        title: 'Email Address',
-        dataIndex: 'email',
-        key: 'email'
-      },
-      {
-        title: 'Action',
-        key: 'action',
-        render: (record) => (
-          <div className='button-wrapper-table'>
-            <AddEditModal command="Edit" user={record} handleUpdate={this.handleUpdate} />
-            <DeleteModal user={record} handleDelete={this.handleDelete} />
-          </div>
-        )
-      }
-    ]
-  }
-
-  handleAdd = account => {
+  const handleAdd = account => {
     // call to back end and pass the account to add
   };
 
-  handleUpdate = account => {
+  const handleUpdate = account => {
     // call to back end and pass the account to update
   };
 
-  handleDelete = accountID => {
+  const handleDelete = accountID => {
     // call to back end passing the accountID to delete
   };
 
-  handleSelectedRow = (object, index) => {
-    this.setState({
-      selectedRow: data[index]
-    })
-  }
+  return (
+    <>
+      <Jumbotron bsPrefix="page-header" fluid>
+        <Container className="inner-container">
+          <h1 style={{color: '#6c63ff'}}>Book Manangers</h1>
+          <p>
+            Manage the book managers of your online library. You can add, edit,
+            and delete book managers!
+          </p>
+        </Container>
+      </Jumbotron>
 
-  render() {
-    return (
-      <>
+      <div className="content-container">
         <div className="header-wrapper">
-          <h2>Book Managers</h2>
-          <AddEditModal command="Add" handleAdd={this.handleAdd} />
+          <AddEditModal command="Add" handleAdd={handleAdd} />
         </div>
-  
-        <Table 
-          columns={this.columns} 
-          dataSource={data} 
-          bordered 
-          pagination={{ position: ['bottomCenter', 'bottomCenter'] }} />
-        
-      </>
-    );
-  }
+
+        <Table
+          columns={columns}
+          dataSource={data}
+          bordered
+          pagination={{position: ['bottomCenter', 'bottomCenter']}}
+        />
+      </div>
+    </>
+  );
 };
+
+export default Page;

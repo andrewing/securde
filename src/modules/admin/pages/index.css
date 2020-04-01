@@ -5,47 +5,44 @@
 .ant-table-cell {
   text-align: center;
 }
-.container {
-  margin-top: 30px;
+.ant-modal-header {
+  padding: 25px;
+}
+.ant-modal-footer {
+  padding: 20px;
+}
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  border-radius: 5px;
+}
+.ant-btn {
+  border-radius: 5px;
+}
+
+/* PAGE */
+.admin-container {
+  margin: auto;
+  max-width: 100%;
+  padding: 0px;
+}
+.inner-container {
+  padding: 0px;
+  margin: 0px 40px;
+}
+.content-container {
+  padding: 0px 60px;
 }
 .logout {
   filter: brightness(0) invert(1);
 }
 
-/* SCROLLBAR */
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
 /* BOOK MANAGERS */
-.button-wrapper-table {
-  display: flex;
-  justify-content: center;
-  margin: 0px;
-}
 .header-wrapper {
   display: flex;
   flex-direction: row;
   margin-bottom: 20px;
 }
 .add-button {
-  width: 100px;
+  width: 150px;
   height: 40px;
   border-radius: 5px;
   padding-bottom: 5px;
@@ -54,19 +51,19 @@
 }
 .field {
   margin: 0px;
+  border-radius: 5px;
 }
 .select-field {
   display: flex;
 }
-.button-table {
-  margin-left: 5px;
-  margin-right: 5px;
-  border-radius: 5px;
-  text-align: center;
-  width: 75px;
-}
 .delete-header {
   font-weight: bold;
+}
+.user-info {
+  margin-bottom: 20px;
+}
+.description-item {
+  padding: 10px !important;
 }
 
 /* SYSTEM LOGS */

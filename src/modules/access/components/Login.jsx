@@ -24,7 +24,7 @@ const UserLogin = ({selectedAccess, onClickShowSignUp, onClickShowForgot}) => {
 
   const loginPath = () => {
     if (selectedAccess === 'Admin') {
-      setPath('/admin');
+      setPath('/admin/book-managers');
     } else if (selectedAccess === 'Manager') {
       setPath('/manager/manage-books');
     } else {

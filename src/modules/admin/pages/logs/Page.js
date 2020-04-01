@@ -1,6 +1,6 @@
 import React from 'react';
-import { Table } from 'antd'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import {Table} from 'antd';
+import {Container, Jumbotron} from 'react-bootstrap';
 import moment from 'moment';
 
 const data = [
@@ -156,7 +156,7 @@ const Page = () => {
       title: 'Date/Time',
       dataIndex: 'time',
       key: 'time',
-      render: time => <span>{moment(time).format('YYYY-MM-DD HH:mm')}</span>
+      render: time => <span>{moment(time).format('YYYY-MM-DD HH:mm')}</span>,
     },
     {
       title: 'Action',
@@ -167,16 +167,25 @@ const Page = () => {
       title: 'Logs',
       dataIndex: 'content',
       key: 'content',
-    }
-  ]
+    },
+  ];
   return (
     <>
-      <h2 className='header-wrapper'>System Logs</h2>
-      <Table 
-        columns={columns} 
-        dataSource={data} 
-        bordered 
-        pagination={{ position: ['bottomCenter', 'bottomCenter'] }} />
+      <Jumbotron bsPrefix="page-header" fluid>
+        <Container className="inner-container">
+          <h1 style={{color: '#6c63ff'}}>System Logs</h1>
+          <p>Manage activities in your online library.</p>
+        </Container>
+      </Jumbotron>
+
+      <div className="content-container">
+        <Table
+          columns={columns}
+          dataSource={data}
+          bordered
+          pagination={{position: ['bottomCenter', 'bottomCenter']}}
+        />
+      </div>
     </>
   );
 };

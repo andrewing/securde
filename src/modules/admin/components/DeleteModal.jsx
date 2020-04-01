@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import {Button, Modal, Tooltip} from 'antd';
+import {DeleteOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 
-const { confirm } = Modal;
+const {confirm} = Modal;
 
 const DeleteModal = prop => {
-
   /**
    * This function handles showing the modal.
    */
@@ -17,8 +16,8 @@ const DeleteModal = prop => {
       centered: true,
       okType: 'danger',
       onOk() {
-        handleDelete()
-      }
+        handleDelete();
+      },
     });
   };
 
@@ -31,9 +30,13 @@ const DeleteModal = prop => {
 
   return (
     <>
-      <Button danger type="primary" onClick={handleShow} className='button-table'>
-        Delete
-      </Button>
+      <Tooltip title="Delete Book Manager">
+        <DeleteOutlined
+          onClick={handleShow}
+          style={{color: '#fc6681'}}
+          className="icons"
+        />
+      </Tooltip>
     </>
   );
 };
