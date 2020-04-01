@@ -10,6 +10,7 @@ import SystemLog from '../../db/models/system_log';
 import LibraryLog from '../../db/models/library_log';
 import db from '../../db/db';
 import Account from '../../db/models/account';
+import Book from '../../db/models/book';
 
 export const borrow = (route, event, context, callback) => {
   if (event.httpMethod !== 'PUT') {
@@ -42,12 +43,13 @@ export const borrow = (route, event, context, callback) => {
         return;
       }
 
-      const book = await BookInstance.findById(q);
-      if (!book) {
+      const bookInstance = await BookInstance.findById(q);
+      const book = await Book.findById(bookInstance.book);
+      if (!bookInstance) {
         callback(null, CODE(409, `Book does not exist`));
         return;
       }
-      if (!book.isAvailable) {
+      if (!bookInstance.isAvailable) {
         callback(null, CODE(409, `Book has already been borrowed`));
         return;
       }
@@ -68,11 +70,14 @@ export const borrow = (route, event, context, callback) => {
             new SystemLog({
               time: moment().format(),
               action: 'BORROW BOOK',
-              content: `Borrowed [${book._id}] ${book.title}`,
+              content: `Borrowed [${bookInstance._id}] ${bookInstance.title}`,
               account: user._id,
             }),
           );
-          callback(null, CODE(200, `Successfully borrowed book`, {book}));
+          callback(
+            null,
+            CODE(200, `Successfully borrowed book`, {book: bookInstance}),
+          );
         })
         .catch(borrowErr => {
           const {code, message} = borrowErr;

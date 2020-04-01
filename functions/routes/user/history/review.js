@@ -24,11 +24,20 @@ export const review = (route, event, context, callback) => {
         return;
       }
       const {_id} = decoded.user;
-      Review.findReviewsByAccount(_id)
-        .then(({data: reviews}) => {
+      Account.findById(_id)
+        .populate({
+          path: 'reviewHistory',
+          populate: {
+            path: 'book',
+            model: 'Book',
+          },
+        })
+        .then(account => {
+          const {reviewHistory} = account;
+
           callback(
             null,
-            CODE(200, `Successfully retrieved review history`, {reviews}),
+            CODE(200, `Successfully retrieved review history`, {reviewHistory}),
           );
         })
         .catch(reviewErr => {
