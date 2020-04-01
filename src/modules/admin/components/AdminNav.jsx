@@ -7,14 +7,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const AdminPageNavbar = ({url}) => (
   <>
     <Navbar expand="lg" bg="dark" variant="dark" style={{height: '60px'}}>
-      <NavLink to={`${url}/home`}>
-        <Navbar.Brand>
-          <img alt="" src="/book.png" width="20" height="20" />
-        </Navbar.Brand>
-      </NavLink>
+      <Navbar.Brand>
+        <img alt="" src="/book.png" width="20" height="20" />
+      </Navbar.Brand>
       <Nav className="mr-auto">
         <NavLink
-          to={`${url}/book-manager`}
+          to={`${url}/book-managers`}
           style={{color: 'white', textDecoration: 'none', margin: 10}}
           activeStyle={{textDecoration: 'underline'}}
         >
@@ -28,9 +26,15 @@ const AdminPageNavbar = ({url}) => (
           View Logs
         </NavLink>
       </Nav>
-      <NavLink to={'/'}>
+      <NavLink to="/">
         <Navbar.Brand>
-          <img alt="" src="/logout.png" width="20" height="20" className='logout' />
+          <img
+            alt=""
+            src="/logout.png"
+            width="20"
+            height="20"
+            className="logout"
+          />
         </Navbar.Brand>
       </NavLink>
     </Navbar>
