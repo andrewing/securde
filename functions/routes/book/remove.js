@@ -9,7 +9,7 @@ import SystemLog from '../../db/models/system_log';
 import db from '../../db/db';
 
 export const remove = async (route, event, context, callback) => {
-  if (event.httpMethod !== 'PUT') {
+  if (event.httpMethod !== 'DELETE') {
     callback(null, CODE(405, 'Method not allowed'));
     return;
   }

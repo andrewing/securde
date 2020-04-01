@@ -48,22 +48,16 @@ bookSchema.statics.findBookByTitle = async booktitle => {
   );
 };
 
-bookSchema.statics.updateBook = async (bookID, book) => {
+bookSchema.statics.updateBook = async (bookId, book) => {
   return to(
     Book.updateOne(
       {
-        _id: bookID,
+        _id: bookId,
       },
       {
-        title: book.title,
-        author: book.author,
-        publisher: book.publisher,
-        yearOfPublication: book.yearOfPublication,
-        ISBN: book.ISBN,
-        callNumber: book.callNumber,
-      },
-      {
-        new: true,
+        $set: {
+          ...book,
+        },
       },
     ),
   );

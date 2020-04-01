@@ -29,18 +29,24 @@ const def = async (route, event, context, callback) => {
     return;
   }
   const {q} = event.queryStringParameters;
-  const booksByTitle = await Book.findBookByTitle(q);
-  const booksByAuthor = await Book.findBookByAuthor(q);
-  // console.log(booksByTitle, booksByAuthor)
-  // const arr = [...booksByTitle, ...booksByAuthor]
-  // let books = []
-  // const map = new Map()
-  // arr.forEach(item=>{
-  //   if(!map.has(item._id)){
-  //     map.set(item._id, true)
-  //     books = [...books, item]
-  //   }
-  // })
+  const titlePromise = Book.findBookByTitle(q);
+  const authorPromise = Book.findBookByAuthor(q);
 
-  callback(null, CODE(200, 'Successful in gettings books', {}));
+  Promise.all([titlePromise, authorPromise])
+    .then(([title, books]) => {
+      const arr = [...title.data, ...books.data];
+      let data = [];
+      const map = new Map();
+      arr.forEach(item => {
+        if (!map.has(item._id.toString())) {
+          map.set(item._id.toString(), true);
+          data = [...data, item];
+        }
+      });
+      callback(null, CODE(200, 'Successful in gettings books', {books: data}));
+    })
+    .catch(err => {
+      const {code, message} = err;
+      callback(null, CODE(code || 500, message));
+    });
 };
