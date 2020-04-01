@@ -17,6 +17,9 @@
 .ant-btn {
   border-radius: 5px;
 }
+.anticon svg {
+  display: flex;
+}
 
 /* PAGE */
 .admin-container {
@@ -29,6 +32,7 @@
   margin: 0px 40px;
 }
 .content-container {
+  margin-top: 30px;
   padding: 0px 60px;
 }
 .logout {

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import {Descriptions, Modal, Tooltip} from 'antd';
 import {EyeOutlined} from '@ant-design/icons';
 
@@ -93,6 +94,10 @@ const ViewModal = prop => {
       </Modal>
     </>
   );
+};
+
+ViewModal.propType = {
+  user: PropTypes.object.isRequired,
 };
 
 export default ViewModal;
