@@ -10,7 +10,7 @@ const Page = () => {
   return (
     <>
       <AdminNav url={url} />
-      <Container className='container'>
+      <Container className="admin-container">
         <Subpages path={path} />
       </Container>
     </>
