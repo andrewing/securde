@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import {handlePath} from '../../util/router';
 import {CODE} from '../../util/code';
 import {create} from './create';
-import {edit} from './edit';
+import {update} from './update';
 import {remove} from './remove';
 import {borrow} from './borrow';
 import {ret} from './return';
@@ -15,7 +15,7 @@ export const bookInstance = (route, ...rest) => {
     route,
     [
       [create, '/create'],
-      [edit, '/edit'],
+      [update, '/update'],
       [remove, '/remove'],
       [borrow, '/borrow'],
       [ret, '/return'],

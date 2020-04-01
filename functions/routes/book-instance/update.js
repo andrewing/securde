@@ -7,13 +7,14 @@ import {AUDIENCE} from '../../util/constants';
 import BookInstance from '../../db/models/book_instance';
 import SystemLog from '../../db/models/system_log';
 
-export const remove = async (route, event, context, callback) => {
-  if (event.httpMethod !== 'DELETE') {
+export const update = async (route, event, context, callback) => {
+  if (event.httpMethod !== 'PUT') {
     callback(null, CODE(405, 'Method not allowed'));
     return;
   }
   const data = JSON.parse(event.body);
   const {authorization} = event.headers;
+  const {q} = event.queryStringParameters;
 
   jwt.verify(
     authorization,
@@ -23,29 +24,25 @@ export const remove = async (route, event, context, callback) => {
       if (err) {
         callback(
           null,
-          jwtError(
-            err,
-            decoded && decoded.user.username,
-            'DELETE BOOK INSTANCE',
-          ),
+          jwtError(err, decoded && decoded.user.username, 'EDIT BOOK INSTANCE'),
         );
         return;
       }
       const {user} = decoded;
-      BookInstance.deleteBookInstance(data.id)
+      BookInstance.updateBookInstance(q, data)
         .then(() => {
           SystemLog.addLog(
             new SystemLog({
               time: moment().format(),
-              action: 'DELETE BOOK INSTANCE',
-              content: `Deleted ${data.id}`,
+              action: 'EDIT BOOK INSTANCE',
+              content: `Edited [${q}]`,
               account: user._id,
             }),
           );
-          callback(null, CODE(200, 'Successfully deleted book instance'));
+          callback(null, CODE(200, 'Successfully edited book instance'));
         })
-        .catch(delErr => {
-          const {code, message} = delErr;
+        .catch(updateErr => {
+          const {code, message} = updateErr;
           callback(null, CODE(code || 500, message));
         });
     },

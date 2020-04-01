@@ -8,6 +8,7 @@ import {isMongooseId} from '../../util/mongoose';
 import BookInstance from '../../db/models/book_instance';
 import SystemLog from '../../db/models/system_log';
 import LibraryLog from '../../db/models/library_log';
+import Book from '../../db/models/book';
 
 export const ret = (route, event, context, callback) => {
   if (event.httpMethod !== 'PUT') {
@@ -38,12 +39,13 @@ export const ret = (route, event, context, callback) => {
         callback(null, CODE(400, `Book Instance ID was invalid`));
         return;
       }
-      const book = await BookInstance.findById(q);
-      if (!book) {
+      const bookInstance = await BookInstance.findById(q);
+      const book = await Book.findById(bookInstance.book);
+      if (!bookInstance) {
         callback(null, CODE(409, `Book does not exist`));
         return;
       }
-      if (book.isAvailable) {
+      if (bookInstance.isAvailable) {
         callback(
           null,
           CODE(
@@ -67,7 +69,10 @@ export const ret = (route, event, context, callback) => {
               account: user._id,
             }),
           );
-          callback(null, CODE(200, `Successfully returned book`, {book}));
+          callback(
+            null,
+            CODE(200, `Successfully returned book`, {book: bookInstance}),
+          );
         })
         .catch(returnErr => {
           const {code, message} = returnErr;

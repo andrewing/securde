@@ -5,7 +5,6 @@ const {Schema} = mongoose;
 const Book = require('./book');
 
 const bookInstanceSchema = new Schema({
-  time: String,
   book: {
     type: Schema.Types.ObjectId,
     ref: 'Book',
@@ -80,6 +79,19 @@ bookInstanceSchema.statics.deleteBookInstance = bookInstanceID => {
     BookInstance.deleteOne({
       _id: bookInstanceID,
     }),
+  );
+};
+
+bookInstanceSchema.statics.updateBookInstance = (_id, bookInstance) => {
+  return to(
+    BookInstance.updateOne(
+      {
+        _id,
+      },
+      {
+        ...bookInstance,
+      },
+    ),
   );
 };
 
