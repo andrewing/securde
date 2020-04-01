@@ -14,6 +14,7 @@ export const update = async (route, event, context, callback) => {
     return;
   }
   const data = JSON.parse(event.body);
+  const {q: _id} = event.queryStringParameters;
   const {authorization} = event.headers;
 
   jwt.verify(
@@ -28,7 +29,7 @@ export const update = async (route, event, context, callback) => {
         );
         return;
       }
-      Book.updateBook(data._id, data)
+      Book.updateBook(_id, data)
         .then(updated => {
           SystemLog.addLog(
             new SystemLog({
@@ -37,7 +38,10 @@ export const update = async (route, event, context, callback) => {
               content: `Book manager updates book detail [ ${data.title}]`,
             }),
           );
-          callback(null, CODE(200, 'Successfully updating book', {updated}));
+          callback(
+            null,
+            CODE(200, 'Successfully updated book', {updated: updated.data}),
+          );
         })
         .catch(bookErr => {
           const {code, message} = bookErr;
