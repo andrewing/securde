@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {Form, Input, Modal, Row, Select, Divider} from 'antd';
 import {Button} from 'react-bootstrap';
 
-const ForgotPassword = ({showModal, handleClose}) => {
+const ForgotPassword = ({showModal, handleClose, resetPassword}) => {
   const [form] = Form.useForm();
   const {Option} = Select;
 
@@ -14,24 +14,31 @@ const ForgotPassword = ({showModal, handleClose}) => {
       .validateFields()
       .then(values => {
         values = {
+          username: values.username,
           password: values.password,
           question: values.question,
           answer: values.answer,
         };
 
-        console.log(values);
+        // verify security question (step 1) with username, then proceed to reset do it like this
+        // if(gucci) setDisable(false);
+        // only enable the reset password fields (step 2) if security question is verified
 
+        resetPassword(values);
         form.resetFields();
         handleClose();
       })
       .catch(info => {
-        console.log('Validate Failed:', info);
+        // console.log('Validate Failed:', info);
       });
   };
 
-  const matchPassword = (rule, value) => {
-    if (!value && form.getFieldValue('password') !== value) {
-      return Promise.reject('Password do not match.');
+  const matchPassword = (_, value) => {
+    try {
+      if (value && form.getFieldValue('password') !== value)
+        throw new Error('Password do not match.');
+    } catch (err) {
+      return Promise.reject(err);
     }
     return Promise.resolve();
   };
@@ -64,6 +71,29 @@ const ForgotPassword = ({showModal, handleClose}) => {
             Step 1 : Answer the security question you chose during sign up.
           </h4>
         </div>
+        <Row justify="center">
+          <Form.Item
+            style={{margin: '5px 10px'}}
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your username',
+              },
+            ]}
+          >
+            <Input
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
+              autoComplete="off"
+              placeholder="Input your username first"
+            />
+          </Form.Item>
+        </Row>
         <Row type="flex">
           <Form.Item
             style={{margin: '5px 10px'}}
@@ -103,7 +133,12 @@ const ForgotPassword = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               placeholder="Answer"
             />
@@ -130,8 +165,13 @@ const ForgotPassword = ({showModal, handleClose}) => {
               },
             ]}
           >
-            <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
+            <Input.Password
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               type="password"
               placeholder="New Password"
@@ -151,8 +191,13 @@ const ForgotPassword = ({showModal, handleClose}) => {
               {validator: matchPassword},
             ]}
           >
-            <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
+            <Input.Password
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               type="password"
               placeholder="Confirm Password"
