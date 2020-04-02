@@ -7,7 +7,7 @@ const ForgotPassword = ({showModal, handleClose, resetPassword}) => {
   const [form] = Form.useForm();
   const {Option} = Select;
 
-  const [disableReset, setDisableReset] = useState(true);
+  const [disableReset, setDisableReset] = useState(false);
 
   const onSubmit = event => {
     form
@@ -165,7 +165,7 @@ const ForgotPassword = ({showModal, handleClose, resetPassword}) => {
               },
             ]}
           >
-            <Input
+            <Input.Password
               style={{
                 fontSize: 13,
                 padding: '3px 10px',
@@ -191,7 +191,7 @@ const ForgotPassword = ({showModal, handleClose, resetPassword}) => {
               {validator: matchPassword},
             ]}
           >
-            <Input
+            <Input.Password
               style={{
                 fontSize: 13,
                 padding: '3px 10px',
