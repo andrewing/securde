@@ -35,7 +35,7 @@ reviewSchema.statics.findReviewsByBook = id => {
   return to(
     Review.find({
       book: id,
-    }).populate('book account'),
+    }).populate('book'),
   );
 };
 
