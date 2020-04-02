@@ -122,6 +122,21 @@ accountSchema.statics.updateAccount = (accountID, account) => {
   );
 };
 
+accountSchema.statics.changePassword = (_id, password) => {
+  const hashed = saltHashPassword(password);
+  return to(
+    Account.updateOne(
+      {
+        _id,
+      },
+      {
+        password: hashed.hashedPassword,
+        salt: hashed.salt,
+      },
+    ),
+  );
+};
+
 accountSchema.statics.deleteAccount = accountID => {
   return to(
     Account.deleteOne({
