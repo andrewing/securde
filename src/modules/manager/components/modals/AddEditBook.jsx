@@ -73,7 +73,7 @@ const AddEditBook = ({
           ]}
         >
           <Input
-            style={{fontSize: 13, padding: '3px 10px'}}
+            style={{fontSize: 13, padding: '3px 10px', borderRadius: '5px'}}
             autoComplete="off"
             placeholder="Book Title"
           />
@@ -113,7 +113,7 @@ const AddEditBook = ({
           ]}
         >
           <Input
-            style={{fontSize: 13, padding: '3px 10px'}}
+            style={{fontSize: 13, padding: '3px 10px', borderRadius: '5px'}}
             autoComplete="off"
             placeholder="Publisher of the Book"
           />
@@ -130,7 +130,7 @@ const AddEditBook = ({
           ]}
         >
           <Input
-            style={{fontSize: 13, padding: '3px 10px'}}
+            style={{fontSize: 13, padding: '3px 10px', borderRadius: '5px'}}
             autoComplete="off"
             placeholder="Year of the publication"
           />
@@ -152,7 +152,7 @@ const AddEditBook = ({
         >
           <Input
             type="number"
-            style={{fontSize: 13, padding: '3px 10px'}}
+            style={{fontSize: 13, padding: '3px 10px', borderRadius: '5px'}}
             autoComplete="off"
             placeholder="ISBN of the book"
           />

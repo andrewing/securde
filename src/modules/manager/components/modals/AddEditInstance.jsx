@@ -79,7 +79,7 @@ const AddEditInstance = ({
           ]}
         >
           <Input
-            style={{fontSize: 13, padding: '3px 10px'}}
+            style={{fontSize: 13, padding: '3px 10px', borderRadius: '5px'}}
             autoComplete="off"
             placeholder="Book Title"
           />
