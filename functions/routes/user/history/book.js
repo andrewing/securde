@@ -3,6 +3,7 @@ import {CODE} from '../../../util/code';
 import {SECRET, jwtError} from '../../../util/jwt';
 import ResponseError from '../../../util/error';
 import {AUDIENCE} from '../../../util/constants';
+import Account from '../../../db/models/account';
 
 export const book = (route, event, context, callback) => {
   if (event.httpMethod !== 'GET') {
@@ -20,8 +21,21 @@ export const book = (route, event, context, callback) => {
         callback(null, jwtError(err, decoded && decoded.user.username, ''));
         return;
       }
+      const {user} = decoded;
 
-      callback(null, CODE(200, `Successfully retrieved book history`));
+      Account.findById(user._id)
+        .populate('bookHistory.book bookHistory.log')
+        .then(account => {
+          const {bookHistory} = account;
+          callback(
+            null,
+            CODE(200, `Successfully retrieved book history`, {bookHistory}),
+          );
+        })
+        .catch(bookErr => {
+          const {code, message} = bookErr;
+          callback(null, CODE(code || 500, message));
+        });
     },
   );
 };

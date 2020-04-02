@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import {CODE} from './util/code';
 import ResponseError from './util/error';
 import {jwtError, REFRESH_SECRET, SECRET} from './util/jwt';
+import db from './db/db';
 
 export const handler = (event, context, callback) => {
   try {

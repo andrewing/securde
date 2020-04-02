@@ -4,3 +4,9 @@ export const AUDIENCE = {
   BOOK_MANAGER: 'BOOK_MANAGER',
   ADMIN: 'ADMIN',
 };
+
+export const ACTIONS = {
+  ADMIN: {
+    CREATE_MANAGER: 'CREATE MANAGER',
+  },
+};

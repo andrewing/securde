@@ -5,15 +5,16 @@ import {SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 import BookInstance from '../../db/models/book_instance';
+import SystemLog from '../../db/models/system_log';
 
-export const create = async (route, event, context, callback) => {
-  if (event.httpMethod !== 'POST') {
+export const update = async (route, event, context, callback) => {
+  if (event.httpMethod !== 'PUT') {
     callback(null, CODE(405, 'Method not allowed'));
     return;
   }
   const data = JSON.parse(event.body);
-  const {bookId} = data;
   const {authorization} = event.headers;
+  const {q} = event.queryStringParameters;
 
   jwt.verify(
     authorization,
@@ -23,26 +24,25 @@ export const create = async (route, event, context, callback) => {
       if (err) {
         callback(
           null,
-          jwtError(
-            err,
-            decoded && decoded.user.username,
-            'CREATE BOOK INSTANCE',
-          ),
+          jwtError(err, decoded && decoded.user.username, 'EDIT BOOK INSTANCE'),
         );
         return;
       }
-
-      BookInstance.addBookInstance(
-        new BookInstance({
-          bookId,
-          isReserved: false,
-        }),
-      )
+      const {user} = decoded;
+      BookInstance.updateBookInstance(q, data)
         .then(() => {
-          callback(null, CODE(200, 'Successfully created book instance'));
+          SystemLog.addLog(
+            new SystemLog({
+              time: moment().format(),
+              action: 'EDIT BOOK INSTANCE',
+              content: `Edited [${q}]`,
+              account: user._id,
+            }),
+          );
+          callback(null, CODE(200, 'Successfully edited book instance'));
         })
-        .catch(bookInstanceErr => {
-          const {code, message} = bookInstanceErr;
+        .catch(updateErr => {
+          const {code, message} = updateErr;
           callback(null, CODE(code || 500, message));
         });
     },

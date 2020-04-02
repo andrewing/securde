@@ -32,8 +32,14 @@ const def = async (route, event, context, callback) => {
     {audience: [AUDIENCE.USER_TEACHER, AUDIENCE.USER_STUDENT]},
     async (err, decoded) => {
       if (err) jwtError(err);
-      const reviews = await Review.findReviewsByBook(bookId);
-      callback(null, CODE(200, 'Successful in user reviews', {reviews}));
+      Review.findReviewsByBook(bookId)
+        .then(({data: reviews}) => {
+          callback(null, CODE(200, 'Successful in user reviews', {reviews}));
+        })
+        .catch(reviewErr => {
+          const {code, message} = reviewErr;
+          callback(null, CODE(code || 500, message));
+        });
     },
   );
 };
