@@ -12,13 +12,7 @@ const AddEditBook = ({
 }) => {
   const {Option} = Select;
   const [form] = Form.useForm();
-  const [formRef, setFormRef] = useState();
   const items = ['Andrew Ing', 'Stanley Sie'];
-
-  useEffect(() => {
-    if (action === 'edit') setValues();
-    else if (action === 'add') form.resetFields();
-  });
 
   const onSubmit = () => {
     form
@@ -30,12 +24,12 @@ const AddEditBook = ({
         handleClose();
       })
       .catch(info => {
-        console.log('Validate Failed:', info);
+        // console.log('Validate Failed:', info);
       });
   };
 
   const setValues = () => {
-    if (formRef && data)
+    if (data)
       form.setFieldsValue({
         title: data.title,
         authors: data.authors,
@@ -45,6 +39,11 @@ const AddEditBook = ({
       });
   };
 
+  useEffect(() => {
+    if (action === 'edit') setValues();
+    else if (action === 'add') form.resetFields();
+  });
+
   return (
     <Modal
       title={action === 'add' ? 'Add Book' : 'Edit Book'}
@@ -53,13 +52,16 @@ const AddEditBook = ({
       centered={true}
       footer={null}
       width={400}
+      destroyOnClose={false}
+      getContainer={false}
+      forceRender={true}
       onOk={onSubmit}
       onCancel={() => {
         form.resetFields();
         handleClose();
       }}
     >
-      <Form ref={setFormRef} form={form}>
+      <Form form={form}>
         <Form.Item
           name="title"
           style={{margin: '5px 10px'}}
@@ -163,7 +165,7 @@ const AddEditBook = ({
               style={{margin: '0px 17px'}}
               onClick={onSubmit}
             >
-              Confirm
+              Add
             </Button>
           ) : (
             <Button

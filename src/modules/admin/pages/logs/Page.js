@@ -155,7 +155,7 @@ const Page = () => {
     <>
       <Jumbotron bsPrefix="page-header" fluid>
         <Container className="inner-container">
-          <h1 style={{color: '#6c63ff'}}>System Logs</h1>
+          <h1 style={{color: '#6C4CC5'}}>System Logs</h1>
           <p>Manage activities in your online library.</p>
         </Container>
       </Jumbotron>

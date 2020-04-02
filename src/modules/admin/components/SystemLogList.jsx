@@ -87,17 +87,20 @@ const SystemLogList = prop => {
   const columns = [
     {
       title: 'Date/Time',
+      className: 'column-style',
       dataIndex: 'time',
       key: 'time',
     },
     {
       title: 'Action',
+      className: 'column-style',
       dataIndex: 'action',
       key: 'action',
       ...getColumnSearchProps('action'),
     },
     {
       title: 'Logs',
+      className: 'column-style',
       dataIndex: 'content',
       key: 'content',
       ...getColumnSearchProps('log'),

@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {Jumbotron, Button} from 'react-bootstrap';
-import {Table, notification} from 'antd';
+import React, {useState, useRef} from 'react';
+import {Jumbotron} from 'react-bootstrap';
+import {Table, Button, notification} from 'antd';
 import {CheckCircleTwoTone} from '@ant-design/icons';
 import bookColumns from '../../components/table/booksColumns';
 import bookData from '../../components/table/bookData';
@@ -24,7 +24,7 @@ const Page = () => {
   };
 
   const deleteBook = data => {
-    console.log(data);
+    // console.log(data);
   };
 
   const onCreateBook = values => {
@@ -33,7 +33,7 @@ const Page = () => {
       message: 'Successfully added a book!',
       description: 'The book is automatically added in the table.',
     });
-    console.log(values);
+    // console.log(values);
   };
 
   const onEditBook = values => {
@@ -42,11 +42,27 @@ const Page = () => {
       message: 'Successfully edited a book!',
       description: 'The book is automatically added in the table.',
     });
-    console.log(values);
+    // console.log(values);
   };
 
   const handleClose = () => {
     setShowAddBook(false);
+  };
+
+  // for filters
+  const [searchText, setSearchText] = useState('');
+  const [searchColumn, setSearchColumn] = useState('');
+  const searchInput = useRef();
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchColumn(dataIndex);
+  };
+
+  const handleReset = clearFilters => {
+    clearFilters();
+    setSearchText('');
   };
 
   return (
@@ -65,14 +81,25 @@ const Page = () => {
             padding: '10px 0',
           }}
         >
-          <Button bsPrefix="primary-button" onClick={showAddModal}>
+          <Button
+            style={{background: '#6C63FF', color: 'white'}}
+            onClick={showAddModal}
+          >
             Add Book
           </Button>
         </div>
         <Table
           bordered
           dataSource={bookData}
-          columns={bookColumns({showEditModal, deleteBook})}
+          columns={bookColumns({
+            showEditModal,
+            deleteBook,
+            handleSearch,
+            handleReset,
+            searchText,
+            searchColumn,
+            searchInput,
+          })}
         />
       </div>
 

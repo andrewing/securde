@@ -46,7 +46,7 @@ const BookManagerList = prop => {
           size="small"
           style={{width: 90}}
         >
-          Reset
+          Clear
         </Button>
       </div>
     ),
@@ -102,6 +102,7 @@ const BookManagerList = prop => {
   const columns = [
     {
       title: 'ID Number',
+      className: 'column-style',
       dataIndex: 'idNumber',
       key: 'idNumber',
       width: 150,
@@ -109,34 +110,39 @@ const BookManagerList = prop => {
     },
     {
       title: 'First Name',
+      className: 'column-style',
       dataIndex: 'firstname',
       key: 'firstname',
       ...getColumnSearchProps('first name'),
     },
     {
       title: 'Last Name',
+      className: 'column-style',
       dataIndex: 'lastname',
       key: 'lastname',
       ...getColumnSearchProps('last name'),
     },
     {
       title: 'Username',
+      className: 'column-style',
       dataIndex: 'username',
       key: 'username',
       ...getColumnSearchProps('username'),
     },
     {
       title: 'Email Address',
+      className: 'column-style',
       dataIndex: 'email',
       key: 'email',
       ...getColumnSearchProps('email address'),
     },
     {
       title: 'Action',
+      className: 'column-style',
       width: 100,
       key: 'action',
       render: record => (
-        <Row type="flex" justify="space-between">
+        <Row type="flex" justify="space-around">
           <ViewModal user={record} />
           <AddEditModal
             command="Edit"

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Form, Modal, Input, Select, DatePicker} from 'antd';
 import {Button} from 'react-bootstrap';
 import moment from 'moment';
@@ -13,13 +13,7 @@ const AddEditInstance = ({
 }) => {
   const {Option} = Select;
   const [form] = Form.useForm();
-  const [formRef, setFormRef] = useState();
   const items = ['Andrew Ing', 'Stanley Sie'];
-
-  useEffect(() => {
-    if (action === 'edit') setValues();
-    else if (action === 'add') form.resetFields();
-  });
 
   const onSubmit = () => {
     form
@@ -37,12 +31,12 @@ const AddEditInstance = ({
         handleClose();
       })
       .catch(info => {
-        console.log('Validate Failed:', info);
+        // console.log('Validate Failed:', info);
       });
   };
 
   const setValues = () => {
-    if (formRef && data)
+    if (data)
       form.setFieldsValue({
         title: data.title,
         authors: data.authors,
@@ -50,6 +44,11 @@ const AddEditInstance = ({
         available: moment(data.available),
       });
   };
+
+  useEffect(() => {
+    if (action === 'edit') setValues();
+    else if (action === 'add') form.resetFields();
+  });
 
   return (
     <Modal
@@ -59,13 +58,16 @@ const AddEditInstance = ({
       centered={true}
       footer={null}
       width={400}
+      destroyOnClose={false}
+      getContainer={false}
+      forceRender={true}
       onOk={onSubmit}
       onCancel={() => {
         form.resetFields();
         handleClose();
       }}
     >
-      <Form ref={setFormRef} form={form}>
+      <Form form={form}>
         <Form.Item
           name="title"
           style={{margin: '5px 10px'}}
@@ -163,7 +165,7 @@ const AddEditInstance = ({
               style={{margin: '0px 17px'}}
               onClick={onSubmit}
             >
-              Edit
+              Add
             </Button>
           )}
 

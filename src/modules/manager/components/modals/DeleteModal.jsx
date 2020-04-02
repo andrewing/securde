@@ -5,33 +5,27 @@ import {DeleteOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 
 const {confirm} = Modal;
 
-const DeleteModal = prop => {
-  /**
-   * This function handles showing the modal.
-   */
+const DeleteModal = ({deleteBook, record, type}) => {
   const handleShow = () => {
     confirm({
-      title: 'Do you want to delete the following user?',
+      title: 'Are you sure you want to delete this row?',
       icon: <ExclamationCircleOutlined />,
       centered: true,
       okType: 'danger',
       onOk() {
-        handleDelete();
+        deleteBook(record);
       },
     });
   };
 
-  /**
-   * This function handles deleting a book manager.
-   */
-  const handleDelete = () => {
-    prop.handleDelete(prop.user._id);
-  };
-
   return (
     <>
-      <Tooltip title="Delete Book Manager">
-        <DeleteOutlined onClick={handleShow} style={{color: '#fc6681'}} />
+      <Tooltip title="Delete">
+        <DeleteOutlined
+          onClick={handleShow}
+          style={{color: '#fc6681'}}
+          className="icons"
+        />
       </Tooltip>
     </>
   );

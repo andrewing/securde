@@ -1,13 +1,31 @@
 import React from 'react';
 import {Row, Tooltip, Tag} from 'antd';
-import {EyeOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons';
+import {EditOutlined} from '@ant-design/icons';
+import DeleteModal from '../modals/DeleteModal';
+import getColumnSearchProps from './getColumnSearchProps';
 
-const bookColumns = ({showEditModal, deleteBook}) => [
+const bookColumns = ({
+  showEditModal,
+  deleteBook,
+  handleSearch,
+  handleReset,
+  searchText,
+  searchColumn,
+  searchInput,
+}) => [
   {
     title: 'Title',
     className: 'column-style',
     dataIndex: 'title',
     align: 'left',
+    ...getColumnSearchProps(
+      'title',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
   },
   {
     title: 'Author/s',
@@ -15,6 +33,14 @@ const bookColumns = ({showEditModal, deleteBook}) => [
     dataIndex: 'authors',
     align: 'left',
     ellipsis: true,
+    ...getColumnSearchProps(
+      'authors',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
     render: record => {
       return (
         <div
@@ -36,6 +62,14 @@ const bookColumns = ({showEditModal, deleteBook}) => [
     className: 'column-style',
     dataIndex: 'status',
     width: 200,
+    ...getColumnSearchProps(
+      'status',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
     render: record => {
       if (record === 'Available') {
         return <Tag color="green">{record}</Tag>;
@@ -48,6 +82,14 @@ const bookColumns = ({showEditModal, deleteBook}) => [
     className: 'column-style',
     dataIndex: 'available',
     width: 250,
+    ...getColumnSearchProps(
+      'available',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
     render: (text, record) => {
       if (record.status === 'Reserved') {
         return <span>{text}</span>;
@@ -70,14 +112,11 @@ const bookColumns = ({showEditModal, deleteBook}) => [
               }}
             />
           </Tooltip>
-          <Tooltip title="Delete Book">
-            <DeleteOutlined
-              style={{color: '#fc6681'}}
-              onClick={() => {
-                deleteBook(record);
-              }}
-            />
-          </Tooltip>
+          <DeleteModal
+            record={record}
+            deleteBook={deleteBook}
+            type="instance"
+          />
         </Row>
       );
     },

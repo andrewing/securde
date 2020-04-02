@@ -84,6 +84,9 @@ const AddEditModal = prop => {
       <Modal
         className="admin-modal"
         visible={visible}
+        destroyOnClose={false}
+        getContainer={false}
+        footer={null}
         title={
           prop.command === 'Add' ? 'New Book Manager' : 'Edit Book Manager'
         }
@@ -170,6 +173,56 @@ const AddEditModal = prop => {
             </Col>
           </Row>
         </Form>
+        <div style={{textAlign: 'center', paddingTop: 20}}>
+          {prop.command === 'Add' ? (
+            <Button
+              bsPrefix="primary-button"
+              style={{
+                margin: '0px 17px',
+                background: '#6C63FF',
+                color: 'white',
+              }}
+              onClick={() => {
+                form
+                  .validateFields()
+                  .then(values => {
+                    form.resetFields();
+                    onSubmit(values);
+                  })
+                  .catch(info => {});
+              }}
+            >
+              Create
+            </Button>
+          ) : (
+            <Button
+              bsPrefix="primary-button"
+              style={{
+                margin: '0px 17px',
+                background: '#6C63FF',
+                color: 'white',
+              }}
+              onClick={() => {
+                form
+                  .validateFields()
+                  .then(values => {
+                    form.resetFields();
+                    onSubmit(values);
+                  })
+                  .catch(info => {});
+              }}
+            >
+              Edit
+            </Button>
+          )}
+
+          <Button
+            style={{margin: '0px 19px', background: '#fc6681', color: 'white'}}
+            onClick={onCancel}
+          >
+            Cancel
+          </Button>
+        </div>
       </Modal>
     );
   };
@@ -177,16 +230,15 @@ const AddEditModal = prop => {
   return (
     <>
       {prop.command === 'Add' ? (
-        <Button type="primary" onClick={handleShow} className="add-button">
+        <Button
+          onClick={handleShow}
+          style={{background: '#6C63FF', color: 'white'}}
+        >
           Add Book Manager
         </Button>
       ) : (
         <Tooltip title="Edit Book Manager">
-          <EditOutlined
-            onClick={handleShow}
-            style={{color: '#6c63ff'}}
-            className="icons"
-          />
+          <EditOutlined onClick={handleShow} style={{color: '#6c63ff'}} />
         </Tooltip>
       )}
 

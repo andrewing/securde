@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {Jumbotron, Button} from 'react-bootstrap';
-import {Table, notification} from 'antd';
+import React, {useState, useRef} from 'react';
+import {Jumbotron} from 'react-bootstrap';
+import {Table, notification, Button} from 'antd';
 import {CheckCircleTwoTone} from '@ant-design/icons';
 import bookInstancesColumns from '../../components/table/bookInstanceColumns';
 import bookInstanceData from '../../components/table/bookInstanceData';
@@ -24,30 +24,47 @@ const Page = () => {
   };
 
   const deleteBook = data => {
-    console.log(data);
+    // console.log(data);
   };
 
   const onCreateBook = values => {
     notification.open({
       icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
-      message: 'Successfully added a book!',
-      description: 'The book is automatically added in the table.',
+      message: 'Successfully added a book instance!',
+      description: 'The book instance is automatically added in the table.',
     });
-    console.log(values);
+    // console.log(values);
   };
 
   const onEditBook = values => {
     notification.open({
       icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
-      message: 'Successfully edited a book!',
-      description: 'The book is automatically added in the table.',
+      message: 'Successfully edited a book instance!',
+      description: 'The book will be automatically updated in the table.',
     });
-    console.log(values);
+    // console.log(values);
   };
 
   const handleClose = () => {
     setShowAddBook(false);
   };
+
+  // for filters
+  const [searchText, setSearchText] = useState('');
+  const [searchColumn, setSearchColumn] = useState('');
+  const searchInput = useRef();
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchColumn(dataIndex);
+  };
+
+  const handleReset = clearFilters => {
+    clearFilters();
+    setSearchText('');
+  };
+
   return (
     <>
       <Jumbotron bsPrefix="page-header" fluid>
@@ -65,14 +82,25 @@ const Page = () => {
             padding: '10px 0',
           }}
         >
-          <Button bsPrefix="primary-button" onClick={showAddModal}>
-            Add Book
+          <Button
+            style={{background: '#6C63FF', color: 'white'}}
+            onClick={showAddModal}
+          >
+            Add Book Instance
           </Button>
         </div>
         <Table
           bordered
           dataSource={bookInstanceData}
-          columns={bookInstancesColumns({showEditModal, deleteBook})}
+          columns={bookInstancesColumns({
+            showEditModal,
+            deleteBook,
+            handleSearch,
+            handleReset,
+            searchText,
+            searchColumn,
+            searchInput,
+          })}
         />
       </div>
 

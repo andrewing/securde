@@ -1,8 +1,18 @@
 import React from 'react';
 import {Row, Tooltip} from 'antd';
-import {EditOutlined, DeleteOutlined} from '@ant-design/icons';
+import {EditOutlined} from '@ant-design/icons';
+import DeleteModal from '../modals/DeleteModal';
+import getColumnSearchProps from './getColumnSearchProps';
 
-const bookColumns = ({showEditModal, deleteBook}) => [
+const bookColumns = ({
+  showEditModal,
+  deleteBook,
+  handleSearch,
+  handleReset,
+  searchText,
+  searchColumn,
+  searchInput,
+}) => [
   {
     title: 'Title',
     className: 'column-style',
@@ -10,6 +20,14 @@ const bookColumns = ({showEditModal, deleteBook}) => [
     width: 250,
     align: 'left',
     ellipsis: true,
+    ...getColumnSearchProps(
+      'title',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
   },
   {
     title: 'Author/s',
@@ -18,6 +36,14 @@ const bookColumns = ({showEditModal, deleteBook}) => [
     width: 300,
     align: 'left',
     ellipsis: true,
+    ...getColumnSearchProps(
+      'authors',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
     render: record => {
       return (
         <div
@@ -41,16 +67,40 @@ const bookColumns = ({showEditModal, deleteBook}) => [
     width: 250,
     align: 'left',
     ellipsis: true,
+    ...getColumnSearchProps(
+      'publisher',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
   },
   {
     title: 'Year Published',
     className: 'column-style',
     dataIndex: 'year_published',
+    ...getColumnSearchProps(
+      'year_published',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
   },
   {
     title: 'ISBN',
     className: 'column-style',
     dataIndex: 'ISBN',
+    ...getColumnSearchProps(
+      'title',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
   },
   {
     title: 'Call Number',
@@ -72,12 +122,7 @@ const bookColumns = ({showEditModal, deleteBook}) => [
               }}
             />
           </Tooltip>
-          <Tooltip title="Delete Book">
-            <DeleteOutlined
-              style={{color: '#fc6681'}}
-              onClick={e => deleteBook(record)}
-            />
-          </Tooltip>
+          <DeleteModal record={record} deleteBook={deleteBook} type="book" />
         </Row>
       );
     },

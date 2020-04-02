@@ -281,7 +281,7 @@ const Page = () => {
     <>
       <Jumbotron bsPrefix="page-header" fluid>
         <Container className="inner-container">
-          <h1 style={{color: '#6c63ff'}}>Book Manangers</h1>
+          <h1 style={{color: '#6C4CC5'}}>Book Manangers</h1>
           <p>
             Manage the book managers of your online library. You can add, edit,
             and delete book managers!

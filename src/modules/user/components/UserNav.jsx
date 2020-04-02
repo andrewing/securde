@@ -13,6 +13,16 @@ const UserPageNavbar = ({url}) => {
         <NavLink to={`${url}`}>
           <Navbar.Brand>
             <img alt="" src="/logo.png" width="45" height="45" />
+            <span
+              style={{
+                fontWeight: 500,
+                fontSize: 15,
+                marginLeft: 10,
+                color: 'white',
+              }}
+            >
+              Manager Page
+            </span>
           </Navbar.Brand>
         </NavLink>
         <Nav className="mr-auto">

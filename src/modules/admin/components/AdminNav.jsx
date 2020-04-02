@@ -10,20 +10,30 @@ const AdminPageNavbar = ({url}) => (
       <NavLink to={`${url}`}>
         <Navbar.Brand>
           <img alt="" src="/logo.png" width="45" height="45" />
+          <span
+            style={{
+              fontWeight: 500,
+              fontSize: 15,
+              marginLeft: 10,
+              color: 'white',
+            }}
+          >
+            Admin Page
+          </span>
         </Navbar.Brand>
       </NavLink>
       <Nav className="mr-auto">
         <NavLink
           to={`${url}/book-managers`}
           style={{color: 'white', textDecoration: 'none', margin: 10}}
-          activeStyle={{textDecoration: 'underline'}}
+          activeStyle={{color: '#A7A1FF'}}
         >
           Book Managers
         </NavLink>
         <NavLink
           to={`${url}/view-logs`}
           style={{color: 'white', textDecoration: 'none', margin: 10}}
-          activeStyle={{textDecoration: 'underline'}}
+          activeStyle={{color: '#A7A1FF'}}
         >
           View Logs
         </NavLink>

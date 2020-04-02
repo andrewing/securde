@@ -19,11 +19,7 @@ const ViewModal = prop => {
   return (
     <>
       <Tooltip title="View Book Manager">
-        <EyeOutlined
-          onClick={handleShow}
-          style={{color: '#6c63ff'}}
-          className="icons"
-        />
+        <EyeOutlined onClick={handleShow} style={{color: '#6c63ff'}} />
       </Tooltip>
 
       <Modal

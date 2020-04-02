@@ -9,6 +9,16 @@ const BookManagerNav = ({url}) => (
     <Navbar expand="lg" bg="dark" variant="dark" style={{height: '60px'}}>
       <Navbar.Brand>
         <img alt="" src="/logo.png" width="45" height="45" />
+        <span
+          style={{
+            fontWeight: 500,
+            fontSize: 15,
+            marginLeft: 10,
+            color: 'white',
+          }}
+        >
+          Manager Page
+        </span>
       </Navbar.Brand>
       <Nav className="mr-auto">
         <NavLink
@@ -26,6 +36,17 @@ const BookManagerNav = ({url}) => (
           All Book Instances
         </NavLink>
       </Nav>
+      <NavLink to="/">
+        <Navbar.Brand>
+          <img
+            alt=""
+            src="/logout.png"
+            width="20"
+            height="20"
+            className="logout"
+          />
+        </Navbar.Brand>
+      </NavLink>
     </Navbar>
   </>
 );
