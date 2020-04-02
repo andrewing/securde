@@ -5,10 +5,12 @@ import {create} from './create';
 import {update} from './update';
 import {remove} from './remove';
 import {borrow} from './borrow';
+import {byBook} from './by-book';
 import {ret} from './return';
 import ResponseError from '../../util/error';
 import {SECRET, jwtError} from '../../util/jwt';
 import {AUDIENCE} from '../../util/constants';
+import BookInstance from '../../db/models/book_instance';
 
 export const bookInstance = (route, ...rest) => {
   handlePath(
@@ -19,6 +21,7 @@ export const bookInstance = (route, ...rest) => {
       [remove, '/remove'],
       [borrow, '/borrow'],
       [ret, '/return'],
+      [byBook, '/by-book'],
       [def, '/'],
     ],
     ...rest,
@@ -26,11 +29,21 @@ export const bookInstance = (route, ...rest) => {
 };
 
 const def = (route, event, context, callback) => {
-  // if (event.httpMethod !== 'GET') {
-  //   callback(null, CODE(405, 'Method not allowed'));
-  //   return;
-  // }
-  // const {q: bookInstanceId} = event.queryStringParams;
-  // const {authorization} = event.headers;
-  callback(null, CODE(200, 'Success!'));
+  if (event.httpMethod !== 'GET') {
+    callback(null, CODE(405, 'Method not allowed'));
+    return;
+  }
+  const {q} = event.queryStringParameters;
+
+  BookInstance.findById(q)
+    .then(val => {
+      callback(
+        null,
+        CODE(200, 'Successfully got book instance', {bookInstance: val}),
+      );
+    })
+    .catch(err => {
+      const {code, message} = err;
+      callback(null, CODE(code || 500, message));
+    });
 };
