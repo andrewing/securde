@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, Modal, Tooltip} from 'antd';
+import {Modal, Tooltip} from 'antd';
 import {DeleteOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 
 const {confirm} = Modal;

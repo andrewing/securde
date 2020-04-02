@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import {notification} from 'antd';
+import {CheckCircleTwoTone} from '@ant-design/icons';
 import LandingPage from './components/LandingPage';
 import Login from './components/Login';
 import './index.css';
@@ -33,6 +35,28 @@ const Page = () => {
     setShowForgotPassword(false);
   };
 
+  const loginAccount = values => {
+    // console.log(values);
+  };
+
+  const signupAccount = values => {
+    notification.open({
+      icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
+      message: 'Successfully Signed Up!',
+      description: 'You can now log in with your new account.',
+    });
+    // console.log(values);
+  };
+
+  const resetPassword = values => {
+    notification.open({
+      icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
+      message: 'Reset password successful!',
+      description: 'You can now log in with your new password.',
+    });
+    // console.log(values);
+  };
+
   return (
     <>
       <LandingPage onClickAccess={onClickAccess} />
@@ -42,13 +66,19 @@ const Page = () => {
           selectedAccess={selectedAccess}
           onClickShowSignUp={onClickShowSignUp}
           onClickShowForgot={onClickShowForgot}
+          loginAccount={loginAccount}
         />
       )}
 
-      <SignUp showModal={showSignUp} handleClose={handleClose} />
+      <SignUp
+        showModal={showSignUp}
+        handleClose={handleClose}
+        signupAccount={signupAccount}
+      />
       <ForgotPassword
         showModal={showForgotPassword}
         handleClose={handleClose}
+        resetPassword={resetPassword}
       />
     </>
   );

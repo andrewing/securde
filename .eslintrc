@@ -33,6 +33,7 @@
     "react/jsx-props-no-spreading": "off",
     "react/forbid-prop-types": "off",
     "react/jsx-one-expression-per-line": "off",
+    "react/jsx-curly-newline": "off",
     "react/jsx-boolean-value": "off",
     "react/prop-types": "off",
     "react/no-array-index-key": "off"

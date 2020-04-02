@@ -1,6 +1,5 @@
 import React from 'react';
 import {useRouteMatch} from 'react-router-dom';
-import {Container, Jumbotron} from 'react-bootstrap';
 import BookManagerNav from './components/BookManagerNav';
 import Subpages from './pages';
 

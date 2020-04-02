@@ -1,5 +1,5 @@
-import React, {useState, useRef} from 'react';
-import {Button, Input, Row, Table} from 'antd';
+import React from 'react';
+import {Button, Input} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 
