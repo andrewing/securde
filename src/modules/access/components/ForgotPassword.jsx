@@ -14,13 +14,15 @@ const ForgotPassword = ({showModal, handleClose, resetPassword}) => {
       .validateFields()
       .then(values => {
         values = {
+          username: values.username,
           password: values.password,
           question: values.question,
           answer: values.answer,
         };
-        // check if step 1 is gucci, then proceed to reset then
+
+        // verify security question (step 1) with username, then proceed to reset do it like this
         // if(gucci) setDisable(false);
-        // only allow user to reset if step 1 is cleared
+        // only enable the reset password fields (step 2) if security question is verified
 
         resetPassword(values);
         form.resetFields();
@@ -69,6 +71,29 @@ const ForgotPassword = ({showModal, handleClose, resetPassword}) => {
             Step 1 : Answer the security question you chose during sign up.
           </h4>
         </div>
+        <Row justify="center">
+          <Form.Item
+            style={{margin: '5px 10px'}}
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your username',
+              },
+            ]}
+          >
+            <Input
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
+              autoComplete="off"
+              placeholder="Input your username first"
+            />
+          </Form.Item>
+        </Row>
         <Row type="flex">
           <Form.Item
             style={{margin: '5px 10px'}}
