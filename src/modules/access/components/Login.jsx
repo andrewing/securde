@@ -46,7 +46,7 @@ const UserLogin = ({selectedAccess, onClickShowSignUp, onClickShowForgot}) => {
           <span>Username</span>
           <Form.Item style={{margin: 0}} name="username">
             <Input
-              style={{fontSize: 13}}
+              style={{fontSize: 13, borderRadius: '5px'}}
               autoComplete="off"
               placeholder="Your Username"
             />
@@ -57,7 +57,7 @@ const UserLogin = ({selectedAccess, onClickShowSignUp, onClickShowForgot}) => {
           <span>Password</span>
           <Form.Item style={{margin: 0}} name="password">
             <Input
-              style={{fontSize: 13}}
+              style={{fontSize: 13, borderRadius: '5px'}}
               autoComplete="off"
               type="password"
               placeholder="Your Password"

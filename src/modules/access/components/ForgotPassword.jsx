@@ -103,7 +103,7 @@ const ForgotPassword = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280}}
+              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
               autoComplete="off"
               placeholder="Answer"
             />
@@ -131,7 +131,7 @@ const ForgotPassword = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280}}
+              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
               autoComplete="off"
               type="password"
               placeholder="New Password"
@@ -152,7 +152,7 @@ const ForgotPassword = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280}}
+              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
               autoComplete="off"
               type="password"
               placeholder="Confirm Password"

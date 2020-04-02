@@ -83,7 +83,7 @@ const SignUpForm = ({showModal, handleClose}) => {
               type="number"
               min="0"
               max="9"
-              style={{fontSize: 13, padding: '3px 10px', width: 180}}
+              style={{fontSize: 13, padding: '3px 10px', width: 180, borderRadius: '5px'}}
               autoComplete="off"
               placeholder="ID Number"
             />
@@ -100,7 +100,7 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 180}}
+              style={{fontSize: 13, padding: '3px 10px', width: 180, borderRadius: '5px'}}
               autoComplete="off"
               placeholder="First Name"
             />
@@ -117,7 +117,7 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 180}}
+              style={{fontSize: 13, padding: '3px 10px', width: 180, borderRadius: '5px'}}
               autoComplete="off"
               placeholder="Last Name"
             />
@@ -140,7 +140,7 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280}}
+              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
               autoComplete="off"
               placeholder="Email"
             />
@@ -157,7 +157,7 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280}}
+              style={{fontSize: 13, padding: '3px 10px', width: 280,borderRadius: '5px'}}
               autoComplete="off"
               placeholder="Username"
             />
@@ -180,7 +180,7 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280}}
+              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
               autoComplete="off"
               type="password"
               placeholder="Password"
@@ -200,7 +200,7 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280}}
+              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
               autoComplete="off"
               type="password"
               placeholder="Confirm Password"
@@ -247,7 +247,7 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280}}
+              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
               autoComplete="off"
               placeholder="Answer"
             />
