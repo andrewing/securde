@@ -199,7 +199,7 @@ const SignUpForm = ({showModal, handleClose, signupAccount}) => {
               },
             ]}
           >
-            <Input
+            <Input.Password
               style={{
                 fontSize: 13,
                 padding: '3px 10px',
@@ -224,7 +224,7 @@ const SignUpForm = ({showModal, handleClose, signupAccount}) => {
               {validator: matchPassword},
             ]}
           >
-            <Input
+            <Input.Password
               style={{
                 fontSize: 13,
                 padding: '3px 10px',

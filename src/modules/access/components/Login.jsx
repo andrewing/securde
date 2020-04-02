@@ -60,7 +60,7 @@ const UserLogin = ({
 
           <span>Password</span>
           <Form.Item style={{margin: 0}} name="password">
-            <Input
+            <Input.Password
               style={{fontSize: 13, borderRadius: '5px'}}
               autoComplete="off"
               type="password"
