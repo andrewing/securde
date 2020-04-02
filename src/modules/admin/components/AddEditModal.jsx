@@ -63,22 +63,24 @@ const AddEditModal = prop => {
   const AddEditForm = ({visible, onSubmit, onCancel}) => {
     const [form] = Form.useForm();
 
-    if (prop.command === 'Edit') {
-      form.setFieldsValue({
-        firstname: prop.user.firstname,
-        lastname: prop.user.lastname,
-        username: prop.user.username,
-        email: prop.user.email,
-        idNumber: prop.user.idNumber,
-        answer: prop.user.answer,
-      });
-
-      if (prop.user.question.length > 0) {
+    useEffect(() => {
+      if (prop.command === 'Edit') {
         form.setFieldsValue({
-          question: prop.user.question,
+          firstname: prop.user.firstname,
+          lastname: prop.user.lastname,
+          username: prop.user.username,
+          email: prop.user.email,
+          idNumber: prop.user.idNumber,
+          answer: prop.user.answer,
         });
+
+        if (prop.user.question.length > 0) {
+          form.setFieldsValue({
+            question: prop.user.question,
+          });
+        }
       }
-    }
+    }, [prop.command]);
 
     return (
       <Modal

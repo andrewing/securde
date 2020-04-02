@@ -7,21 +7,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const AdminPageNavbar = ({url}) => (
   <>
     <Navbar expand="lg" bg="dark" variant="dark" style={{height: '60px'}}>
-      <NavLink to={`${url}`}>
-        <Navbar.Brand>
-          <img alt="" src="/logo.png" width="45" height="45" />
-          <span
-            style={{
-              fontWeight: 500,
-              fontSize: 15,
-              marginLeft: 10,
-              color: 'white',
-            }}
-          >
-            Admin Page
-          </span>
-        </Navbar.Brand>
-      </NavLink>
+      <Navbar.Brand>
+        <img alt="" src="/logo.png" width="45" height="45" />
+        <span
+          style={{
+            fontWeight: 500,
+            fontSize: 15,
+            marginLeft: 10,
+            color: 'white',
+          }}
+        >
+          Admin Page
+        </span>
+      </Navbar.Brand>
       <Nav className="mr-auto">
         <NavLink
           to={`${url}/book-managers`}
