@@ -1,14 +1,12 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
-import {Form, Input, Modal, Row, Select, notification} from 'antd';
-import {CheckCircleTwoTone} from '@ant-design/icons';
+import {Form, Input, Modal, Row, Select} from 'antd';
 import {Button} from 'react-bootstrap';
 
-const SignUpForm = ({showModal, handleClose}) => {
+const SignUpForm = ({showModal, handleClose, signupAccount}) => {
   const [form] = Form.useForm();
   const {Option} = Select;
 
-  const onSubmit = event => {
+  const onSubmit = () => {
     form
       .validateFields()
       .then(values => {
@@ -23,24 +21,21 @@ const SignUpForm = ({showModal, handleClose}) => {
           answer: values.answer,
           bookHistory: [],
         };
-        notification.open({
-          icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
-          message: 'Successfully Signed Up!',
-          description: 'You can now log int with your new account.',
-        });
-        console.log(values);
-
+        signupAccount(values);
         form.resetFields();
         handleClose();
       })
       .catch(info => {
-        console.log('Validate Failed:', info);
+        // console.log('Validate Failed:', info);
       });
   };
 
   const matchPassword = (_, value) => {
-    if (!value && form.getFieldValue('password') !== value) {
-      return Promise.reject('Password do not match.');
+    try {
+      if (value && form.getFieldValue('password') !== value)
+        throw new Error('Password do not match.');
+    } catch (err) {
+      return Promise.reject(err);
     }
     return Promise.resolve();
   };
@@ -83,7 +78,12 @@ const SignUpForm = ({showModal, handleClose}) => {
               type="number"
               min="0"
               max="9"
-              style={{fontSize: 13, padding: '3px 10px', width: 180, borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 180,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               placeholder="ID Number"
             />
@@ -100,7 +100,12 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 180, borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 180,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               placeholder="First Name"
             />
@@ -117,7 +122,12 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 180, borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 180,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               placeholder="Last Name"
             />
@@ -140,7 +150,12 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               placeholder="Email"
             />
@@ -157,7 +172,12 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280,borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               placeholder="Username"
             />
@@ -180,7 +200,12 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               type="password"
               placeholder="Password"
@@ -200,7 +225,12 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               type="password"
               placeholder="Confirm Password"
@@ -247,7 +277,12 @@ const SignUpForm = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               placeholder="Answer"
             />

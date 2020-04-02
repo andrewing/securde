@@ -3,11 +3,11 @@ import React, {useState} from 'react';
 import {Form, Input, Modal, Row, Select, Divider} from 'antd';
 import {Button} from 'react-bootstrap';
 
-const ForgotPassword = ({showModal, handleClose}) => {
+const ForgotPassword = ({showModal, handleClose, resetPassword}) => {
   const [form] = Form.useForm();
   const {Option} = Select;
 
-  const [disableReset, setDisableReset] = useState(false);
+  const [disableReset, setDisableReset] = useState(true);
 
   const onSubmit = event => {
     form
@@ -18,20 +18,25 @@ const ForgotPassword = ({showModal, handleClose}) => {
           question: values.question,
           answer: values.answer,
         };
+        // check if step 1 is gucci, then proceed to reset then
+        // if(gucci) setDisable(false);
+        // only allow user to reset if step 1 is cleared
 
-        console.log(values);
-
+        resetPassword(values);
         form.resetFields();
         handleClose();
       })
       .catch(info => {
-        console.log('Validate Failed:', info);
+        // console.log('Validate Failed:', info);
       });
   };
 
-  const matchPassword = (rule, value) => {
-    if (!value && form.getFieldValue('password') !== value) {
-      return Promise.reject('Password do not match.');
+  const matchPassword = (_, value) => {
+    try {
+      if (value && form.getFieldValue('password') !== value)
+        throw new Error('Password do not match.');
+    } catch (err) {
+      return Promise.reject(err);
     }
     return Promise.resolve();
   };
@@ -103,7 +108,12 @@ const ForgotPassword = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               placeholder="Answer"
             />
@@ -131,7 +141,12 @@ const ForgotPassword = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               type="password"
               placeholder="New Password"
@@ -152,7 +167,12 @@ const ForgotPassword = ({showModal, handleClose}) => {
             ]}
           >
             <Input
-              style={{fontSize: 13, padding: '3px 10px', width: 280, borderRadius: '5px'}}
+              style={{
+                fontSize: 13,
+                padding: '3px 10px',
+                width: 280,
+                borderRadius: '5px',
+              }}
               autoComplete="off"
               type="password"
               placeholder="Confirm Password"

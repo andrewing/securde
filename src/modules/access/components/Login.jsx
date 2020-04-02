@@ -3,7 +3,12 @@ import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import {Form, Input} from 'antd';
 
-const UserLogin = ({selectedAccess, onClickShowSignUp, onClickShowForgot}) => {
+const UserLogin = ({
+  selectedAccess,
+  onClickShowSignUp,
+  onClickShowForgot,
+  loginAccount,
+}) => {
   const [form] = Form.useForm();
   const [path, setPath] = useState('');
 
@@ -13,12 +18,11 @@ const UserLogin = ({selectedAccess, onClickShowSignUp, onClickShowForgot}) => {
     form
       .validateFields()
       .then(values => {
-        console.log(values);
-
+        loginAccount(values);
         form.resetFields();
       })
       .catch(info => {
-        console.log('Validate Failed:', info);
+        // console.log('Validate Failed:', info);
       });
   };
 
@@ -95,6 +99,21 @@ const UserLogin = ({selectedAccess, onClickShowSignUp, onClickShowForgot}) => {
               </Button>
             )}
           </div>
+          {selectedAccess === 'User' && (
+            <Link to={path}>
+              <Button
+                style={{
+                  color: '#6C63FF',
+                  padding: '15px 0px',
+                  fontSize: 13,
+                }}
+                variant="link"
+                type="submit"
+              >
+                Log In as a Guest 🡢
+              </Button>
+            </Link>
+          )}
         </Form>
       </div>
 
