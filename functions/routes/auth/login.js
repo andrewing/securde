@@ -44,11 +44,11 @@ export const login = (route, event, context, callback) => {
 
           const {type} = user;
           const tokenPromise = jwt.sign({user}, SECRET, {
-            expiresIn: '7d',
+            expiresIn: '30m',
             audience: type,
           });
 
-          const refreshTokenPromise = jwt.sign({}, REFRESH_SECRET, {
+          const refreshTokenPromise = jwt.sign({id: user._id}, REFRESH_SECRET, {
             expiresIn: '30m',
           });
 
@@ -64,7 +64,10 @@ export const login = (route, event, context, callback) => {
               );
               callback(
                 null,
-                CODE(200, 'Successfully logged in', {token, refreshToken}),
+                CODE(200, 'Successfully logged in', {
+                  access: token,
+                  refresh: refreshToken,
+                }),
               );
             })
             .catch(err => {

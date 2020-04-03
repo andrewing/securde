@@ -1,6 +1,7 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import routes from './routes/routes';
+import {request} from './api/api';
 import './index.css';
 import './App.css';
 
@@ -18,6 +19,28 @@ const App = () => {
   return (
     <>
       <Switch>{mainPages}</Switch>
+      <button
+        type="button"
+        onClick={() => {
+          request('/.netlify/functions/auth/login', {
+            method: 'POST',
+            body: {
+              username: 'student',
+              password: 'password',
+            },
+          }).then(val => {});
+        }}
+      >
+        Log In
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          request('/.netlify/functions/user/get-question').then(val => {});
+        }}
+      >
+        Get
+      </button>
     </>
 
     // <button
