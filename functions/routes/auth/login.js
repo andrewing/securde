@@ -3,7 +3,7 @@ import moment from 'moment';
 import {CODE} from '../../util/code';
 import {SECRET, REFRESH_SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
-import {EXPIRATIONS} from '../../util/constants';
+import {EXPIRATIONS, AUDIENCE} from '../../util/constants';
 import Account from '../../db/models/account';
 import db from '../../db/db';
 import SystemLog from '../../db/models/system_log';
@@ -14,7 +14,7 @@ export const login = (route, event, context, callback) => {
     return;
   }
   const body = JSON.parse(event.body);
-  const {username, password} = body;
+  const {username, password, type: loginType} = body;
 
   Account.findUserByUsername(username)
     .then(({data: found}) => {
@@ -29,7 +29,12 @@ export const login = (route, event, context, callback) => {
         throw new ResponseError(404, 'User Not Found');
       }
 
-      Account.authenticate(username, password, found.salt)
+      Account.authenticate(
+        username,
+        password,
+        found.salt,
+        loginType || AUDIENCE.USER_STUDENT,
+      )
         .then(({data: user}) => {
           if (!user) {
             SystemLog.addLog(

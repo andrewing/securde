@@ -43,12 +43,13 @@ const accountSchema = new Schema({
   salt: String,
 });
 
-accountSchema.statics.authenticate = (username, password, salt) => {
+accountSchema.statics.authenticate = (username, password, salt, type) => {
   const hashed = sha512(password, salt).hashedPassword;
   return to(
     Account.findOne({
       username,
       password: hashed,
+      type,
     }),
   );
 };

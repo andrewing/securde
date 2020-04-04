@@ -38,14 +38,23 @@ export const changepassword = (route, event, context, callback) => {
 
       Account.authenticate(found.username, oldPassword, found.salt)
         .then(({data: account}) => {
-          if (!account) throw new ResponseError(401, 'Incorrect Password');
-
+          if (!account) {
+            SystemLog.addLog(
+              new SystemLog({
+                time: moment().format(),
+                action: 'CHANGE PASSWORD ATTEMPT',
+                content: 'Incorrect password',
+                account: user._id,
+              }),
+            );
+            throw new ResponseError(401, 'Incorrect Password');
+          }
           Account.changePassword(user._id, newPassword).then(() => {
             SystemLog.addLog(
               new SystemLog({
                 time: moment().format(),
                 action: 'CHANGE PASSWORD',
-                content: null,
+                content: 'Success!',
                 account: user._id,
               }),
             );
