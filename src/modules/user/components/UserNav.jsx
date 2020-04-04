@@ -10,7 +10,7 @@ const UserPageNavbar = ({url}) => {
   return (
     <>
       <Navbar expand="lg" bg="dark" variant="dark" style={{height: '60px'}}>
-        <NavLink to={`${url}`}>
+        <NavLink to={`${url}/books`}>
           <Navbar.Brand>
             <img alt="" src="/logo.png" width="45" height="45" />
             <span
@@ -21,7 +21,7 @@ const UserPageNavbar = ({url}) => {
                 color: 'white',
               }}
             >
-              Manager Page
+              User Page
             </span>
           </Navbar.Brand>
         </NavLink>
@@ -29,14 +29,14 @@ const UserPageNavbar = ({url}) => {
           <NavLink
             to={`${url}/books`}
             style={{color: 'white', textDecoration: 'none', margin: 10}}
-            activeStyle={{textDecoration: 'underline'}}
+            activeStyle={{color: '#A7A1FF'}}
           >
             All Books
           </NavLink>
           <NavLink
             to={`${url}/profile`}
             style={{color: 'white', textDecoration: 'none', margin: 10}}
-            activeStyle={{textDecoration: 'underline'}}
+            activeStyle={{color: '#A7A1FF'}}
           >
             View Profile
           </NavLink>

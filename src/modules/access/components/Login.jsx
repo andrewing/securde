@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import {Form, Input} from 'antd';
 
@@ -12,8 +11,6 @@ const UserLogin = ({
   const [form] = Form.useForm();
   const [path, setPath] = useState('');
 
-  useEffect(() => loginPath());
-
   const onClickLogin = () => {
     form
       .validateFields()
@@ -24,16 +21,6 @@ const UserLogin = ({
       .catch(info => {
         // console.log('Validate Failed:', info);
       });
-  };
-
-  const loginPath = () => {
-    if (selectedAccess === 'Admin') {
-      setPath('/admin/book-managers');
-    } else if (selectedAccess === 'Manager') {
-      setPath('/manager/manage-books');
-    } else {
-      setPath('/user/books');
-    }
   };
 
   return (
@@ -79,15 +66,13 @@ const UserLogin = ({
           )}
 
           <div style={{display: 'flex', paddingTop: 20}}>
-            <Link to={path}>
-              <Button
-                bsPrefix="primary-button"
-                type="submit"
-                onClick={onClickLogin}
-              >
-                Log In
-              </Button>
-            </Link>
+            <Button
+              bsPrefix="primary-button"
+              type="submit"
+              onClick={onClickLogin}
+            >
+              Log In
+            </Button>
 
             {selectedAccess !== 'Manager' && (
               <Button
@@ -100,19 +85,17 @@ const UserLogin = ({
             )}
           </div>
           {selectedAccess === 'User' && (
-            <Link to={path}>
-              <Button
-                style={{
-                  color: '#6C63FF',
-                  padding: '15px 0px',
-                  fontSize: 13,
-                }}
-                variant="link"
-                type="submit"
-              >
-                Log In as a Guest 🡢
-              </Button>
-            </Link>
+            <Button
+              style={{
+                color: '#6C63FF',
+                padding: '15px 0px',
+                fontSize: 13,
+              }}
+              variant="link"
+              type="submit"
+            >
+              Log In as a Guest 🡢
+            </Button>
           )}
         </Form>
       </div>

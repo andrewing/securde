@@ -5,15 +5,11 @@ import {CheckCircleTwoTone} from '@ant-design/icons';
 import bookColumns from '../../components/table/booksColumns';
 import bookData from '../../components/table/bookData';
 
-const Page = () => {
-  const [showView, setShowView] = useState(false);
+const Page = ({props}) => {
+  const [showBorrow, setShowBorrow] = useState(false); // showBorrow will go to borrow modal
 
-  const showViewModal = () => {
-    setShowView(true);
-  };
-
-  const handleClose = () => {
-    setShowView(false);
+  const showBorrowModal = () => {
+    setShowBorrow(true);
   };
 
   // for filters
@@ -43,7 +39,8 @@ const Page = () => {
           bordered
           dataSource={bookData}
           columns={bookColumns({
-            showViewModal,
+            props,
+            showBorrowModal,
             handleSearch,
             handleReset,
             searchText,

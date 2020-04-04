@@ -1,13 +1,16 @@
+/* eslint-disable no-else-return */
 import React, {useState} from 'react';
+import {Redirect} from 'react-router-dom';
 import {notification} from 'antd';
 import {CheckCircleTwoTone} from '@ant-design/icons';
 import LandingPage from './components/LandingPage';
 import Login from './components/Login';
-import './index.css';
 import SignUp from './components/SignUp';
 import ForgotPassword from './components/ForgotPassword';
+import loginAuth from '../../common/loginAuth';
+import './index.css';
 
-const Page = () => {
+const Page = props => {
   const [selectedAccess, setAccess] = useState('User');
   const [showSignUp, setShowSignUp] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -36,7 +39,12 @@ const Page = () => {
   };
 
   const loginAccount = values => {
-    // console.log(values);
+    if (selectedAccess === 'Admin') {
+      loginAuth.verifyAccount(values);
+      return props.history.push('/admin');
+    }
+
+    return props.history.push('/');
   };
 
   const signupAccount = values => {

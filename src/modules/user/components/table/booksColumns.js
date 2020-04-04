@@ -1,10 +1,11 @@
 import React from 'react';
-import {Row, Tooltip} from 'antd';
+import {Link} from 'react-router-dom';
+import {Row, Tooltip, Tag} from 'antd';
 import {EyeOutlined, BookOutlined} from '@ant-design/icons';
 import getColumnSearchProps from './getColumnSearchProps';
 
 const bookColumns = ({
-  showViewModal,
+  showBorrowModal,
   handleSearch,
   handleReset,
   searchText,
@@ -15,7 +16,7 @@ const bookColumns = ({
     title: 'Title',
     className: 'column-style',
     dataIndex: 'title',
-    width: 250,
+    width: 220,
     align: 'left',
     ellipsis: true,
     ...getColumnSearchProps(
@@ -26,12 +27,22 @@ const bookColumns = ({
       searchColumn,
       searchText,
     ),
+    render: record => {
+      return (
+        <div
+          style={{overflow: 'hidden', textOverflow: 'ellipsis'}}
+          title={record}
+        >
+          {record}
+        </div>
+      );
+    },
   },
   {
     title: 'Author/s',
     className: 'column-style',
     dataIndex: 'authors',
-    width: 300,
+    width: 250,
     align: 'left',
     ellipsis: true,
     ...getColumnSearchProps(
@@ -62,7 +73,7 @@ const bookColumns = ({
     title: 'Publisher',
     className: 'column-style',
     dataIndex: 'publisher',
-    width: 250,
+    width: 220,
     align: 'left',
     ellipsis: true,
     ...getColumnSearchProps(
@@ -73,37 +84,57 @@ const bookColumns = ({
       searchColumn,
       searchText,
     ),
+    render: (text, record) => {
+      return (
+        <div>
+          {record.publisher}
+          <br />
+          <small style={{fontStyle: 'italic'}}>
+            Published at {record.year_published}
+          </small>
+        </div>
+      );
+    },
   },
   {
-    title: 'Year Published',
+    title: 'Status',
     className: 'column-style',
-    dataIndex: 'year_published',
+    dataIndex: 'status',
+    width: 150,
     ...getColumnSearchProps(
-      'year_published',
+      'status',
       searchInput,
       handleSearch,
       handleReset,
       searchColumn,
       searchText,
     ),
+    render: record => {
+      if (record === 'Available') {
+        return <Tag color="green">{record}</Tag>;
+      }
+      return <Tag color="red">{record}</Tag>;
+    },
   },
   {
-    title: 'ISBN',
+    title: 'Available By',
     className: 'column-style',
-    dataIndex: 'ISBN',
+    dataIndex: 'available',
+    width: 130,
     ...getColumnSearchProps(
-      'title',
+      'available',
       searchInput,
       handleSearch,
       handleReset,
       searchColumn,
       searchText,
     ),
-  },
-  {
-    title: 'Call Number',
-    className: 'column-style',
-    dataIndex: 'call_number',
+    render: (text, record) => {
+      if (record.status === 'Reserved') {
+        return <span>{text}</span>;
+      }
+      return <span>-</span>;
+    },
   },
   {
     title: 'Actions',
@@ -113,18 +144,29 @@ const bookColumns = ({
       return (
         <Row type="flex" justify="space-around">
           <Tooltip title="View Book">
-            <EyeOutlined
-              style={{color: '#6c63ff'}}
-              onClick={() => {
-                showViewModal(record);
+            <Link
+              to={{
+                pathname: `/user/books/${record.title}`,
+                state: {
+                  title: record.title,
+                  authors: record.authors,
+                  publisher: record.publisher,
+                  year_published: record.year_published,
+                  ISBN: record.ISBN,
+                  status: record.status,
+                  call_number: record.call_number,
+                },
               }}
-            />
+            >
+              <EyeOutlined style={{color: '#6c63ff'}} />
+            </Link>
           </Tooltip>
+
           <Tooltip title="Borrow Book">
             <BookOutlined
               style={{color: '#6c63ff'}}
               onClick={() => {
-                showViewModal(record);
+                showBorrowModal(record);
               }}
             />
           </Tooltip>

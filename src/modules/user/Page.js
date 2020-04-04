@@ -6,12 +6,13 @@ import UserNav from './components/UserNav';
 import Subpages from './pages';
 import './index.css';
 
-const Page = () => {
+const Page = props => {
   const {url, path} = useRouteMatch();
+
   return (
     <>
       <UserNav url={url} />
-      <Subpages path={path} />
+      <Subpages path={path} props={props} />
     </>
   );
 };
