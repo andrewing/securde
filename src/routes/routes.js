@@ -7,18 +7,18 @@ export default [
     key: '/user',
     path: '/user',
     component: User,
-    exact: true,
+    exact: false,
   },
   {
     key: '/admin',
     path: '/admin',
     component: Admin,
-    exact: true,
+    exact: false,
   },
   {
     key: '/manager',
     path: '/manager',
     component: BookManager,
-    exact: true,
+    exact: false,
   },
 ];

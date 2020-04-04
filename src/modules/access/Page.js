@@ -42,6 +42,12 @@ const Page = props => {
     if (selectedAccess === 'Admin') {
       loginAuth.verifyAccount(values);
       return props.history.push('/admin');
+    } else if (selectedAccess === 'Manager') {
+      loginAuth.verifyAccount(values);
+      return props.history.push('/manager');
+    } else if (selectedAccess === 'User') {
+      loginAuth.verifyAccount(values);
+      return props.history.push('/user');
     }
 
     return props.history.push('/');

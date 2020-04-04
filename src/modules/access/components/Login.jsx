@@ -35,7 +35,16 @@ const UserLogin = ({
         <h1>Login as {selectedAccess}</h1>
         <Form form={form}>
           <span>Username</span>
-          <Form.Item style={{margin: 0}} name="username">
+          <Form.Item
+            style={{margin: 0}}
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your username',
+              },
+            ]}
+          >
             <Input
               style={{fontSize: 13, borderRadius: '5px'}}
               autoComplete="off"
@@ -46,7 +55,16 @@ const UserLogin = ({
           <br />
 
           <span>Password</span>
-          <Form.Item style={{margin: 0}} name="password">
+          <Form.Item
+            style={{margin: 0}}
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your password',
+              },
+            ]}
+          >
             <Input.Password
               style={{fontSize: 13, borderRadius: '5px'}}
               autoComplete="off"

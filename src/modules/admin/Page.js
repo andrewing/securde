@@ -7,6 +7,7 @@ import './pages/index.css';
 
 const Page = () => {
   const {url, path} = useRouteMatch();
+
   return (
     <>
       <AdminNav url={url} />
