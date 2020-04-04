@@ -72,6 +72,7 @@ export const login = (route, event, context, callback) => {
                 CODE(200, 'Successfully logged in', {
                   access: token,
                   refresh: refreshToken,
+                  type,
                 }),
               );
             })
