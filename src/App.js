@@ -19,28 +19,6 @@ const App = () => {
   return (
     <>
       <Switch>{mainPages}</Switch>
-      <button
-        type="button"
-        onClick={() => {
-          request('/.netlify/functions/auth/login', {
-            method: 'POST',
-            body: {
-              username: 'student',
-              password: 'password',
-            },
-          }).then(val => {});
-        }}
-      >
-        Log In
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          request('/.netlify/functions/user/get-question').then(val => {});
-        }}
-      >
-        Get
-      </button>
     </>
 
     // <button

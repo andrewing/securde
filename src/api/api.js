@@ -1,14 +1,13 @@
 import normalize from 'normalize-url';
 import {setTokens, getTokens} from './constants';
 
-export const request = async (url, options = {}) => {
+export const request = async (url, options = {}, tokenNeeded = false) => {
   const dummy = `http://dummy.com`;
-  url = normalize(`${dummy}${url}`).substring(dummy.length);
+  url = normalize(`${dummy}/.netlify/functions${url}`).substring(dummy.length);
   options = normalizeOpts(options);
 
-  await refreshToken();
-  if (getTokens().refresh) return fetch(url, options);
-  return null;
+  if (tokenNeeded) await refreshToken();
+  return fetch(url, options);
 };
 
 const normalizeOpts = options => {

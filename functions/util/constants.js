@@ -5,8 +5,7 @@ export const AUDIENCE = {
   ADMIN: 'ADMIN',
 };
 
-export const ACTIONS = {
-  ADMIN: {
-    CREATE_MANAGER: 'CREATE MANAGER',
-  },
+export const EXPIRATIONS = {
+  access: '3m',
+  refresh: '30m',
 };

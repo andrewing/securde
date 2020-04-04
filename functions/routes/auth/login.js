@@ -3,7 +3,7 @@ import moment from 'moment';
 import {CODE} from '../../util/code';
 import {SECRET, REFRESH_SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
-import {AUDIENCE} from '../../util/constants';
+import {EXPIRATIONS} from '../../util/constants';
 import Account from '../../db/models/account';
 import db from '../../db/db';
 import SystemLog from '../../db/models/system_log';
@@ -44,12 +44,12 @@ export const login = (route, event, context, callback) => {
 
           const {type} = user;
           const tokenPromise = jwt.sign({user}, SECRET, {
-            expiresIn: '30m',
+            expiresIn: EXPIRATIONS.access,
             audience: type,
           });
 
           const refreshTokenPromise = jwt.sign({id: user._id}, REFRESH_SECRET, {
-            expiresIn: '30m',
+            expiresIn: EXPIRATIONS.refresh,
           });
 
           Promise.all([tokenPromise, refreshTokenPromise])

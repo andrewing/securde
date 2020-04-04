@@ -4,6 +4,7 @@ import ResponseError from './util/error';
 import {jwtError, REFRESH_SECRET, SECRET} from './util/jwt';
 import db from './db/db';
 import Account from './db/models/account';
+import {EXPIRATIONS} from './util/constants';
 
 export const handler = (event, context, callback) => {
   try {
@@ -13,13 +14,22 @@ export const handler = (event, context, callback) => {
     const {authorization: oldRefreshToken} = event.headers;
 
     jwt.verify(oldRefreshToken, REFRESH_SECRET, (err, decoded) => {
-      if (err) throw jwtError(err);
+      if (err) {
+        callback(
+          null,
+          jwtError(err, decoded && decoded.user.username, 'REFRESH TOKEN'),
+        );
+        return;
+      }
       const {id} = decoded;
       Account.findById(id)
         .then(user => {
-          const tokenPromise = jwt.sign({user}, SECRET, {expiresIn: '30m'});
+          const tokenPromise = jwt.sign({user}, SECRET, {
+            expiresIn: EXPIRATIONS.refresh,
+            audience: user.type,
+          });
           const refreshTokenPromise = jwt.sign({id}, REFRESH_SECRET, {
-            expiresIn: '30m',
+            expiresIn: EXPIRATIONS.refresh,
           });
 
           Promise.all([tokenPromise, refreshTokenPromise])
