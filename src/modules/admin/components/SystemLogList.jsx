@@ -99,6 +99,13 @@ const SystemLogList = prop => {
       ...getColumnSearchProps('action'),
     },
     {
+      title: 'Username',
+      className: 'column-style',
+      dataIndex: 'account',
+      key: 'account',
+      ...getColumnSearchProps('username'),
+    },
+    {
       title: 'Logs',
       className: 'column-style',
       dataIndex: 'content',

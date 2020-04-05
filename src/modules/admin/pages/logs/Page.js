@@ -9,7 +9,11 @@ const data = [
     time: '2020-03-24 12:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title1]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -17,7 +21,11 @@ const data = [
     time: '2020-03-24 23:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title2]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -25,7 +33,11 @@ const data = [
     time: '2020-03-24 22:00',
     action: 'DELETE',
     content: 'Book manager deleted a book [book title3]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -33,7 +45,11 @@ const data = [
     time: '2020-03-24 21:25',
     action: 'UPDATE',
     content: 'Book manager updated a book [book title4]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -41,7 +57,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -49,7 +69,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -57,7 +81,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -65,7 +93,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -73,7 +105,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -81,7 +117,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -89,7 +129,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -97,7 +141,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -105,7 +153,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -113,7 +165,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -121,7 +177,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -129,7 +189,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -137,7 +201,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
   {
@@ -145,7 +213,11 @@ const data = [
     time: '2020-03-24 11:25',
     action: 'ADD',
     content: 'Book manager added a new book [book title5]',
-    account: {},
+    account: {
+      firstname: 'firstname',
+      lastname: 'lastname',
+      username: 'username',
+    },
     __v: 0,
   },
 ];
