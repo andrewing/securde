@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Container, Jumbotron, Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {AUDIENCE} from '../../../util/constants';
 
 const LoginPage = props => {
   return (
@@ -12,19 +13,21 @@ const LoginPage = props => {
         <p>You can access the online library as follows</p>{' '}
         <Button
           style={{backgroundColor: '#6C63FF'}}
-          onClick={e => props.onClickAccess(e.target.innerText)}
+          onClick={e => props.onClickAccess(AUDIENCE.USER_STUDENT, 'Student')}
         >
           Access as a User
         </Button>{' '}
         <Button
           style={{backgroundColor: '#6C63FF'}}
-          onClick={e => props.onClickAccess(e.target.innerText)}
+          onClick={e => props.onClickAccess(AUDIENCE.ADMIN, 'Admin')}
         >
           Access as an Admin
         </Button>{' '}
         <Button
           style={{backgroundColor: '#6C63FF'}}
-          onClick={e => props.onClickAccess(e.target.innerText)}
+          onClick={e =>
+            props.onClickAccess(AUDIENCE.BOOK_MANAGER, 'Book Manager')
+          }
         >
           Access as a Book Manager
         </Button>

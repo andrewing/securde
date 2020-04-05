@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
+import {BeatLoader} from 'react-spinners';
 import {Form, Input} from 'antd';
+import {AUDIENCE} from '../../../util/constants';
 
 const UserLogin = ({
   selectedAccess,
@@ -10,8 +13,10 @@ const UserLogin = ({
 }) => {
   const [form] = Form.useForm();
   const [path, setPath] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
   const onClickLogin = () => {
+    setLoading(true);
     form
       .validateFields()
       .then(values => {
@@ -21,6 +26,29 @@ const UserLogin = ({
       .catch(info => {
         // console.log('Validate Failed:', info);
       });
+    // .finally(() => {
+    //   setLoading(false)
+    // })
+  };
+
+  const renderDisplay = access => {
+    if (selectedAccess === AUDIENCE.ADMIN) {
+      return 'Admin';
+    }
+    if (selectedAccess === AUDIENCE.BOOK_MANAGER) {
+      return 'Book Manager';
+    }
+    return 'User';
+  };
+
+  const loginPath = () => {
+    if (selectedAccess === AUDIENCE.ADMIN) {
+      setPath('/admin/book-managers');
+    } else if (selectedAccess === AUDIENCE.BOOK_MANAGER) {
+      setPath('/manager/manage-books');
+    } else {
+      setPath('/user/books');
+    }
   };
 
   return (
@@ -32,7 +60,7 @@ const UserLogin = ({
           width: 350,
         }}
       >
-        <h1>Login as {selectedAccess}</h1>
+        <h1>Login as {renderDisplay(selectedAccess)}</h1>
         <Form form={form}>
           <span>Username</span>
           <Form.Item
@@ -73,7 +101,7 @@ const UserLogin = ({
             />
           </Form.Item>
 
-          {selectedAccess !== 'Manager' && (
+          {selectedAccess !== AUDIENCE.BOOK_MANAGER && (
             <Button
               style={{color: '#6C63FF'}}
               variant="link"
@@ -84,15 +112,18 @@ const UserLogin = ({
           )}
 
           <div style={{display: 'flex', paddingTop: 20}}>
+            {/* <Link to={path}> */}
             <Button
               bsPrefix="primary-button"
               type="submit"
               onClick={onClickLogin}
+              disabled={isLoading}
             >
-              Log In
+              {isLoading ? <BeatLoader size={8} color="white" /> : 'Log In'}
             </Button>
+            {/* </Link> */}
 
-            {selectedAccess !== 'Manager' && (
+            {selectedAccess !== AUDIENCE.BOOK_MANAGER && (
               <Button
                 style={{color: '#6C63FF'}}
                 variant="link"
@@ -102,18 +133,20 @@ const UserLogin = ({
               </Button>
             )}
           </div>
-          {selectedAccess === 'User' && (
-            <Button
-              style={{
-                color: '#6C63FF',
-                padding: '15px 0px',
-                fontSize: 13,
-              }}
-              variant="link"
-              type="submit"
-            >
-              Log In as a Guest 🡢
-            </Button>
+          {selectedAccess === AUDIENCE.USER_STUDENT && (
+            <Link to={path}>
+              <Button
+                style={{
+                  color: '#6C63FF',
+                  padding: '15px 0px',
+                  fontSize: 13,
+                }}
+                variant="link"
+                type="submit"
+              >
+                Log In as a Guest 🡢
+              </Button>
+            </Link>
           )}
         </Form>
       </div>

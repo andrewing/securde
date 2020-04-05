@@ -5,6 +5,7 @@ import {changepassword} from './changepassword';
 import {forgotpassword} from './forgotpassword';
 import {getQuestion} from './get-question';
 import {history} from './history/index';
+import {details} from './details';
 
 export const user = (route, ...rest) => {
   handlePath(
@@ -14,6 +15,7 @@ export const user = (route, ...rest) => {
       [forgotpassword, '/forgot-password'],
       [getQuestion, '/get-question'],
       [history, '/history'],
+      [details, '/details'],
       [def, '/'],
     ],
     ...rest,

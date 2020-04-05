@@ -1,5 +1,5 @@
 import normalize from 'normalize-url';
-import {setTokens, getTokens} from './constants';
+import {auth} from './auth';
 
 export const request = async (url, options = {}, tokenNeeded = false) => {
   const dummy = `http://dummy.com`;
@@ -22,7 +22,7 @@ const normalizeOpts = options => {
     method,
     body,
     headers: {
-      Authorization: getTokens().access,
+      Authorization: auth.accessToken,
     },
   };
 };
@@ -31,7 +31,7 @@ export const refreshToken = async () => {
   await fetch('/.netlify/functions/refresh-token', {
     method: 'POST',
     headers: {
-      Authorization: getTokens().refresh,
+      Authorization: auth.refreshToken,
     },
   })
     .then(res => {
@@ -39,10 +39,10 @@ export const refreshToken = async () => {
       return res.json();
     })
     .then(json => {
-      const {access, refresh} = json.data;
-      setTokens(access, refresh);
+      const {access, refresh, type} = json.data;
+      auth.authenticate(access, refresh, type);
     })
     .catch(err => {
-      setTokens(null, null);
+      auth.signout();
     });
 };

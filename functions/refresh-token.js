@@ -36,7 +36,11 @@ export const handler = (event, context, callback) => {
             .then(([token, refreshToken]) => {
               callback(
                 null,
-                CODE(200, null, {access: token, refresh: refreshToken}),
+                CODE(200, null, {
+                  access: token,
+                  refresh: refreshToken,
+                  type: user.type,
+                }),
               );
             })
             .catch(pErr => {
