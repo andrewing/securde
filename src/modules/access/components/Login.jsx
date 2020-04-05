@@ -15,6 +15,8 @@ const UserLogin = ({
   const [path, setPath] = useState('');
   const [isLoading, setLoading] = useState(false);
 
+  useEffect(() => loginPath());
+
   const onClickLogin = () => {
     setLoading(true);
     form
@@ -112,16 +114,16 @@ const UserLogin = ({
           )}
 
           <div style={{display: 'flex', paddingTop: 20}}>
-            {/* <Link to={path}> */}
-            <Button
-              bsPrefix="primary-button"
-              type="submit"
-              onClick={onClickLogin}
-              disabled={isLoading}
-            >
-              {isLoading ? <BeatLoader size={8} color="white" /> : 'Log In'}
-            </Button>
-            {/* </Link> */}
+            <Link to={path}>
+              <Button
+                bsPrefix="primary-button"
+                type="submit"
+                onClick={onClickLogin}
+                disabled={isLoading}
+              >
+                {isLoading ? <BeatLoader size={8} color="white" /> : 'Log In'}
+              </Button>
+            </Link>
 
             {selectedAccess !== AUDIENCE.BOOK_MANAGER && (
               <Button

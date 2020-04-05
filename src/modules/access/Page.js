@@ -26,13 +26,13 @@ const Page = props => {
   };
 
   const loginAccount = values => {
-    if (selectedAccess === 'Admin') {
+    if (selectedAccess === AUDIENCE.ADMIN) {
       loginAuth.verifyAccount(values);
       return props.history.push('/admin');
-    } else if (selectedAccess === 'Manager') {
+    } else if (selectedAccess === AUDIENCE.BOOK_MANAGER) {
       loginAuth.verifyAccount(values);
       return props.history.push('/manager');
-    } else if (selectedAccess === 'User') {
+    } else if (selectedAccess === AUDIENCE.USER_STUDENT) {
       loginAuth.verifyAccount(values);
       return props.history.push('/user');
     }
