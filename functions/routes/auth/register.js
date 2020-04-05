@@ -19,7 +19,6 @@ export const register = (route, event, context, callback) => {
       if (found) {
         SystemLog.addLog(
           new SystemLog({
-            time: moment().format(),
             action: 'USER REGISTER ATTEMPT',
             content: `Anonymous user tried to register but ${body.username} already existed`,
           }),
@@ -34,7 +33,6 @@ export const register = (route, event, context, callback) => {
       );
       SystemLog.addLog(
         new SystemLog({
-          time: moment().format(),
           action: 'USER REGISTER',
           content: `User ${body.username} registered`,
         }),

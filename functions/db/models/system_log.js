@@ -1,11 +1,15 @@
 import mongoose from 'mongoose';
+import moment from 'moment';
 import to from '../../util/to';
 
 const {Schema} = mongoose;
 const Account = require('./account');
 
 const systemLogSchema = new Schema({
-  time: String,
+  time: {
+    type: Date,
+    default: () => moment(),
+  },
   action: String,
   content: String,
   account: {

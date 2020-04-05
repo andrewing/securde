@@ -35,7 +35,6 @@ export const update = async (route, event, context, callback) => {
           const book = await Book.findById(_id);
           SystemLog.addLog(
             new SystemLog({
-              time: moment().format(),
               action: 'UPDATE',
               content: `Updated book [${book._id}] ${book.title}`,
               account: user._id,

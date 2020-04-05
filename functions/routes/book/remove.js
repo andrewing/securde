@@ -34,7 +34,6 @@ export const remove = async (route, event, context, callback) => {
           const book = await Book.findById(data.id);
           SystemLog.addLog(
             new SystemLog({
-              time: moment().format(),
               action: 'DELETE',
               content: `Deleted a book [${book._id}] ${book.title}`,
               account: user._id,
