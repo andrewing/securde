@@ -1,8 +1,8 @@
 import React from 'react';
 import {Descriptions, Tag, Divider} from 'antd';
-import {Container} from 'react-bootstrap';
+import {Container, Button} from 'react-bootstrap';
 
-const BookInfo = ({state}) => {
+const BookInfo = ({state, borrowBook}) => {
   return (
     <Container>
       <Descriptions bordered size="small" column={2}>
@@ -24,7 +24,21 @@ const BookInfo = ({state}) => {
           )}
         </Descriptions.Item>
         <Descriptions.Item label="Available By">
-          {state.available ? <span>{state.available}</span> : '-'}
+          {state.available_by ? (
+            <span>{state.available_by}</span>
+          ) : (
+            <Button
+              variant="link"
+              style={{
+                color: '#6c63ff',
+                fontSize: 13,
+                padding: 0,
+              }}
+              onClick={() => borrowBook(state)}
+            >
+              Borrow Now
+            </Button>
+          )}
         </Descriptions.Item>
       </Descriptions>
       <Divider />

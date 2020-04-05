@@ -1,5 +1,5 @@
 const loginAuth = {
-  isAuthenticated: true,
+  isAuthenticated: false,
 
   verifyAccount(values) {
     if (values.username && values.password) loginAuth.isAuthenticated = true;

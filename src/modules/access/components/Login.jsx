@@ -12,10 +12,7 @@ const UserLogin = ({
   loginAccount,
 }) => {
   const [form] = Form.useForm();
-  const [path, setPath] = useState('');
   const [isLoading, setLoading] = useState(false);
-
-  useEffect(() => loginPath());
 
   const onClickLogin = () => {
     setLoading(true);
@@ -27,6 +24,7 @@ const UserLogin = ({
       })
       .catch(info => {
         // console.log('Validate Failed:', info);
+        setLoading(false);
       });
     // .finally(() => {
     //   setLoading(false)
@@ -41,16 +39,6 @@ const UserLogin = ({
       return 'Book Manager';
     }
     return 'User';
-  };
-
-  const loginPath = () => {
-    if (selectedAccess === AUDIENCE.ADMIN) {
-      setPath('/admin/book-managers');
-    } else if (selectedAccess === AUDIENCE.BOOK_MANAGER) {
-      setPath('/manager/manage-books');
-    } else {
-      setPath('/user/books');
-    }
   };
 
   return (
@@ -114,16 +102,14 @@ const UserLogin = ({
           )}
 
           <div style={{display: 'flex', paddingTop: 20}}>
-            <Link to={path}>
-              <Button
-                bsPrefix="primary-button"
-                type="submit"
-                onClick={onClickLogin}
-                disabled={isLoading}
-              >
-                {isLoading ? <BeatLoader size={8} color="white" /> : 'Log In'}
-              </Button>
-            </Link>
+            <Button
+              bsPrefix="primary-button"
+              type="submit"
+              onClick={onClickLogin}
+              disabled={isLoading}
+            >
+              {isLoading ? <BeatLoader size={8} color="white" /> : 'Log In'}
+            </Button>
 
             {selectedAccess !== AUDIENCE.BOOK_MANAGER && (
               <Button
@@ -136,7 +122,7 @@ const UserLogin = ({
             )}
           </div>
           {selectedAccess === AUDIENCE.USER_STUDENT && (
-            <Link to={path}>
+            <Link to="/guest">
               <Button
                 style={{
                   color: '#6C63FF',
