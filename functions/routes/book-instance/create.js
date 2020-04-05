@@ -39,6 +39,7 @@ export const create = async (route, event, context, callback) => {
       const bookInstance = new BookInstance({
         book: bookId,
         isAvailable: true,
+        dateAvailable: null,
       });
       bookInstance
         .save()
