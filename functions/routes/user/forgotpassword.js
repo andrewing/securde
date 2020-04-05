@@ -39,7 +39,6 @@ export const forgotpassword = (route, event, context, callback) => {
           .then(() => {
             SystemLog.addLog(
               new SystemLog({
-                time: moment().format(),
                 action: 'FORGOT PASSWORD',
                 content: 'Success!',
                 account: user._id,
@@ -55,7 +54,6 @@ export const forgotpassword = (route, event, context, callback) => {
       } else {
         SystemLog.addLog(
           new SystemLog({
-            time: moment().format(),
             action: 'FORGOT PASSWORD ATTEMPT',
             content: 'Incorrect Answer',
             account: user._id,

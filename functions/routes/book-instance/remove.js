@@ -36,7 +36,6 @@ export const remove = async (route, event, context, callback) => {
         .then(() => {
           SystemLog.addLog(
             new SystemLog({
-              time: moment().format(),
               action: 'DELETE BOOK INSTANCE',
               content: `Deleted ${data.id}`,
               account: user._id,

@@ -5,6 +5,7 @@ import {create} from './create';
 import {update} from './update';
 import {remove} from './remove';
 import {get} from './get';
+import {paginated} from './paginated';
 import db from '../../db/db';
 import Book from '../../db/models/book';
 import Review from '../../db/models/review';
@@ -17,6 +18,7 @@ export const book = (route, ...rest) => {
       [update, '/update'],
       [remove, '/remove'],
       [get, '/get'],
+      [paginated, '/paginated'],
       [def, '/'],
     ],
     ...rest,

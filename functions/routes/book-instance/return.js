@@ -63,7 +63,6 @@ export const ret = (route, event, context, callback) => {
 
           SystemLog.addLog(
             new SystemLog({
-              time: moment().format(),
               action: 'RETURN BOOK',
               content: `Returned [${book._id}] ${book.title}`,
               account: user._id,

@@ -4,7 +4,7 @@ import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import Account from '../../db/models/account';
-import {AUDIENCE, ACTIONS} from '../../util/constants';
+import {AUDIENCE} from '../../util/constants';
 import SystemLog from '../../db/models/system_log';
 
 export const createManager = (route, event, context, callback) => {
@@ -42,8 +42,7 @@ export const createManager = (route, event, context, callback) => {
 
           SystemLog.addLog(
             new SystemLog({
-              time: moment().format(),
-              action: ACTIONS.ADMIN.CREATE_MANAGER,
+              action: 'CREATE MANAGER',
               content: `Created a book manager`,
               account: user._id,
             }),

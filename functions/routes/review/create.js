@@ -40,7 +40,6 @@ export const create = (route, event, context, callback) => {
           Account.addReviewHistory(user._id, review._id);
           SystemLog.addLog(
             new SystemLog({
-              time: moment().format(),
               action: 'BOOK REVIEW',
               content: `Reviewed [${book._id}] ${book.title}`,
               account: user._id,
