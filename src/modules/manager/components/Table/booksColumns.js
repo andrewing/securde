@@ -1,6 +1,7 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {Row, Tooltip} from 'antd';
-import {EditOutlined} from '@ant-design/icons';
+import {EditOutlined, SettingOutlined} from '@ant-design/icons';
 import DeleteModal from '../modals/DeleteModal';
 import getColumnSearchProps from './getColumnSearchProps';
 
@@ -114,9 +115,28 @@ const bookColumns = ({
     render: record => {
       return (
         <Row type="flex" justify="space-around">
+          <Tooltip title="Manage This Book">
+            <Link
+              to={{
+                pathname: `/manager/manage-books/${record.title}`,
+                state: {
+                  title: record.title,
+                  authors: record.authors,
+                  publisher: record.publisher,
+                  year_published: record.year_published,
+                  ISBN: record.ISBN,
+                  status: record.status,
+                  call_number: record.call_number,
+                },
+              }}
+            >
+              <SettingOutlined style={{color: '#6c63ff'}} />
+            </Link>
+          </Tooltip>
+
           <Tooltip title="Edit Book">
             <EditOutlined
-              style={{color: '#6c63ff'}}
+              style={{color: '#6c63ff', padding: 3}}
               onClick={e => {
                 showEditModal(record);
               }}

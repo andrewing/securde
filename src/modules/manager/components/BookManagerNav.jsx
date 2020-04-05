@@ -28,13 +28,6 @@ const BookManagerNav = ({url}) => (
         >
           All Books
         </NavLink>
-        <NavLink
-          to={`${url}/manage-book-instances`}
-          style={{color: 'white', textDecoration: 'none', margin: 10}}
-          activeStyle={{color: '#A7A1FF'}}
-        >
-          All Book Instances
-        </NavLink>
       </Nav>
       <NavLink to="/">
         <Navbar.Brand>

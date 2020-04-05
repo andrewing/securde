@@ -7,6 +7,8 @@ const bookData = [
     year_published: '04-20-1999',
     ISBN: '123456789',
     call_number: '123',
+    status: 'Available',
+    available: '2020-04-27 02:13',
   },
   {
     key: 2,
@@ -16,6 +18,8 @@ const bookData = [
     year_published: '04-20-1999',
     ISBN: '123456789',
     call_number: '123',
+    status: 'Available',
+    available: '2020-04-27 02:13',
   },
   {
     key: 3,
@@ -25,6 +29,8 @@ const bookData = [
     year_published: '04-20-1999',
     ISBN: '123456789',
     call_number: '123',
+    status: 'Available',
+    available: '2020-04-27 02:13',
   },
   {
     key: 4,
@@ -40,6 +46,8 @@ const bookData = [
     year_published: '04-20-1999',
     ISBN: '123456789',
     call_number: '123',
+    status: 'Available',
+    available: '2020-04-27 02:13',
   },
   {
     key: 5,
@@ -49,6 +57,8 @@ const bookData = [
     year_published: '04-20-1999',
     ISBN: '123456789',
     call_number: '123',
+    status: 'Available',
+    available: '2020-04-27 02:13',
   },
   {
     key: 6,
@@ -58,6 +68,8 @@ const bookData = [
     year_published: '04-20-1999',
     ISBN: '123456789',
     call_number: '123',
+    status: 'Available',
+    available: '2020-04-27 02:13',
   },
   {
     key: 7,
@@ -67,6 +79,8 @@ const bookData = [
     year_published: '04-20-1999',
     ISBN: '123456789',
     call_number: '123',
+    status: 'Available',
+    available: '2020-04-27 02:13',
   },
   {
     key: 8,
@@ -76,6 +90,8 @@ const bookData = [
     year_published: '04-20-1999',
     ISBN: '123456789',
     call_number: '123',
+    status: 'Available',
+    available: '2020-04-27 02:13',
   },
   {
     key: 9,
@@ -85,6 +101,8 @@ const bookData = [
     year_published: '04-20-1999',
     ISBN: '123456789',
     call_number: '123',
+    status: 'Available',
+    available: '2020-04-27 02:13',
   },
   {
     key: 10,
@@ -94,6 +112,8 @@ const bookData = [
     year_published: '04-20-1999',
     ISBN: '123456789',
     call_number: '123',
+    status: 'Available',
+    available: '2020-04-27 02:13',
   },
 ];
 

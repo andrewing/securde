@@ -9,7 +9,6 @@ const UserLogin = ({
   loginAccount,
 }) => {
   const [form] = Form.useForm();
-  const [path, setPath] = useState('');
 
   const onClickLogin = () => {
     form

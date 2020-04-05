@@ -3,14 +3,13 @@ import {useRouteMatch} from 'react-router-dom';
 import BookManagerNav from './components/BookManagerNav';
 import Subpages from './pages';
 
-const Page = () => {
+const Page = props => {
   const {url, path} = useRouteMatch();
-
   return (
     <>
       <BookManagerNav url={url} />
 
-      <Subpages path={path} />
+      <Subpages path={path} props={props} />
     </>
   );
 };

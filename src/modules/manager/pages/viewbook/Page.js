@@ -1,12 +1,15 @@
+/* eslint-disable react/destructuring-assignment */
 import React, {useState, useRef} from 'react';
-import {Jumbotron} from 'react-bootstrap';
-import {Table, notification, Button} from 'antd';
+import {Table, notification, Row, Button} from 'antd';
 import {CheckCircleTwoTone} from '@ant-design/icons';
+import {Jumbotron, Container} from 'react-bootstrap';
+import BookInfo from '../../components/BookInfo';
+import AddEditInstance from '../../components/modals/AddEditInstance';
 import bookInstancesColumns from '../../components/table/bookInstanceColumns';
 import bookInstanceData from '../../components/table/bookInstanceData';
-import AddEditInstance from '../../components/modals/AddEditInstance';
 
-const Page = () => {
+const ViewBook = ({props}) => {
+  const {state} = props.location;
   const [showAddBook, setShowAddBook] = useState(false);
   const [selectedAction, setSelectedAction] = useState('add');
   const [tableData, setTableData] = useState();
@@ -27,22 +30,24 @@ const Page = () => {
     // console.log(data);
   };
 
-  const onCreateBook = values => {
+  const onCreateInstance = values => {
+    // console.log(values);
+
     notification.open({
       icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
       message: 'Successfully added a book instance!',
       description: 'The book instance is automatically added in the table.',
     });
-    // console.log(values);
   };
 
-  const onEditBook = values => {
+  const onEditInstance = values => {
+    // console.log(values);
+
     notification.open({
       icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
       message: 'Successfully edited a book instance!',
       description: 'The book will be automatically updated in the table.',
     });
-    // console.log(values);
   };
 
   const handleClose = () => {
@@ -68,27 +73,38 @@ const Page = () => {
   return (
     <>
       <Jumbotron bsPrefix="page-header" fluid>
-        <h1 style={{color: '#6C4CC5'}}>All Book Instances</h1>
-        <p>
-          Manage the book instances you created. You can add, edit, and delete
-          book instances!
-        </p>
-      </Jumbotron>
-      <div className="page-content">
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            padding: '10px 0',
-          }}
-        >
-          <Button
-            style={{background: '#6C63FF', color: 'white'}}
-            onClick={showAddModal}
-          >
-            Add Book Instance
-          </Button>
+        <div style={{paddingLeft: 70}}>
+          <h1>{state.title}</h1>
+          <div title={state.authors}>
+            <span>Authored By </span>
+            {state.authors.map((item, i) => {
+              if (i === state.authors.length - 1) {
+                return <span key={i}> {item} </span>;
+              }
+              return <span key={i}>{item}, </span>;
+            })}
+          </div>
         </div>
+      </Jumbotron>
+      <br />
+      <BookInfo state={state} />
+
+      <Row type="flex" justify="space-between">
+        <h1 style={{paddingLeft: 130, margin: '15px 0'}}>Book Instances</h1>
+        <Button
+          style={{
+            background: '#6C63FF',
+            color: 'white',
+            margin: 15,
+            marginRight: 150,
+          }}
+          onClick={showAddModal}
+        >
+          Add Book Instance
+        </Button>
+      </Row>
+
+      <Container>
         <Table
           bordered
           dataSource={bookInstanceData}
@@ -102,18 +118,17 @@ const Page = () => {
             searchInput,
           })}
         />
-      </div>
-
+      </Container>
       <AddEditInstance
         showAddBook={showAddBook}
         handleClose={handleClose}
         action={selectedAction}
         data={tableData}
-        onCreateBook={onCreateBook}
-        onEditBook={onEditBook}
+        onCreateBook={onCreateInstance}
+        onEditBook={onEditInstance}
       />
     </>
   );
 };
 
-export default Page;
+export default ViewBook;
