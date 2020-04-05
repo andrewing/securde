@@ -6,28 +6,15 @@ import Login from './components/Login';
 import './index.css';
 import SignUp from './components/SignUp';
 import ForgotPassword from './components/ForgotPassword';
+import {AUDIENCE} from '../../util/constants';
 
 const Page = () => {
-  const [selectedAccess, setAccess] = useState('User');
+  const [selectedAccess, setAccess] = useState(AUDIENCE.USER_STUDENT);
   const [showSignUp, setShowSignUp] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const onClickAccess = e => {
-    if (e.includes('User')) {
-      setAccess('User');
-    } else if (e.includes('Admin')) {
-      setAccess('Admin');
-    } else {
-      setAccess('Manager');
-    }
-  };
-
-  const onClickShowSignUp = () => {
-    setShowSignUp(true);
-  };
-
-  const onClickShowForgot = () => {
-    setShowForgotPassword(true);
+    setAccess(e);
   };
 
   const handleClose = () => {
@@ -35,9 +22,7 @@ const Page = () => {
     setShowForgotPassword(false);
   };
 
-  const loginAccount = values => {
-    // console.log(values);
-  };
+  const loginAccount = values => {};
 
   const signupAccount = values => {
     notification.open({
@@ -64,8 +49,12 @@ const Page = () => {
       {!!selectedAccess && (
         <Login
           selectedAccess={selectedAccess}
-          onClickShowSignUp={onClickShowSignUp}
-          onClickShowForgot={onClickShowForgot}
+          onClickShowSignUp={() => {
+            setShowSignUp(true);
+          }}
+          onClickShowForgot={() => {
+            setShowForgotPassword(true);
+          }}
           loginAccount={loginAccount}
         />
       )}
