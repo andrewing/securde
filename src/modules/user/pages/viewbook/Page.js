@@ -4,6 +4,7 @@ import {Jumbotron, Container} from 'react-bootstrap';
 import BookInfo from '../../components/BookInfo';
 import AddReview from '../../components/AddReview';
 import reviewsData from '../../components/reviewsData';
+import ReviewList from '../../components/ReviewList';
 
 const ViewBook = ({props}) => {
   const {state} = props.location;
@@ -36,6 +37,7 @@ const ViewBook = ({props}) => {
 
       <Container>
         <AddReview postReview={postReview} />
+        <ReviewList reviews={reviews} />
       </Container>
     </>
   );
