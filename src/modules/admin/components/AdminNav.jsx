@@ -45,6 +45,7 @@ const AdminPageNavbar = ({url}) => (
             height="20"
             className="logout"
           />
+          <span className="logout-link">Log Out</span>
         </Navbar.Brand>
       </NavLink>
     </Navbar>

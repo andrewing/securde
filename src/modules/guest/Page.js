@@ -1,28 +1,13 @@
 import React, {useState, useRef} from 'react';
+import {useRouteMatch} from 'react-router-dom';
 import {Jumbotron} from 'react-bootstrap';
-import {Table, notification} from 'antd';
-import {CheckCircleTwoTone} from '@ant-design/icons';
-import bookColumns from '../../components/table/booksColumns';
-import bookData from '../../components/table/bookData';
-import BorrowBookModal from '../../components/modals/BorrowBookModal';
+import {Table} from 'antd';
+import GuestNav from './components/GuestNav';
+import bookColumns from './components/table/booksColumns';
+import bookData from './components/table/bookData';
 
-const Page = ({props}) => {
-  const [selectedBook, setSelectedBook] = useState();
-  const [showModal, setShowModal] = useState(false); // showBorrow will go to borrow modal
-
-  const showBorrowBook = record => {
-    setShowModal(true);
-    setSelectedBook(record);
-  };
-
-  const borrowBook = values => {
-    // console.log(selectedBook, values);
-  };
-
-  const handleClose = () => {
-    setShowModal(false);
-  };
-
+const Page = () => {
+  const {url} = useRouteMatch();
   // for filters
   const [searchText, setSearchText] = useState('');
   const [searchColumn, setSearchColumn] = useState('');
@@ -38,9 +23,9 @@ const Page = ({props}) => {
     clearFilters();
     setSearchText('');
   };
-
   return (
     <>
+      <GuestNav url={url} />
       <Jumbotron bsPrefix="page-header" fluid>
         <h1 style={{color: '#6C4CC5'}}>All Books</h1>
         <p>View the list of books that you can borrow online!</p>
@@ -50,8 +35,6 @@ const Page = ({props}) => {
           bordered
           dataSource={bookData}
           columns={bookColumns({
-            props,
-            showBorrowBook,
             handleSearch,
             handleReset,
             searchText,
@@ -60,12 +43,6 @@ const Page = ({props}) => {
           })}
         />
       </div>
-      <BorrowBookModal
-        data={selectedBook}
-        showModal={showModal}
-        borrowBook={borrowBook}
-        handleClose={handleClose}
-      />
     </>
   );
 };

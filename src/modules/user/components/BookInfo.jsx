@@ -2,7 +2,7 @@ import React from 'react';
 import {Descriptions, Tag, Divider} from 'antd';
 import {Container, Button} from 'react-bootstrap';
 
-const BookInfo = ({state, borrowBook}) => {
+const BookInfo = ({state, showBorrowBook}) => {
   return (
     <Container>
       <Descriptions bordered size="small" column={2}>
@@ -34,7 +34,7 @@ const BookInfo = ({state, borrowBook}) => {
                 fontSize: 13,
                 padding: 0,
               }}
-              onClick={() => borrowBook(state)}
+              onClick={() => showBorrowBook(state)}
             >
               Borrow Now
             </Button>

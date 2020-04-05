@@ -122,7 +122,7 @@ const UserLogin = ({
             )}
           </div>
           {selectedAccess === AUDIENCE.USER_STUDENT && (
-            <Link to="/guest">
+            <Link to="/guest/books">
               <Button
                 style={{
                   color: '#6C63FF',

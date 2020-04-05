@@ -97,83 +97,36 @@ const bookColumns = ({
     },
   },
   {
-    title: 'Status',
+    title: 'ISBN',
     className: 'column-style',
-    dataIndex: 'status',
-    width: 150,
+    dataIndex: 'ISBN',
+    width: 120,
+    align: 'left',
+    ellipsis: true,
     ...getColumnSearchProps(
-      'status',
+      'ISBN',
       searchInput,
       handleSearch,
       handleReset,
       searchColumn,
       searchText,
     ),
-    render: record => {
-      if (record === 'Available') {
-        return <Tag color="green">{record}</Tag>;
-      }
-      return <Tag color="red">{record}</Tag>;
-    },
   },
   {
-    title: 'Available By',
+    title: 'Call Number',
     className: 'column-style',
-    dataIndex: 'available_by',
-    width: 130,
-    ...getColumnSearchProps(
-      'available_by',
-      searchInput,
-      handleSearch,
-      handleReset,
-      searchColumn,
-      searchText,
-    ),
-    render: (text, record) => {
-      if (record.status === 'Reserved') {
-        return <span>{text}</span>;
-      }
-      return <span>-</span>;
-    },
-  },
-  {
-    title: 'Actions',
-    className: 'column-style',
+    dataIndex: 'call_number',
     width: 100,
-    render: record => {
-      return (
-        <Row type="flex" justify="space-around">
-          <Tooltip title="View Book">
-            <Link
-              to={{
-                pathname: `/user/books/${record.title}`,
-                state: {
-                  title: record.title,
-                  authors: record.authors,
-                  publisher: record.publisher,
-                  year_published: record.year_published,
-                  ISBN: record.ISBN,
-                  call_number: record.call_number,
-                  status: record.status,
-                  available_by: record.available_by,
-                },
-              }}
-            >
-              <EyeOutlined style={{color: '#6c63ff'}} />
-            </Link>
-          </Tooltip>
-
-          <Tooltip title="Borrow Book">
-            <BookOutlined
-              style={{color: '#6c63ff', padding: 3}}
-              onClick={() => {
-                showBorrowBook(record);
-              }}
-            />
-          </Tooltip>
-        </Row>
-      );
-    },
+    align: 'center',
+    ellipsis: true,
+    ...getColumnSearchProps(
+      'call_number',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
   },
 ];
 
