@@ -2,7 +2,7 @@ import React from 'react';
 import {Comment, Divider} from 'antd';
 import moment from 'moment';
 
-const List = ({reviews}) => {
+const Reviews = ({reviews}) => {
   return reviews.map((item, i) => {
     return (
       <>
@@ -30,7 +30,7 @@ const ReviewList = ({reviews}) => {
         overflowX: 'hidden',
       }}
     >
-      <List reviews={reviews} />
+      <Reviews reviews={reviews} />
     </div>
   );
 };

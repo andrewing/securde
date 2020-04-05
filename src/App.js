@@ -5,6 +5,7 @@ import {request} from './api/api';
 import Login from './modules/access';
 import PageNotFound from './common/main-pages/PageNotFound';
 import PrivateRoute from './common/PrivateRoute';
+import GuestPage from './modules/guest';
 import './index.css';
 import './App.css';
 
@@ -24,6 +25,7 @@ const App = () => {
       <Switch>
         <Route component={Login} path="/" exact />
         {mainPages}
+        <Route component={GuestPage} path="/guest" />
         <Route component={PageNotFound} path="*" />
       </Switch>
     </>

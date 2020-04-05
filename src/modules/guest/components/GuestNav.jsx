@@ -6,11 +6,11 @@ import {Navbar, Nav} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const UserPageNavbar = ({url}) => {
+const GuestPageNavbar = ({url}) => {
   return (
     <>
       <Navbar expand="lg" bg="dark" variant="dark" style={{height: '60px'}}>
-        <NavLink to={`${url}/books`}>
+        <NavLink to={`${url}`}>
           <Navbar.Brand>
             <img alt="" src="/logo.png" width="45" height="45" />
             <span
@@ -21,7 +21,7 @@ const UserPageNavbar = ({url}) => {
                 color: 'white',
               }}
             >
-              User Page
+              Guest Page
             </span>
           </Navbar.Brand>
         </NavLink>
@@ -33,13 +33,6 @@ const UserPageNavbar = ({url}) => {
           >
             All Books
           </NavLink>
-          <NavLink
-            to={`${url}/profile`}
-            style={{color: 'white', textDecoration: 'none', margin: 10}}
-            activeStyle={{color: '#A7A1FF'}}
-          >
-            View Profile
-          </NavLink>
         </Nav>
         <NavLink to="/">
           <Navbar.Brand>
@@ -50,7 +43,7 @@ const UserPageNavbar = ({url}) => {
               height="20"
               className="logout"
             />
-            <span className="logout-link">Log Out</span>
+            <span className="logout-link">Go Back</span>
           </Navbar.Brand>
         </NavLink>
       </Navbar>
@@ -58,8 +51,8 @@ const UserPageNavbar = ({url}) => {
   );
 };
 
-UserPageNavbar.propTypes = {
+GuestPageNavbar.propTypes = {
   url: PropTypes.string.isRequired,
 };
 
-export default UserPageNavbar;
+export default GuestPageNavbar;
