@@ -6,7 +6,7 @@ import bookColumns from '../../components/table/booksColumns';
 import bookData from '../../components/table/bookData';
 import AddEditBookModal from '../../components/modals/AddEditBook';
 
-const Page = () => {
+const Page = ({props}) => {
   const [showAddBook, setShowAddBook] = useState(false);
   const [selectedAction, setSelectedAction] = useState('add');
   const [tableData, setTableData] = useState();
@@ -92,6 +92,7 @@ const Page = () => {
           bordered
           dataSource={bookData}
           columns={bookColumns({
+            props,
             showEditModal,
             deleteBook,
             handleSearch,

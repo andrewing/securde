@@ -23,7 +23,7 @@ const DeleteModal = ({deleteBook, record, type}) => {
       <Tooltip title="Delete">
         <DeleteOutlined
           onClick={handleShow}
-          style={{color: '#fc6681'}}
+          style={{color: '#fc6681', padding: 3}}
           className="icons"
         />
       </Tooltip>

@@ -13,17 +13,14 @@ const AddEditInstance = ({
 }) => {
   const {Option} = Select;
   const [form] = Form.useForm();
-  const items = ['Andrew Ing', 'Stanley Sie'];
 
   const onSubmit = () => {
     form
       .validateFields()
       .then(values => {
         values = {
-          title: values.title,
-          authors: values.authors,
           status: values.status,
-          available: values.available.format('YYYY-MM-DD HH:mm'),
+          available_by: values.available_by.format('YYYY-MM-DD HH:mm'),
         };
         action === 'add' ? onCreateBook(values) : onEditBook(values);
 
@@ -38,10 +35,8 @@ const AddEditInstance = ({
   const setValues = () => {
     if (data)
       form.setFieldsValue({
-        title: data.title,
-        authors: data.authors,
         status: data.status,
-        available: moment(data.available),
+        available_by: moment(data.available_by),
       });
   };
 
@@ -52,7 +47,7 @@ const AddEditInstance = ({
 
   return (
     <Modal
-      title={action === 'add' ? 'Add Book' : 'Edit Book'}
+      title={action === 'add' ? 'Add Book Instance' : 'Edit Book Instance'}
       visible={showAddBook}
       okText="Submit"
       centered={true}
@@ -68,46 +63,6 @@ const AddEditInstance = ({
       }}
     >
       <Form form={form}>
-        <Form.Item
-          name="title"
-          style={{margin: '5px 10px'}}
-          rules={[
-            {
-              required: true,
-              message: 'Please input a book title',
-            },
-          ]}
-        >
-          <Input
-            style={{fontSize: 13, padding: '3px 10px', borderRadius: '5px'}}
-            autoComplete="off"
-            placeholder="Book Title"
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="authors"
-          style={{margin: '5px 10px'}}
-          rules={[
-            {
-              required: true,
-              message: 'Please input an author',
-            },
-          ]}
-        >
-          <Select
-            style={{fontSize: 13, fontWeight: 490}}
-            placeholder="Author/s of the Book"
-            mode="tags"
-          >
-            {items.map(item => (
-              <Option style={{fontSize: 12}} value={item} key={item}>
-                {item}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-
         <Form.Item
           name="status"
           style={{margin: '5px 10px'}}
@@ -128,19 +83,13 @@ const AddEditInstance = ({
         </Form.Item>
 
         <Form.Item
-          name="available"
+          name="available_by"
           style={{margin: '5px 10px'}}
           rules={[
-            () => ({
-              validator(rule, value) {
-                if (form.getFieldValue('status') === 'Reserved' && !value) {
-                  return Promise.reject(
-                    'This is required if the book is reserved.',
-                  );
-                }
-                return Promise.resolve();
-              },
-            }),
+            {
+              required: true,
+              message: 'Please input when the book will be available',
+            },
           ]}
         >
           <DatePicker
@@ -165,7 +114,7 @@ const AddEditInstance = ({
               style={{margin: '0px 17px'}}
               onClick={onSubmit}
             >
-              Add
+              Edit
             </Button>
           )}
 

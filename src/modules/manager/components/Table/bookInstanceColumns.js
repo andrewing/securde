@@ -14,54 +14,14 @@ const bookColumns = ({
   searchInput,
 }) => [
   {
-    title: 'Title',
+    title: 'ID',
     className: 'column-style',
-    dataIndex: 'title',
-    align: 'left',
-    ...getColumnSearchProps(
-      'title',
-      searchInput,
-      handleSearch,
-      handleReset,
-      searchColumn,
-      searchText,
-    ),
-  },
-  {
-    title: 'Author/s',
-    className: 'column-style',
-    dataIndex: 'authors',
-    align: 'left',
-    ellipsis: true,
-    ...getColumnSearchProps(
-      'authors',
-      searchInput,
-      handleSearch,
-      handleReset,
-      searchColumn,
-      searchText,
-    ),
-    render: record => {
-      return (
-        <div
-          style={{overflow: 'hidden', textOverflow: 'ellipsis'}}
-          title={record}
-        >
-          {record.map((item, i) => {
-            if (i === record.length - 1) {
-              return <span key={i}>{item} </span>;
-            }
-            return <span key={i}>{item}, </span>;
-          })}
-        </div>
-      );
-    },
+    dataIndex: 'key',
   },
   {
     title: 'Status',
     className: 'column-style',
     dataIndex: 'status',
-    width: 200,
     ...getColumnSearchProps(
       'status',
       searchInput,
@@ -80,10 +40,9 @@ const bookColumns = ({
   {
     title: 'Date Available',
     className: 'column-style',
-    dataIndex: 'available',
-    width: 250,
+    dataIndex: 'available_by',
     ...getColumnSearchProps(
-      'available',
+      'available_by',
       searchInput,
       handleSearch,
       handleReset,
@@ -100,13 +59,12 @@ const bookColumns = ({
   {
     title: 'Actions',
     className: 'column-style',
-    width: 100,
     render: record => {
       return (
         <Row type="flex" justify="space-around">
           <Tooltip title="Edit Book">
             <EditOutlined
-              style={{color: '#6c63ff'}}
+              style={{color: '#6c63ff', padding: 3}}
               onClick={() => {
                 showEditModal(record);
               }}

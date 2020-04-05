@@ -1,17 +1,19 @@
+import React from 'react';
 import ManageBooks from './books';
-import ManageBookInstances from './bookinstances';
+import ViewBook from './viewbook';
 import PageNotFound from '../../../common/main-pages/PageNotFound';
 
 const subpages = [
   {
     key: '/manage-books',
     path: '/manage-books',
-    component: ManageBooks,
+    component: props => <ManageBooks props={props} />,
+    exact: true,
   },
   {
-    key: '/manage-book-instances',
-    path: '/manage-book-instances',
-    component: ManageBookInstances,
+    key: '/manage-books/:title',
+    path: '/manage-books/:title',
+    component: props => <ViewBook props={props} />,
   },
   {
     key: '/*',

@@ -23,6 +23,7 @@ const ReviewList = ({reviews}) => {
     <div
       style={{
         border: '1px solid #EFEFEF',
+        marginBottom: 20,
         height: 500,
         width: '100%',
         overflowY: 'auto',
