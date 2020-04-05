@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import moment from 'moment';
 import to from '../../util/to';
 
 const {Schema} = mongoose;
@@ -10,6 +11,7 @@ const bookInstanceSchema = new Schema({
     ref: 'Book',
   },
   isAvailable: Boolean,
+  dateAvailable: Date,
 });
 
 bookInstanceSchema.statics.addBookInstance = (bookInstance, callback) => {
@@ -44,7 +46,7 @@ bookInstanceSchema.statics.findAllReserved = () => {
   );
 };
 
-bookInstanceSchema.statics.borrowBookInstance = _id => {
+bookInstanceSchema.statics.borrowBookInstance = (_id, days) => {
   return to(
     BookInstance.updateOne(
       {
@@ -53,6 +55,7 @@ bookInstanceSchema.statics.borrowBookInstance = _id => {
       {
         $set: {
           isAvailable: false,
+          dateAvailable: moment().add(Number(days || '7'), 'd'),
         },
       },
     ),
@@ -68,6 +71,7 @@ bookInstanceSchema.statics.returnBookInstance = _id => {
       {
         $set: {
           isAvailable: true,
+          dateAvailable: null,
         },
       },
     ),

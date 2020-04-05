@@ -18,6 +18,7 @@ export const borrow = (route, event, context, callback) => {
     return;
   }
   const {q} = event.queryStringParameters;
+  const data = event.body;
   const {authorization} = event.headers;
 
   jwt.verify(
