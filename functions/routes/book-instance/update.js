@@ -33,7 +33,6 @@ export const update = async (route, event, context, callback) => {
         .then(() => {
           SystemLog.addLog(
             new SystemLog({
-              time: moment().format(),
               action: 'EDIT BOOK INSTANCE',
               content: `Edited [${q}]`,
               account: user._id,

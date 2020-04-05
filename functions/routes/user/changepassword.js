@@ -41,7 +41,6 @@ export const changepassword = (route, event, context, callback) => {
           if (!account) {
             SystemLog.addLog(
               new SystemLog({
-                time: moment().format(),
                 action: 'CHANGE PASSWORD ATTEMPT',
                 content: 'Incorrect password',
                 account: user._id,
@@ -52,7 +51,6 @@ export const changepassword = (route, event, context, callback) => {
           Account.changePassword(user._id, newPassword).then(() => {
             SystemLog.addLog(
               new SystemLog({
-                time: moment().format(),
                 action: 'CHANGE PASSWORD',
                 content: 'Success!',
                 account: user._id,

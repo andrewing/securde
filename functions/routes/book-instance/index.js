@@ -6,6 +6,7 @@ import {update} from './update';
 import {remove} from './remove';
 import {borrow} from './borrow';
 import {byBook} from './by-book';
+import {paginatedByBook} from './paginated-by-book';
 import {ret} from './return';
 import ResponseError from '../../util/error';
 import {SECRET, jwtError} from '../../util/jwt';
@@ -22,6 +23,7 @@ export const bookInstance = (route, ...rest) => {
       [borrow, '/borrow'],
       [ret, '/return'],
       [byBook, '/by-book'],
+      [paginatedByBook, '/paginated-by-book'],
       [def, '/'],
     ],
     ...rest,

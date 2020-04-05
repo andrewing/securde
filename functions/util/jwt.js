@@ -14,7 +14,6 @@ export const jwtError = (
 ) => {
   SystemLog.addLog(
     new SystemLog({
-      time: moment().format(),
       action,
       content: `${username} tried to access but encountered an error: ${err.message}`,
     }),

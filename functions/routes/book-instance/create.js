@@ -46,7 +46,6 @@ export const create = async (route, event, context, callback) => {
           const book = await Book.findById(bookId);
           SystemLog.addLog(
             new SystemLog({
-              time: moment().format(),
               action: 'CREATE BOOK INSTANCE',
               content: `created a book instance of [${book._id}] ${book.title}`,
               account: _id,

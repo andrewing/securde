@@ -37,7 +37,6 @@ export const create = async (route, event, context, callback) => {
         .then(() => {
           SystemLog.addLog(
             new SystemLog({
-              time: moment().format(),
               action: 'CREATE BOOK',
               content: `Created a book [${book._id}] ${book.title}`,
               account: user._id,

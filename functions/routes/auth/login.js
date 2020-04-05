@@ -21,7 +21,6 @@ export const login = (route, event, context, callback) => {
       if (!found) {
         SystemLog.addLog(
           new SystemLog({
-            time: moment().format(),
             action: 'LOG IN ATTEMPT',
             content: `Anonymous user tried ${username} but it did not exist`,
           }),
@@ -39,7 +38,6 @@ export const login = (route, event, context, callback) => {
           if (!user) {
             SystemLog.addLog(
               new SystemLog({
-                time: moment().format(),
                 action: 'LOG IN ATTEMPT',
                 content: `${username} tried to log in`,
               }),
@@ -61,7 +59,6 @@ export const login = (route, event, context, callback) => {
             .then(([token, refreshToken]) => {
               SystemLog.addLog(
                 new SystemLog({
-                  time: moment().format(),
                   action: 'LOG IN',
                   content: `${username} logged in`,
                   account: user._id,

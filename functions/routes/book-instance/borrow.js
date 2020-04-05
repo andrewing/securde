@@ -68,7 +68,6 @@ export const borrow = (route, event, context, callback) => {
 
           SystemLog.addLog(
             new SystemLog({
-              time: moment().format(),
               action: 'BORROW BOOK',
               content: `Borrowed [${book._id}] ${book.title}`,
               account: user._id,

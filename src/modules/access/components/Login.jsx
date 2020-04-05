@@ -153,15 +153,15 @@ const UserLogin = ({
         </Form>
       </div>
 
-      {selectedAccess === 'User' && (
+      {selectedAccess === AUDIENCE.USER_STUDENT && (
         <img alt="user" src="./landing_page.png" className="image-placement" />
       )}
 
-      {selectedAccess === 'Admin' && (
+      {selectedAccess === AUDIENCE.ADMIN && (
         <img alt="admin" src="./admin.png" className="image-placement" />
       )}
 
-      {selectedAccess === 'Manager' && (
+      {selectedAccess === AUDIENCE.BOOK_MANAGER && (
         <img alt="manager" src="./manager.png" className="image-placement" />
       )}
     </div>
