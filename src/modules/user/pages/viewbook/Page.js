@@ -14,6 +14,10 @@ const ViewBook = ({props}) => {
     // console.log(review);
   };
 
+  const borrowBook = values => {
+    // console.log(values);
+  };
+
   return (
     <>
       <Jumbotron bsPrefix="page-header" fluid>
@@ -31,7 +35,7 @@ const ViewBook = ({props}) => {
         </div>
       </Jumbotron>
       <br />
-      <BookInfo state={state} />
+      <BookInfo state={state} borrowBook={borrowBook} />
 
       <h1 style={{paddingLeft: 130, margin: '15px 0'}}>Book Reviews</h1>
 

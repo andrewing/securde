@@ -119,10 +119,10 @@ const bookColumns = ({
   {
     title: 'Available By',
     className: 'column-style',
-    dataIndex: 'available',
+    dataIndex: 'available_by',
     width: 130,
     ...getColumnSearchProps(
-      'available',
+      'available_by',
       searchInput,
       handleSearch,
       handleReset,
@@ -153,8 +153,9 @@ const bookColumns = ({
                   publisher: record.publisher,
                   year_published: record.year_published,
                   ISBN: record.ISBN,
-                  status: record.status,
                   call_number: record.call_number,
+                  status: record.status,
+                  available_by: record.available_by,
                 },
               }}
             >
