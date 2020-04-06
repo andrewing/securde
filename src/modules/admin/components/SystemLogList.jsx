@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import Highlighter from 'react-highlight-words';
 import {Button, Input, Table} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
+import moment from 'moment';
 import {getSystemLogs} from '../../../api/admin/index';
 
 const SystemLogList = () => {
@@ -97,6 +98,7 @@ const SystemLogList = () => {
       title: 'Date/Time',
       className: 'column-style',
       dataIndex: 'time',
+      render: time => <span>{moment(time).format('YYYY-MM-DD HH:mm')}</span>,
     },
     {
       title: 'Action',
