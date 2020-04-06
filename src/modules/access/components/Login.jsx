@@ -4,30 +4,56 @@ import {Button} from 'react-bootstrap';
 import {BeatLoader} from 'react-spinners';
 import {Form, Input} from 'antd';
 import {AUDIENCE} from '../../../util/constants';
+import {login} from '../../../api/auth/index';
+import {auth} from '../../../api/auth';
 
 const UserLogin = ({
   selectedAccess,
   onClickShowSignUp,
   onClickShowForgot,
-  loginAccount,
-  isLoading,
-  setLoading,
+  setNotification,
+  history,
 }) => {
   const [form] = Form.useForm();
+  const [isLoading, setLoading] = useState(false);
+
+  const loginAccount = values => {
+    values = {
+      ...values,
+      type: selectedAccess,
+    };
+
+    login(values)
+      .then(res => {
+        const {data} = res;
+        setNotification(res);
+        setLoading(false);
+        const {access, refresh, type} = data;
+        auth.authenticate(access, refresh, type);
+        switch (data.type) {
+          case AUDIENCE.USER_STUDENT:
+          case AUDIENCE.USER_TEACHER:
+            return history.push('/user');
+          case AUDIENCE.BOOK_MANAGER:
+            return history.push('/manager');
+          case AUDIENCE.ADMIN:
+            return history.push('/admin');
+          default:
+            return history.push('/');
+        }
+      })
+      .catch(err => {
+        setNotification({isSuccess: false, message: err.message});
+        setLoading(false);
+      });
+    return history.push('/');
+  };
 
   const onClickLogin = () => {
-    form
-      .validateFields()
-      .then(values => {
-        setLoading(true);
-        loginAccount(values);
-      })
-      .catch(info => {
-        // console.log('Validate Failed:', info);
-      })
-      .finally(() => {
-        // setLoading(false)
-      });
+    form.validateFields().then(values => {
+      setLoading(true);
+      loginAccount(values);
+    });
   };
 
   const renderDisplay = access => {

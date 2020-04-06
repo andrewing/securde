@@ -1,33 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {BeatLoader} from 'react-spinners';
 import {Form, Input, Modal, Row, Select} from 'antd';
 import {Button} from 'react-bootstrap';
+import {register} from '../../../api/auth/';
 
-const SignUpForm = ({showModal, handleClose, signupAccount}) => {
+const {Option} = Select;
+
+const SignUpForm = ({visible, setVisibleSignUp, setNotification}) => {
+  const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
-  const {Option} = Select;
+
+  const signupAccount = body => {
+    register(body).then(res => {
+      const {data} = res;
+      setNotification(res);
+      setVisibleSignUp(false);
+      setConfirmLoading(false);
+    });
+  };
 
   const onSubmit = () => {
-    form
-      .validateFields()
-      .then(values => {
-        values = {
-          username: values.username,
-          password: values.password,
-          firstname: values.firstname,
-          lastname: values.lastname,
-          email: values.email,
-          idnumber: values.id_number,
-          question: values.security_question,
-          answer: values.answer,
-          bookHistory: [],
-        };
-        signupAccount(values);
-        form.resetFields();
-        handleClose();
-      })
-      .catch(info => {
-        // console.log('Validate Failed:', info);
-      });
+    form.validateFields().then(values => {
+      setConfirmLoading(true);
+      values = {
+        ...values,
+        bookHistory: [],
+      };
+      signupAccount(values);
+    });
   };
 
   const matchPassword = (_, value) => {
@@ -51,7 +51,7 @@ const SignUpForm = ({showModal, handleClose, signupAccount}) => {
   return (
     <Modal
       title="Sign Up!"
-      visible={showModal}
+      visible={visible}
       okText="Submit"
       centered={true}
       footer={null}
@@ -59,13 +59,13 @@ const SignUpForm = ({showModal, handleClose, signupAccount}) => {
       onOk={onSubmit}
       onCancel={() => {
         form.resetFields();
-        handleClose();
+        setVisibleSignUp(false);
       }}
     >
-      <Form form={form} initialValues={{security_question: questions[0]}}>
+      <Form form={form} initialValues={{question: questions[0]}}>
         <div style={{display: 'flex', alignItems: 'stretch'}}>
           <Form.Item
-            name="id_number"
+            name="idNumber"
             style={{margin: '5px 10px'}}
             rules={[
               {
@@ -241,7 +241,7 @@ const SignUpForm = ({showModal, handleClose, signupAccount}) => {
         <Row type="flex">
           <Form.Item
             style={{margin: '5px 10px'}}
-            name="security_question"
+            name="question"
             rules={[
               {
                 required: true,
@@ -296,7 +296,7 @@ const SignUpForm = ({showModal, handleClose, signupAccount}) => {
           style={{margin: '0px 17px'}}
           onClick={onSubmit}
         >
-          Confirm
+          {confirmLoading ? <BeatLoader size={8} color="white" /> : 'Confirm'}
         </Button>
 
         <Button
@@ -304,7 +304,7 @@ const SignUpForm = ({showModal, handleClose, signupAccount}) => {
           style={{margin: '0px 19px'}}
           onClick={() => {
             form.resetFields();
-            handleClose();
+            setVisibleSignUp(false);
           }}
         >
           Cancel
