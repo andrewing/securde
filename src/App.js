@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {Switch, Route} from 'react-router-dom';
 import routes from './routes/routes';
 import {request} from './api/api';
@@ -10,6 +11,8 @@ import './index.css';
 import './App.css';
 
 const App = () => {
+  const notif = useSelector(state => state.notification);
+
   const mainPages = routes.map(route => (
     <PrivateRoute
       key={route.key}
