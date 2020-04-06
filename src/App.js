@@ -16,6 +16,7 @@ const App = () => {
       exact={route.exact}
       path={route.path}
       component={route.component}
+      type={route.type}
       {...routes}
     />
   ));
