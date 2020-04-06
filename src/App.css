@@ -101,3 +101,21 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.ant-tabs-nav .ant-tabs-tab-active {
+  color: #6c63ff;
+  font-weight: 400;
+}
+
+.ant-tabs-ink-bar {
+  background-color: #6c63ff;
+}
+
+.logout-link {
+  margin-left: 10px;
+  color: 'white';
+}
+
+.logout-link:hover {
+  text-decoration: underline;
+}
