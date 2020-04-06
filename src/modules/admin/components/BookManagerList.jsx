@@ -3,14 +3,23 @@ import PropTypes from 'prop-types';
 import {Button, Input, Row, Table} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
+import {useDispatch} from 'react-redux';
 import AddEditModal from './AddEditModal';
 import DeleteModal from './DeleteModal';
 import ViewModal from './ViewModal';
+import {createManager} from '../../../api/admin/index';
+import {AUDIENCE} from '../../../util/constants';
+import {actions} from '../../../redux/notification';
 
 const BookManagerList = prop => {
   const [searchText, setSearchText] = useState('');
   const [searchColumn, setSearchColumn] = useState('');
+  const dispatch = useDispatch();
   const searchInput = useRef();
+
+  const setNotification = ({isSuccess, message}) => {
+    dispatch(actions.setNotification({isSuccess, message}));
+  };
 
   const getColumnSearchProps = dataIndex => ({
     filterDropdown: ({
@@ -87,8 +96,14 @@ const BookManagerList = prop => {
     setSearchText('');
   };
 
-  const handleAdd = account => {
+  const handleAdd = values => {
     // call to back end and pass the account to add
+    values = {...values, type: AUDIENCE.BOOK_MANAGER, bookHistory: []};
+
+    createManager(values).then(res => {
+      const {data} = res;
+      setNotification(res);
+    });
   };
 
   const handleUpdate = account => {
