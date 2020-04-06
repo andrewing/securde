@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\": \"hello\",\n\t\"password\": \"hi\"\n}\t",
+							"raw": "{\n\t\"username\": \"student\",\n\t\"password\": \"password123\"\n}\t\t\t",
 							"options": {
 								"raw": {
 									"language": "javascript"
@@ -43,7 +43,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\": \"Hello\",\n\t\"password\": \"Hi\"\n}\t\t\t",
+							"raw": "{\n\t\"username\": \"manager2\",\n\t\"password\": \"password\",\n\t\"firstname\": \"Andrew\",\n\t\"lastname\": \"Ing\",\n\t\"email\": \"amdrew@yahoo.com\",\n\t\"idNumber\": 117,\n\t\"question\": \"Who?\",\n\t\"answer\": \"me\",\n\t\"type\": \"BOOK_MANAGER\",\n\t\"bookHistory\": []\n}\t\t\t ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -83,7 +83,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"BOOKTITLE2123\",\n\t\"author\": [\"Andrew\", \"Stanley\", \"Rae\"],\n\t\"publisher\": \"PUBLISHINGER\",\n\t\"yearOfPublication\": 1999,\n\t\"ISBN\": \"100\",\n\t\"callNumber\": \"123\"\n}",
+							"raw": "{\n\t\"title\": \"123BOOKTITLE2123\",\n\t\"author\": [\"Andrew\", \"Stanley\", \"Rae\"],\n\t\"publisher\": \"PUBLISHINGER\",\n\t\"yearOfPublication\": 1999,\n\t\"ISBN\": \"100\",\n\t\"callNumber\": \"123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -105,80 +105,9 @@
 					"response": []
 				},
 				{
-					"name": "Borrow",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{user_token\n}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "localhost:9000/book/borrow?bookId=1",
-							"host": [
-								"localhost"
-							],
-							"port": "9000",
-							"path": [
-								"book",
-								"borrow"
-							],
-							"query": [
-								{
-									"key": "bookId",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Review",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{user_token\n}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"reviewText\": \"Very good!\"\n}\t\t\t",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:9000/book/review?bookId=1",
-							"host": [
-								"localhost"
-							],
-							"port": "9000",
-							"path": [
-								"book",
-								"review"
-							],
-							"query": [
-								{
-									"key": "bookId",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Remove",
 					"request": {
-						"method": "PUT",
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "Authorization",
@@ -186,8 +115,17 @@
 								"type": "text"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"5e820d2b9fc6fd3eac7aa597\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:9000/book/remove?bookId=1",
+							"raw": "localhost:9000/book/remove",
 							"host": [
 								"localhost"
 							],
@@ -195,12 +133,6 @@
 							"path": [
 								"book",
 								"remove"
-							],
-							"query": [
-								{
-									"key": "bookId",
-									"value": "1"
-								}
 							]
 						}
 					},
@@ -227,7 +159,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:9000/book/update?bookId=1",
+							"raw": "localhost:9000/book/update?q=5e834dff13ac394b14448a1f",
 							"host": [
 								"localhost"
 							],
@@ -238,8 +170,8 @@
 							],
 							"query": [
 								{
-									"key": "bookId",
-									"value": "1"
+									"key": "q",
+									"value": "5e834dff13ac394b14448a1f"
 								}
 							]
 						}
@@ -247,31 +179,58 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "{{manager_token}}",
-								"disabled": true
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "localhost:9000/book/?title=Hello",
+							"raw": "localhost:9000/book/get",
 							"host": [
 								"localhost"
 							],
 							"port": "9000",
 							"path": [
 								"book",
-								""
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Paginated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/book/paginated?limit=10&page=1",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"book",
+								"paginated"
 							],
 							"query": [
 								{
-									"key": "title",
-									"value": "Hello"
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
 								}
 							]
 						}
@@ -351,7 +310,7 @@
 					"name": "History",
 					"item": [
 						{
-							"name": "Logs",
+							"name": "Books",
 							"request": {
 								"method": "GET",
 								"header": [
@@ -362,7 +321,7 @@
 									}
 								],
 								"url": {
-									"raw": "localhost:9000/user/history/review",
+									"raw": "localhost:9000/user/history/book",
 									"host": [
 										"localhost"
 									],
@@ -370,7 +329,7 @@
 									"path": [
 										"user",
 										"history",
-										"review"
+										"book"
 									]
 								}
 							},
@@ -399,6 +358,484 @@
 					],
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Change password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user_token\n}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"oldPassword\": \"password123\",\n\t\"newPassword\": \"password\"\n}\t",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/user/change-password",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get question",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user_token\n}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:9000/user/get-question",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"user",
+								"get-question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Book Instance",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{manager_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"bookId\": \"5e8494fde523960e84b70c71\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/book-instance/create",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"book-instance",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrow",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user_token\n}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:9000/book-instance/borrow?q=5e84955a9bbfbb0e84e780bc",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"book-instance",
+								"borrow"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "5e84955a9bbfbb0e84e780bc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user_token\n}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:9000/book-instance/return",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"book-instance",
+								"return"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{manager_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"book\": \"5e84ee14cdf07549d44c83b7\",\n\t\"isAvailable\": \"false\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/book-instance/update?q=5e84955a9bbfbb0e84e780bc",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"book-instance",
+								"update"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "5e84955a9bbfbb0e84e780bc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{manager_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"5e858327b5ea2504fc586dc9\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/book-instance/remove",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"book-instance",
+								"remove"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by book instance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/book-instance?q=5e84955a9bbfbb0e84e780bc",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"book-instance"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "5e84955a9bbfbb0e84e780bc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/book-instance/by-book?q=5e84ee14cdf07549d44c83b7",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"book-instance",
+								"by-book"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "5e84ee14cdf07549d44c83b7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Paginated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/book-instance/paginated-by-book?limit=10&page=1&book=5e84ee14cdf07549d44c83b7",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"book-instance",
+								"paginated-by-book"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "book",
+									"value": "5e84ee14cdf07549d44c83b7"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "logs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin_token\n}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:9000/admin/logs",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"admin",
+								"logs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Manager",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin_token\n}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"bookmanager\",\n\t\"password\": \"password\",\n\t\"firstname\": \"Andrew\",\n\t\"lastname\": \"Ing\",\n\t\"email\": \"amdrew@yahoo.com\",\n\t\"idNumber\": 117,\n\t\"question\": \"Who?\",\n\t\"answer\": \"me\",\n\t\"bookHistory\": []\n}\t\t\t ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/admin/create-manager",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"admin",
+								"create-manager"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paginated-logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/admin/paginated-logs?limit=10&page=1",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"admin",
+								"paginated-logs"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user_token\n}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"content\": \"Great book harry potter!\",\n\t\"book\": \"5e834e0313ac394b14448a21\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/review/create",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"review",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Reviews By Book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -411,10 +848,23 @@
 		{
 			"name": "refresh-token",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1ODUxMjEyNjEsImV4cCI6MTU4NTEyMzA2MX0.jacgf0kKvhASQMPFp3Mj22P3V9Wa1v1ojhoB1wRr6wc",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": ""
+					"raw": "localhost:9000/refresh-token",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"refresh-token"
+					]
 				}
 			},
 			"response": []
