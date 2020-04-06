@@ -1,14 +1,12 @@
 import jwt from 'jsonwebtoken';
-import moment from 'moment';
 import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
-import ResponseError from '../../util/error';
 import Account from '../../db/models/account';
 import {AUDIENCE} from '../../util/constants';
 import SystemLog from '../../db/models/system_log';
 
 export const deleteAccount = (route, event, context, callback) => {
-  if (event.httpMethod !== 'PUT') {
+  if (event.httpMethod !== 'POST') {
     callback(null, CODE(405, 'Method not allowed'));
     return;
   }
