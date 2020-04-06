@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {Switch, Route} from 'react-router-dom';
 import routes from './routes/routes';
@@ -9,9 +9,14 @@ import PrivateRoute from './common/PrivateRoute';
 import GuestPage from './modules/guest';
 import './index.css';
 import './App.css';
+import {notify} from './util/notification';
 
 const App = () => {
   const notif = useSelector(state => state.notification);
+  useEffect(() => {
+    if (notif.isSuccess !== null)
+      notify(notif.isSuccess, notif.message, notif.description);
+  }, [notif]);
 
   const mainPages = routes.map(route => (
     <PrivateRoute

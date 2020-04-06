@@ -10,25 +10,24 @@ const UserLogin = ({
   onClickShowSignUp,
   onClickShowForgot,
   loginAccount,
+  isLoading,
+  setLoading,
 }) => {
   const [form] = Form.useForm();
-  const [isLoading, setLoading] = useState(false);
 
   const onClickLogin = () => {
-    setLoading(true);
     form
       .validateFields()
       .then(values => {
+        setLoading(true);
         loginAccount(values);
-        form.resetFields();
       })
       .catch(info => {
         // console.log('Validate Failed:', info);
-        setLoading(false);
+      })
+      .finally(() => {
+        // setLoading(false)
       });
-    // .finally(() => {
-    //   setLoading(false)
-    // })
   };
 
   const renderDisplay = access => {

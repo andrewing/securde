@@ -1,8 +1,6 @@
-/* eslint-disable no-else-return */
-import React, {useState} from 'react';
-import {Redirect} from 'react-router-dom';
-import {notification} from 'antd';
-import {CheckCircleTwoTone} from '@ant-design/icons';
+import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {notify} from '../../util/notification';
 import LandingPage from './components/LandingPage';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -11,11 +9,13 @@ import {auth} from '../../api/auth';
 import {login} from '../../api/auth/index';
 import './index.css';
 import {AUDIENCE} from '../../util/constants';
+import {actions} from '../../redux/notification';
 
-const Page = props => {
+const Page = ({setNotification, ...props}) => {
   const [selectedAccess, setAccess] = useState(AUDIENCE.USER_STUDENT);
   const [showSignUp, setShowSignUp] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const onClickAccess = e => {
     setAccess(e);
@@ -34,10 +34,9 @@ const Page = props => {
 
     login(values)
       .then(res => {
-        return res.json();
-      })
-      .then(json => {
-        const {data, isSuccessful, message} = json;
+        const {data} = res;
+        setNotification(res);
+        setLoading(false);
         const {access, refresh, type} = data;
         auth.authenticate(access, refresh, type);
         switch (data.type) {
@@ -51,27 +50,17 @@ const Page = props => {
           default:
             return props.history.push('/');
         }
+      })
+      .catch(err => {
+        setNotification({isSuccess: false, message: err.message});
+        setLoading(false);
       });
     return props.history.push('/');
   };
 
-  const signupAccount = values => {
-    notification.open({
-      icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
-      message: 'Successfully Signed Up!',
-      description: 'You can now log in with your new account.',
-    });
-    // console.log(values);
-  };
+  const signupAccount = values => {};
 
-  const resetPassword = values => {
-    notification.open({
-      icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
-      message: 'Reset password successful!',
-      description: 'You can now log in with your new password.',
-    });
-    // console.log(values);
-  };
+  const resetPassword = values => {};
 
   return (
     <>
@@ -87,6 +76,8 @@ const Page = props => {
             setShowForgotPassword(true);
           }}
           loginAccount={loginAccount}
+          isLoading={isLoading}
+          setLoading={setLoading}
         />
       )}
 
