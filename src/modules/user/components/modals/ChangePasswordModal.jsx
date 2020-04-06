@@ -10,7 +10,8 @@ const ChangePasswordModal = ({showModal, changePassword, handleClose}) => {
       .validateFields()
       .then(values => {
         values = {
-          password: values.password,
+          oldPassword: values.oldPassword,
+          newPassword: values.newPassword,
         };
 
         changePassword(values);
@@ -46,7 +47,7 @@ const ChangePasswordModal = ({showModal, changePassword, handleClose}) => {
     >
       <Form form={form}>
         <Form.Item
-          name="password"
+          name="oldPassword"
           rules={[
             {required: true, message: 'Please input your new password'},
             {
@@ -63,7 +64,30 @@ const ChangePasswordModal = ({showModal, changePassword, handleClose}) => {
             }}
             autoComplete="off"
             type="password"
-            placeholder="Password"
+            placeholder="Input your old password"
+            minLength={8}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="newPassword"
+          rules={[
+            {required: true, message: 'Please input your new password'},
+            {
+              min: 8,
+              message: 'It should be at least 8 characters',
+            },
+          ]}
+        >
+          <Input.Password
+            style={{
+              fontSize: 13,
+              padding: '3px 10px',
+              borderRadius: '5px',
+            }}
+            autoComplete="off"
+            type="password"
+            placeholder="Input your new password"
             minLength={8}
           />
         </Form.Item>
