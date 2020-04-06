@@ -3,13 +3,16 @@ export const auth = {
   accessToken: null,
   refreshToken: null,
   authenticate: (access, refresh, type) => {
-    auth.access = access;
-    auth.refresh = refresh;
-    auth.type = type;
+    auth.accessToken = access;
+    auth.refreshToken = refresh;
+    auth.authType = type;
   },
   signout: () => {
-    auth.access = null;
-    auth.refresh = null;
-    auth.type = null;
+    auth.accessToken = null;
+    auth.refreshToken = null;
+    auth.authType = null;
+  },
+  isAuthenticated: () => {
+    return !!auth.accessToken || !!auth.refreshToken;
   },
 };
