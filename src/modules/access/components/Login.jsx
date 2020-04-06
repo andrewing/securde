@@ -136,7 +136,7 @@ const UserLogin = ({
               {isLoading ? <BeatLoader size={8} color="white" /> : 'Log In'}
             </Button>
 
-            {selectedAccess !== AUDIENCE.BOOK_MANAGER && (
+            {selectedAccess === AUDIENCE.USER_STUDENT && (
               <Button
                 style={{color: '#6C63FF'}}
                 variant="link"
