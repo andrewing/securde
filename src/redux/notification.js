@@ -7,15 +7,16 @@ export const actions = {
   removeNotification: () => ({
     type: actionTypes.REMOVE_NOTIFICATION,
   }),
-  setNotification: ({isSuccess, message}) => ({
+  setNotification: ({isSuccess, message, description}) => ({
     type: actionTypes.SET_NOTIFICATION,
-    payload: {isSuccess, message},
+    payload: {isSuccess, message, description},
   }),
 };
 
 export const initialState = {
   isSuccess: null,
   message: null,
+  description: null,
 };
 
 export const notification = (state = initialState, action) => {
@@ -23,7 +24,9 @@ export const notification = (state = initialState, action) => {
     case actionTypes.SET_NOTIFICATION:
       return {
         ...state,
-        ...action.payload,
+        isSuccess: action.payload.isSuccess,
+        message: action.payload.message,
+        description: action.payload.description,
       };
     case actionTypes.REMOVE_NOTIFICATION:
     default:
