@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Form, Modal, Input, Select, DatePicker} from 'antd';
+import {Form, Modal, Select, DatePicker} from 'antd';
 import {Button} from 'react-bootstrap';
 import moment from 'moment';
 

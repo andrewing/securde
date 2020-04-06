@@ -1,13 +1,22 @@
-import React, {useState, useRef} from 'react';
-import PropTypes from 'prop-types';
+import React, {useState, useRef, useEffect} from 'react';
 import Highlighter from 'react-highlight-words';
 import {Button, Input, Table} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
+import moment from 'moment';
+import {getSystemLogs} from '../../../api/admin/index';
 
-const SystemLogList = prop => {
+const SystemLogList = () => {
   const [searchText, setSearchText] = useState('');
   const [searchColumn, setSearchColumn] = useState('');
+  const [logsData, setLogsData] = useState([]);
   const searchInput = useRef();
+
+  useEffect(() => {
+    getSystemLogs().then(res => {
+      const {data} = res;
+      setLogsData(data.logs);
+    });
+  }, []);
 
   const getColumnSearchProps = dataIndex => ({
     filterDropdown: ({
@@ -89,27 +98,24 @@ const SystemLogList = prop => {
       title: 'Date/Time',
       className: 'column-style',
       dataIndex: 'time',
-      key: 'time',
+      render: time => <span>{moment(time).format('YYYY-MM-DD HH:mm')}</span>,
     },
     {
       title: 'Action',
       className: 'column-style',
       dataIndex: 'action',
-      key: 'action',
       ...getColumnSearchProps('action'),
     },
-    {
-      title: 'Username',
-      className: 'column-style',
-      dataIndex: 'account',
-      key: 'account',
-      ...getColumnSearchProps('username'),
-    },
+    // {
+    //   title: 'Username',
+    //   className: 'column-style',
+    //   dataIndex: 'account',
+    //   ...getColumnSearchProps('username'),
+    // },
     {
       title: 'Logs',
       className: 'column-style',
       dataIndex: 'content',
-      key: 'content',
       ...getColumnSearchProps('log'),
     },
   ];
@@ -117,17 +123,16 @@ const SystemLogList = prop => {
   return (
     <>
       <Table
+        rowKey={record => {
+          return record._id;
+        }}
         columns={columns}
-        dataSource={prop.data}
+        dataSource={logsData}
         bordered
         pagination={{position: ['bottomCenter', 'bottomCenter']}}
       />
     </>
   );
-};
-
-SystemLogList.propType = {
-  data: PropTypes.array.isRequired,
 };
 
 export default SystemLogList;

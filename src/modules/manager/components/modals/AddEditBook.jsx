@@ -18,6 +18,15 @@ const AddEditBook = ({
     form
       .validateFields()
       .then(values => {
+        values = {
+          title: values.title,
+          author: values.author,
+          publisher: values.publisher,
+          yearOfPublication: values.yearOfPublication,
+          ISBN: values.ISBN,
+          callNumber: values.callNumber,
+        };
+
         action === 'add' ? onCreateBook(values) : onEditBook(values);
 
         form.resetFields();
@@ -32,10 +41,11 @@ const AddEditBook = ({
     if (data)
       form.setFieldsValue({
         title: data.title,
-        authors: data.authors,
+        author: data.author,
         publisher: data.publisher,
-        year_published: data.year_published,
+        yearOfPublication: data.year_published,
         ISBN: data.ISBN,
+        callNumber: data.callNumber,
       });
   };
 
@@ -80,7 +90,7 @@ const AddEditBook = ({
         </Form.Item>
 
         <Form.Item
-          name="authors"
+          name="author"
           style={{margin: '5px 10px'}}
           rules={[
             {
@@ -120,7 +130,7 @@ const AddEditBook = ({
         </Form.Item>
 
         <Form.Item
-          name="year_published"
+          name="yearOfPublication"
           style={{margin: '5px 10px'}}
           rules={[
             {
@@ -155,6 +165,28 @@ const AddEditBook = ({
             style={{fontSize: 13, padding: '3px 10px', borderRadius: '5px'}}
             autoComplete="off"
             placeholder="ISBN of the book"
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="callNumber"
+          style={{margin: '5px 10px'}}
+          rules={[
+            {
+              required: true,
+              message: 'Please input the call number of the book',
+            },
+            {
+              min: 3,
+              message: 'Please input valid call number',
+            },
+          ]}
+        >
+          <Input
+            type="number"
+            style={{fontSize: 13, padding: '3px 10px', borderRadius: '5px'}}
+            autoComplete="off"
+            placeholder="Call number of the book"
           />
         </Form.Item>
 

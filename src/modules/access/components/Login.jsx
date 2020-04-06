@@ -37,7 +37,7 @@ const UserLogin = ({
           case AUDIENCE.BOOK_MANAGER:
             return history.push('/manager');
           case AUDIENCE.ADMIN:
-            return history.push('/admin');
+            return history.push('/admin/book-managers');
           default:
             return history.push('/');
         }
@@ -136,7 +136,7 @@ const UserLogin = ({
               {isLoading ? <BeatLoader size={8} color="white" /> : 'Log In'}
             </Button>
 
-            {selectedAccess !== AUDIENCE.BOOK_MANAGER && (
+            {selectedAccess === AUDIENCE.USER_STUDENT && (
               <Button
                 style={{color: '#6C63FF'}}
                 variant="link"

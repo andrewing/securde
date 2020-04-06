@@ -3,14 +3,23 @@ import PropTypes from 'prop-types';
 import {Button, Input, Row, Table} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
+import {useDispatch} from 'react-redux';
 import AddEditModal from './AddEditModal';
 import DeleteModal from './DeleteModal';
 import ViewModal from './ViewModal';
+import {createManager} from '../../../api/admin/index';
+import {AUDIENCE} from '../../../util/constants';
+import {actions} from '../../../redux/notification';
 
 const BookManagerList = prop => {
   const [searchText, setSearchText] = useState('');
   const [searchColumn, setSearchColumn] = useState('');
+  const dispatch = useDispatch();
   const searchInput = useRef();
+
+  const setNotification = ({isSuccess, message}) => {
+    dispatch(actions.setNotification({isSuccess, message}));
+  };
 
   const getColumnSearchProps = dataIndex => ({
     filterDropdown: ({
@@ -87,8 +96,14 @@ const BookManagerList = prop => {
     setSearchText('');
   };
 
-  const handleAdd = account => {
+  const handleAdd = values => {
     // call to back end and pass the account to add
+    values = {...values, type: AUDIENCE.BOOK_MANAGER, bookHistory: []};
+
+    createManager(values).then(res => {
+      const {data} = res;
+      setNotification(res);
+    });
   };
 
   const handleUpdate = account => {
@@ -104,7 +119,6 @@ const BookManagerList = prop => {
       title: 'ID Number',
       className: 'column-style',
       dataIndex: 'idNumber',
-      key: 'idNumber',
       width: 150,
       ...getColumnSearchProps('ID number'),
     },
@@ -112,35 +126,30 @@ const BookManagerList = prop => {
       title: 'First Name',
       className: 'column-style',
       dataIndex: 'firstname',
-      key: 'firstname',
       ...getColumnSearchProps('first name'),
     },
     {
       title: 'Last Name',
       className: 'column-style',
       dataIndex: 'lastname',
-      key: 'lastname',
       ...getColumnSearchProps('last name'),
     },
     {
       title: 'Username',
       className: 'column-style',
       dataIndex: 'username',
-      key: 'username',
       ...getColumnSearchProps('username'),
     },
     {
       title: 'Email Address',
       className: 'column-style',
       dataIndex: 'email',
-      key: 'email',
       ...getColumnSearchProps('email address'),
     },
     {
       title: 'Action',
       className: 'column-style',
       width: 100,
-      key: 'action',
       render: record => (
         <Row type="flex" justify="space-around">
           <ViewModal user={record} />
@@ -162,6 +171,9 @@ const BookManagerList = prop => {
       </div>
 
       <Table
+        rowKey={record => {
+          return record._id;
+        }}
         columns={columns}
         dataSource={prop.data}
         bordered
