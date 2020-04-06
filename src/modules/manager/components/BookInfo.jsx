@@ -1,5 +1,5 @@
 import React from 'react';
-import {Descriptions, Tag, Divider} from 'antd';
+import {Descriptions, Divider} from 'antd';
 import {Container} from 'react-bootstrap';
 
 const BookInfo = ({state}) => {
