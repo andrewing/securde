@@ -1,7 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {Row, Tooltip, Tag} from 'antd';
-import {EyeOutlined, BookOutlined} from '@ant-design/icons';
 import getColumnSearchProps from './getColumnSearchProps';
 
 const bookColumns = ({
