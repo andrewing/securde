@@ -6,7 +6,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import ForgotPassword from './components/ForgotPassword';
 import {auth} from '../../api/auth';
-import {login} from '../../api/auth/index';
+import {login, register} from '../../api/auth/index';
 import './index.css';
 import {AUDIENCE} from '../../util/constants';
 import {actions} from '../../redux/notification';
@@ -46,7 +46,7 @@ const Page = ({setNotification, ...props}) => {
           case AUDIENCE.BOOK_MANAGER:
             return props.history.push('/manager');
           case AUDIENCE.ADMIN:
-            return props.history.push('/admin');
+            return props.history.push('/admin/book-managers');
           default:
             return props.history.push('/');
         }
@@ -58,7 +58,24 @@ const Page = ({setNotification, ...props}) => {
     return props.history.push('/');
   };
 
-  const signupAccount = values => {};
+  const signupAccount = values => {
+    values = {
+      ...values,
+      type: selectedAccess,
+      bookHistory: [],
+    };
+
+    register(values)
+      .then(res => {
+        const {data} = res;
+        setNotification(res);
+        setLoading(false);
+      })
+      .catch(err => {
+        setNotification({isSuccess: false, message: err.message});
+        setLoading(false);
+      });
+  };
 
   const resetPassword = values => {};
 
