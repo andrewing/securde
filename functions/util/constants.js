@@ -6,6 +6,6 @@ export const AUDIENCE = {
 };
 
 export const EXPIRATIONS = {
-  access: '3m',
+  access: '2m',
   refresh: '30m',
 };
