@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Navbar, Nav} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
+import {auth} from '../../../api/auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UserPageNavbar = ({url}) => {
@@ -41,7 +42,12 @@ const UserPageNavbar = ({url}) => {
             View Profile
           </NavLink>
         </Nav>
-        <NavLink to="/">
+        <NavLink
+          onClick={() => {
+            auth.signout();
+          }}
+          to="/"
+        >
           <Navbar.Brand>
             <img
               alt=""

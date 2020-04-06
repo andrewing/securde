@@ -7,7 +7,8 @@ import LandingPage from './components/LandingPage';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import ForgotPassword from './components/ForgotPassword';
-import loginAuth from '../../common/loginAuth';
+import {auth} from '../../api/auth';
+import {login} from '../../api/auth/index';
 import './index.css';
 import {AUDIENCE} from '../../util/constants';
 
@@ -26,17 +27,31 @@ const Page = props => {
   };
 
   const loginAccount = values => {
-    if (selectedAccess === AUDIENCE.ADMIN) {
-      loginAuth.verifyAccount(values);
-      return props.history.push('/admin');
-    } else if (selectedAccess === AUDIENCE.BOOK_MANAGER) {
-      loginAuth.verifyAccount(values);
-      return props.history.push('/manager');
-    } else if (selectedAccess === AUDIENCE.USER_STUDENT) {
-      loginAuth.verifyAccount(values);
-      return props.history.push('/user');
-    }
+    values = {
+      ...values,
+      type: selectedAccess,
+    };
 
+    login(values)
+      .then(res => {
+        return res.json();
+      })
+      .then(json => {
+        const {data, isSuccessful, message} = json;
+        const {access, refresh, type} = data;
+        auth.authenticate(access, refresh, type);
+        switch (data.type) {
+          case AUDIENCE.USER_STUDENT:
+          case AUDIENCE.USER_TEACHER:
+            return props.history.push('/user');
+          case AUDIENCE.BOOK_MANAGER:
+            return props.history.push('/manager');
+          case AUDIENCE.ADMIN:
+            return props.history.push('/admin');
+          default:
+            return props.history.push('/');
+        }
+      });
     return props.history.push('/');
   };
 
