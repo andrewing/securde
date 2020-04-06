@@ -104,7 +104,6 @@ const BookManagerList = prop => {
       title: 'ID Number',
       className: 'column-style',
       dataIndex: 'idNumber',
-      key: 'idNumber',
       width: 150,
       ...getColumnSearchProps('ID number'),
     },
@@ -112,35 +111,30 @@ const BookManagerList = prop => {
       title: 'First Name',
       className: 'column-style',
       dataIndex: 'firstname',
-      key: 'firstname',
       ...getColumnSearchProps('first name'),
     },
     {
       title: 'Last Name',
       className: 'column-style',
       dataIndex: 'lastname',
-      key: 'lastname',
       ...getColumnSearchProps('last name'),
     },
     {
       title: 'Username',
       className: 'column-style',
       dataIndex: 'username',
-      key: 'username',
       ...getColumnSearchProps('username'),
     },
     {
       title: 'Email Address',
       className: 'column-style',
       dataIndex: 'email',
-      key: 'email',
       ...getColumnSearchProps('email address'),
     },
     {
       title: 'Action',
       className: 'column-style',
       width: 100,
-      key: 'action',
       render: record => (
         <Row type="flex" justify="space-around">
           <ViewModal user={record} />
@@ -162,6 +156,9 @@ const BookManagerList = prop => {
       </div>
 
       <Table
+        rowKey={record => {
+          return record._id;
+        }}
         columns={columns}
         dataSource={prop.data}
         bordered

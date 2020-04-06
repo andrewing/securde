@@ -178,7 +178,7 @@ const AddEditModal = prop => {
         <div style={{textAlign: 'center', paddingTop: 20}}>
           {prop.command === 'Add' ? (
             <Button
-              bsPrefix="primary-button"
+              bsprefix="primary-button"
               style={{
                 margin: '0px 17px',
                 background: '#6C63FF',
@@ -198,7 +198,7 @@ const AddEditModal = prop => {
             </Button>
           ) : (
             <Button
-              bsPrefix="primary-button"
+              bsprefix="primary-button"
               style={{
                 margin: '0px 17px',
                 background: '#6C63FF',
