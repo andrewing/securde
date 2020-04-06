@@ -23,6 +23,7 @@ export const login = (route, event, context, callback) => {
           new SystemLog({
             action: 'LOG IN ATTEMPT',
             content: `Anonymous user tried ${username} but it did not exist`,
+            account: null
           }),
         );
         throw new ResponseError(404, 'User Not Found');
@@ -40,6 +41,7 @@ export const login = (route, event, context, callback) => {
               new SystemLog({
                 action: 'LOG IN ATTEMPT',
                 content: `${username} tried to log in`,
+                account: null
               }),
             );
             throw new ResponseError(401, 'Incorrect Password');

@@ -44,6 +44,7 @@ const Page = ({setNotification, ...props}) => {
         visible={visibleSignUp}
         setVisibleSignUp={setVisibleSignUp}
         setNotification={setNotification}
+        selectedAccess={selectedAccess}
       />
       <ForgotPassword
         visible={visibleForgot}

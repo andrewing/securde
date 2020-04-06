@@ -21,6 +21,7 @@ export const register = (route, event, context, callback) => {
           new SystemLog({
             action: 'USER REGISTER ATTEMPT',
             content: `Anonymous user tried to register but ${body.username} already existed`,
+            account: null
           }),
         );
         throw new ResponseError(409, 'Username already exists');
@@ -35,6 +36,7 @@ export const register = (route, event, context, callback) => {
         new SystemLog({
           action: 'USER REGISTER',
           content: `User ${body.username} registered`,
+          account: null
         }),
       );
     })

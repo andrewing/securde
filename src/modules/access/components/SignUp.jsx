@@ -6,7 +6,7 @@ import {register} from '../../../api/auth/';
 
 const {Option} = Select;
 
-const SignUpForm = ({visible, setVisibleSignUp, setNotification}) => {
+const SignUpForm = ({visible, setVisibleSignUp, setNotification, selectedAccess}) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
 
@@ -24,6 +24,7 @@ const SignUpForm = ({visible, setVisibleSignUp, setNotification}) => {
       setConfirmLoading(true);
       values = {
         ...values,
+        type: selectedAccess,
         bookHistory: [],
       };
       signupAccount(values);

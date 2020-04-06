@@ -16,6 +16,7 @@ export const jwtError = (
     new SystemLog({
       action,
       content: `${username} tried to access but encountered an error: ${err.message}`,
+      account: null
     }),
   );
   switch (err.name.toUpperCase()) {
