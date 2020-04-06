@@ -12,7 +12,9 @@ export const auth = {
     auth.refreshToken = null;
     auth.authType = null;
   },
-  isAuthenticated: () => {
-    return !!auth.accessToken || !!auth.refreshToken;
+  isAuthenticated: type => {
+    return (
+      (!!auth.accessToken || !!auth.refreshToken) && auth.authType === type
+    );
   },
 };
