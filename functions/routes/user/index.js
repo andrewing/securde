@@ -5,6 +5,8 @@ import {changepassword} from './changepassword';
 import {forgotpassword} from './forgotpassword';
 import {getQuestion} from './get-question';
 import {history} from './history/index';
+import {getId} from './get-id';
+import {checkAnswer} from './check-answer';
 import {details} from './details';
 
 export const user = (route, ...rest) => {
@@ -16,6 +18,8 @@ export const user = (route, ...rest) => {
       [getQuestion, '/get-question'],
       [history, '/history'],
       [details, '/details'],
+      [getId, '/get-id'],
+      [checkAnswer, '/check-answer'],
       [def, '/'],
     ],
     ...rest,

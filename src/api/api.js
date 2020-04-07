@@ -7,7 +7,7 @@ export const request = async (url, options = {}, tokenNeeded = false) => {
   options = normalizeOpts(options);
 
   if (tokenNeeded) await refreshToken();
-  return fetch(url, options).then(res => res.json());
+  return timeoutIn(fetch(url, options), 10000);
 };
 
 const normalizeOpts = options => {
@@ -45,4 +45,26 @@ export const refreshToken = async () => {
     .catch(err => {
       auth.signout();
     });
+};
+
+const timeoutIn = (promise, ms) => {
+  return new Promise((resolve, reject) => {
+    const id = setTimeout(() => {
+      reject({
+        isSuccessful: false,
+        message: 'Timed Out',
+        description: 'Your request has timed out',
+      });
+    }, ms);
+
+    promise
+      .then(res => {
+        clearTimeout(id);
+        resolve(res.json());
+      })
+      .catch(err => {
+        clearTimeout(id);
+        resolve(err);
+      });
+  });
 };
