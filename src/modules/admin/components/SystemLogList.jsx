@@ -3,20 +3,25 @@ import Highlighter from 'react-highlight-words';
 import {Button, Input, Table} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
 import moment from 'moment';
-import {getSystemLogs} from '../../../api/admin/index';
+import {getSystemLogsPaginated} from '../../../api/admin/index';
 
 const SystemLogList = () => {
   const [searchText, setSearchText] = useState('');
   const [searchColumn, setSearchColumn] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const [logsData, setLogsData] = useState([]);
   const searchInput = useRef();
 
   useEffect(() => {
-    getSystemLogs().then(res => {
+    getSystemLogsPaginated(currentPage, 10).then(res => {
       const {data} = res;
       setLogsData(data.logs);
     });
-  }, []);
+  }, [currentPage]);
+
+  const handleChangePage = page => {
+    setCurrentPage(page.current);
+  };
 
   const getColumnSearchProps = (dataIndex, placeholder) => ({
     filterDropdown: ({
@@ -149,6 +154,7 @@ const SystemLogList = () => {
         dataSource={logsData}
         bordered
         pagination={{position: ['bottomCenter', 'bottomCenter']}}
+        onChange={handleChangePage}
       />
     </>
   );
