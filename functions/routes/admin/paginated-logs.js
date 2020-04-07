@@ -7,7 +7,7 @@ import SystemLog from '../../db/models/system_log';
 import {regexWildCard} from '../../util/mongoose';
 import db from '../../db/db';
 
-export const paginated = async (route, event, context, callback) => {
+export const paginatedLogs = async (route, event, context, callback) => {
   if (event.httpMethod !== 'GET') {
     callback(null, CODE(405, 'Method not allowed'));
     return;
