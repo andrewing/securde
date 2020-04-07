@@ -9,3 +9,5 @@ export const udpateAccount = (body, accountId) =>
   request(`/admin/update-account?q=${accountId}`, {method: 'PUT', body});
 export const deleteAccount = body =>
   request(`/admin/delete-account`, {method: 'POST', body});
+export const getAccountsPaginated = (page, limit, fields = '') =>
+  request(`/admin/paginated-accounts?limit=${limit}&page=${page}${fields}`);
