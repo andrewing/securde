@@ -98,19 +98,18 @@ const BookManagerList = prop => {
 
   const handleAdd = values => {
     // call to back end and pass the account to add
-    values = {...values, type: AUDIENCE.BOOK_MANAGER, bookHistory: []};
+    values = {...values};
 
     createManager(values).then(res => {
-      const {data} = res;
       setNotification(res);
     });
   };
 
-  const handleUpdate = account => {
+  const handleUpdate = values => {
     // call to back end and pass the account to update
   };
 
-  const handleDelete = accountID => {
+  const handleDelete = values => {
     // call to back end passing the accountID to delete
   };
 

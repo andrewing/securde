@@ -18,7 +18,7 @@ const SystemLogList = () => {
     });
   }, []);
 
-  const getColumnSearchProps = dataIndex => ({
+  const getColumnSearchProps = (dataIndex, placeholder) => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -30,7 +30,7 @@ const SystemLogList = () => {
           ref={node => {
             searchInput.current = node;
           }}
-          placeholder={`Search ${dataIndex}`}
+          placeholder={`Search ${placeholder}`}
           value={selectedKeys[0]}
           onChange={e =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
@@ -59,11 +59,21 @@ const SystemLogList = () => {
     filterIcon: filtered => (
       <SearchOutlined style={{color: filtered ? '#1890ff' : undefined}} />
     ),
-    onFilter: (value, record) =>
-      record[dataIndex]
+    onFilter: (value, record) => {
+      if (dataIndex === 'account') {
+        if (record[dataIndex] !== null) {
+          return record[dataIndex].username
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase());
+        }
+        return false;
+      }
+      return record[dataIndex]
         .toString()
         .toLowerCase()
-        .includes(value.toLowerCase()),
+        .includes(value.toLowerCase());
+    },
     onFilterDropdownVisibleChange: visible => {
       if (visible) {
         setTimeout(() => searchInput.current.select());
@@ -75,7 +85,11 @@ const SystemLogList = () => {
           highlightStyle={{backgroundColor: '#ffc069', padding: 0}}
           searchWords={[searchText]}
           autoEscape
-          textToHighlight={text.toString()}
+          textToHighlight={
+            dataIndex === 'account' && text !== null
+              ? text.username.toString()
+              : text.toString()
+          }
         />
       ) : (
         text
@@ -98,25 +112,30 @@ const SystemLogList = () => {
       title: 'Date/Time',
       className: 'column-style',
       dataIndex: 'time',
+      width: 200,
       render: time => <span>{moment(time).format('YYYY-MM-DD HH:mm')}</span>,
     },
     {
       title: 'Action',
       className: 'column-style',
       dataIndex: 'action',
-      ...getColumnSearchProps('action'),
+      width: 200,
+      ...getColumnSearchProps('action', 'action'),
     },
-    // {
-    //   title: 'Username',
-    //   className: 'column-style',
-    //   dataIndex: 'account',
-    //   ...getColumnSearchProps('username'),
-    // },
+    {
+      title: 'Username',
+      className: 'column-style',
+      dataIndex: 'account',
+      width: 200,
+      ...getColumnSearchProps('account', 'username'),
+      render: account =>
+        account === null ? <span>NONE</span> : <span>{account.username}</span>,
+    },
     {
       title: 'Logs',
       className: 'column-style',
       dataIndex: 'content',
-      ...getColumnSearchProps('log'),
+      ...getColumnSearchProps('content', 'logs'),
     },
   ];
 
