@@ -1,17 +1,20 @@
 /* eslint-disable react/no-array-index-key */
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {Form, Input, Modal, Row, Select, Divider, Steps} from 'antd';
 import {
   UserOutlined,
   SolutionOutlined,
   LockOutlined,
   LoadingOutlined,
+  CheckCircleTwoTone,
+  CheckCircleOutlined,
 } from '@ant-design/icons';
 import {Button, ProgressBar} from 'react-bootstrap';
-import {getId, checkAnswer} from '../../../../api/user';
+import {getId, checkAnswer, forgotPassword} from '../../../../api/user';
 import Username from './components/Username';
 import Question from './components/Question';
 import Reset from './components/Reset';
+import Done from './components/Done';
 import {debounce} from '../../../../util/debounce';
 
 const {Step} = Steps;
@@ -23,11 +26,47 @@ const ForgotPassword = ({visible, setVisibleForgot, setNotification}) => {
   const [isUsernameLoading, setUsernameLoading] = useState(false);
   const [isQuestionLoading, setQuestionLoading] = useState(false);
   const [isResetLoading, setResetLoading] = useState(false);
-  const [disableReset, setDisableReset] = useState(false);
   const [page, setPage] = useState(1);
 
   const [userId, setUserId] = useState(null);
   const [isCorrectAnswer, setCorrectAnswer] = useState(null);
+  const [answer, setAnswer] = useState(null);
+
+  useEffect(() => {
+    if (page === 2 && isCorrectAnswer)
+      setTimeout(() => {
+        setPage(page + 1);
+      }, 500);
+  }, [page, isCorrectAnswer]);
+
+  const resetModal = () => {
+    setUsernameLoading(false);
+    setQuestionLoading(false);
+    setResetLoading(false);
+    setUserId(null);
+    setCorrectAnswer(null);
+    setAnswer(null);
+    form.resetFields();
+    setPage(1);
+  };
+
+  const resetPassword = () => {
+    form.validateFields(['newPassword', 'confirmPassword']).then(values => {
+      setResetLoading(true);
+      const {newPassword} = values;
+      forgotPassword({answer, newPassword, id: userId})
+        .then(res => {
+          const {isSuccess} = res;
+          setNotification(res);
+          setResetLoading(false);
+          if (isSuccess) setPage(page + 1);
+        })
+        .catch(err => {
+          setNotification(err);
+          setResetLoading(false);
+        });
+    });
+  };
 
   const checkQuestion = useRef(
     debounce((id, answerCurr) => {
@@ -131,10 +170,21 @@ const ForgotPassword = ({visible, setVisibleForgot, setNotification}) => {
             isQuestionLoading={isQuestionLoading}
             setPage={setPage}
             page={page}
+            setAnswer={setAnswer}
           />
         );
       case 3:
-        return <Reset />;
+        return (
+          <Reset
+            form={form}
+            setPage={setPage}
+            page={page}
+            isResetLoading={isResetLoading}
+            resetPassword={resetPassword}
+          />
+        );
+      case 4:
+        return <Done setVisibleForgot={setVisibleForgot} />;
       default:
         return '';
     }
@@ -149,9 +199,10 @@ const ForgotPassword = ({visible, setVisibleForgot, setNotification}) => {
       footer={null}
       width={650}
       onOk={onSubmit}
+      afterClose={() => {
+        resetModal();
+      }}
       onCancel={() => {
-        form.resetFields();
-        setPage(1);
         setVisibleForgot(false);
       }}
     >
@@ -159,156 +210,49 @@ const ForgotPassword = ({visible, setVisibleForgot, setNotification}) => {
         <Step
           status={step(1)}
           title="Login"
-          icon={isUsernameLoading ? <LoadingOutlined /> : <UserOutlined />}
+          icon={
+            isUsernameLoading ? (
+              <LoadingOutlined />
+            ) : (
+              <UserOutlined style={{color: page >= 1 && '#6c63ff'}} />
+            )
+          }
         />
         <Step
           status={step(2)}
           title="Verification"
-          icon={isQuestionLoading ? <LoadingOutlined /> : <SolutionOutlined />}
+          icon={
+            isQuestionLoading ? (
+              <LoadingOutlined />
+            ) : (
+              <SolutionOutlined style={{color: page >= 2 && '#6c63ff'}} />
+            )
+          }
         />
         <Step
           status={step(3)}
+          title="Reset Password"
+          icon={
+            isResetLoading ? (
+              <LoadingOutlined />
+            ) : (
+              <LockOutlined style={{color: page >= 3 && '#6c63ff'}} />
+            )
+          }
+        />
+        <Step
+          status={step(4)}
           title="Done"
-          icon={isResetLoading ? <LoadingOutlined /> : <LockOutlined />}
+          icon={
+            page === 4 ? (
+              <CheckCircleTwoTone twoToneColor="#52c41a" />
+            ) : (
+              <CheckCircleOutlined />
+            )
+          }
         />
       </Steps>
-      <Form form={form}>
-        {pages(page)}
-        {/* <Row type="flex">
-          <Form.Item
-            style={{ margin: '5px 10px' }}
-            name="question"
-            rules={[
-              {
-                required: true,
-                message: 'Please choose a security question',
-              },
-            ]}
-          >
-            <Select
-              placholder="Choose a security question"
-              style={{ fontSize: 12, width: 280 }}
-            >
-              {questions.map((item, i) => (
-                <Option
-                  style={{ fontSize: 11 }}
-                  key={i}
-                  title={item}
-                  value={item}
-                >
-                  {item}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            style={{ margin: '5px 10px' }}
-            name="answer"
-            rules={[
-              {
-                required: true,
-                message: 'This field is required.',
-              },
-            ]}
-          >
-            <Input
-              style={{
-                fontSize: 13,
-                padding: '3px 10px',
-                width: 280,
-                borderRadius: '5px',
-              }}
-              autoComplete="off"
-              placeholder="Answer"
-            />
-          </Form.Item>
-        </Row>
-
-        <Divider />
-
-        <div style={{ textAlign: 'center', padding: '10px' }}>
-          <h4 style={{ margin: 0 }}>Step 2 : Reset Your Password</h4>
-        </div>
-        <Row type="flex">
-          <Form.Item
-            style={{ margin: '5px 10px' }}
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your password',
-              },
-              {
-                min: 8,
-                message: 'It should be at least 8 characters',
-              },
-            ]}
-          >
-            <Input.Password
-              style={{
-                fontSize: 13,
-                padding: '3px 10px',
-                width: 280,
-                borderRadius: '5px',
-              }}
-              autoComplete="off"
-              type="password"
-              placeholder="New Password"
-              minLength={8}
-              disabled={disableReset}
-            />
-          </Form.Item>
-
-          <Form.Item
-            style={{ margin: '5px 10px' }}
-            name="confirm"
-            rules={[
-              {
-                required: true,
-                message: 'Please confirm your password',
-              },
-              { validator: matchPassword },
-            ]}
-          >
-            <Input.Password
-              style={{
-                fontSize: 13,
-                padding: '3px 10px',
-                width: 280,
-                borderRadius: '5px',
-              }}
-              autoComplete="off"
-              type="password"
-              placeholder="Confirm Password"
-              disabled={disableReset}
-            />
-          </Form.Item>
-        </Row> */}
-      </Form>
-
-      {/* <div style={{ textAlign: 'center', paddingTop: 20 }}>
-
-
-        <Button
-          bsPrefix="secondary-button"
-          style={{ margin: '0px 19px' }}
-          onClick={() => {
-            form.resetFields();
-            setVisibleForgot(false);
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          bsPrefix="primary-button"
-          style={{ margin: '0px 17px' }}
-          onClick={onSubmit}
-          disabled={disableReset}
-        >
-          Confirm
-        </Button>
-      </div> */}
+      <Form form={form}>{pages(page)}</Form>
     </Modal>
   );
 };
