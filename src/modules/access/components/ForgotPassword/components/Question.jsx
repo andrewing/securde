@@ -2,19 +2,17 @@ import React, {useState} from 'react';
 import {Form, Input, Row, Col, Skeleton} from 'antd';
 import {Button} from 'react-bootstrap';
 import {BarLoader} from 'react-spinners';
-import {RightOutlined} from '@ant-design/icons';
 import {getQuestion, checkAnswer} from '../../../../../api/user';
 
 const Question = ({
   checkQuestion,
-  form,
-  setVisibleForgot,
   setNotification,
   userId,
   isCorrectAnswer,
   isQuestionLoading,
   setPage,
   page,
+  setAnswer,
 }) => {
   const [question, setQuestion] = useState(null);
 
@@ -76,13 +74,14 @@ const Question = ({
             autoComplete="off"
             placeholder="Answer"
             onChange={e => {
+              setAnswer(e.target.value);
               checkQuestion(userId, e.target.value);
             }}
           />
         </Form.Item>
-        <Button
+        {/* <Button
           bsPrefix="primary-button"
-          style={{margin: '0px 17px', height: 40}}
+          style={{margin: '0px 17px', height: 40, display: isCorrectAnswer? "inline":"none"}}
           type="submit"
           disabled={!isCorrectAnswer}
           onClick={() => {
@@ -90,7 +89,7 @@ const Question = ({
           }}
         >
           Next <RightOutlined />
-        </Button>
+        </Button> */}
       </Row>
     </>
   );

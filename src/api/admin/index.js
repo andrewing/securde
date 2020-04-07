@@ -4,10 +4,13 @@ export const createManager = body =>
   request('/admin/create-manager', {method: 'POST', body}, true);
 export const getSystemLogs = () => request('/admin/logs');
 export const getSystemLogsPaginated = (page, limit) =>
-  request(`/admin/paginated-logs?limit=${limit}&page=${page}`);
+  request(`/admin/paginated-logs?limit=${limit}&page=${page}`, true);
 export const udpateAccount = (body, accountId) =>
-  request(`/admin/update-account?q=${accountId}`, {method: 'PUT', body});
+  request(`/admin/update-account?q=${accountId}`, {method: 'PUT', body}, true);
 export const deleteAccount = body =>
-  request(`/admin/delete-account`, {method: 'POST', body});
+  request(`/admin/delete-account`, {method: 'POST', body}, true);
 export const getAccountsPaginated = (page, limit, fields = '') =>
-  request(`/admin/paginated-accounts?limit=${limit}&page=${page}${fields}`);
+  request(
+    `/admin/paginated-accounts?limit=${limit}&page=${page}${fields}`,
+    true,
+  );

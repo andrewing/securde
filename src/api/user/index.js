@@ -6,6 +6,6 @@ export const forgotPassword = body =>
   request('/user/forgot-password', {method: 'POST', body});
 export const changePassword = body =>
   request('/user/change-password', {method: 'POST', body});
-export const getId = username => request(`/user/get-id?q=${username}`);
+export const getId = username => request(`/user/get-id?q=${username}`, true);
 export const checkAnswer = body =>
   request(`/user/check-answer`, {method: 'POST', body});

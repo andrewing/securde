@@ -6,7 +6,12 @@ import {actions} from '../../redux/notification';
 const Access = props => {
   const dispatch = useDispatch();
 
-  const setNotification = ({isSuccess, message}) => {
+  const setNotification = obj => {
+    let {isSuccess, message} = obj;
+    if (obj instanceof Error) {
+      isSuccess = false;
+      message = obj.message;
+    }
     dispatch(actions.setNotification({isSuccess, message}));
   };
 
