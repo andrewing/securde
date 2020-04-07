@@ -1,26 +1,37 @@
 import React, {useState, useRef, useEffect} from 'react';
 import Highlighter from 'react-highlight-words';
-import {Button, Input, Table} from 'antd';
+import {Button, Input, Pagination, Table} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
 import moment from 'moment';
 import {getSystemLogsPaginated} from '../../../api/admin/index';
 
 const SystemLogList = () => {
+  const [loadingTable, setLoadingTable] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [searchColumn, setSearchColumn] = useState('');
+  const [dataPerPage, setDataPerPage] = useState(10);
+  const [total, setTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [logsData, setLogsData] = useState([]);
   const searchInput = useRef();
 
   useEffect(() => {
-    getSystemLogsPaginated(currentPage, 10).then(res => {
+    getSystemLogsPaginated(currentPage, dataPerPage).then(res => {
       const {data} = res;
-      setLogsData(data.logs);
+      setLogsData(data.res);
+      setTotal(data.meta.total);
+      setLoadingTable(false);
     });
-  }, [currentPage]);
+  }, [currentPage, dataPerPage]);
 
   const handleChangePage = page => {
-    setCurrentPage(page.current);
+    setLoadingTable(true);
+    setCurrentPage(page);
+  };
+
+  const handleChangePageSize = (current, size) => {
+    setLoadingTable(true);
+    setDataPerPage(size);
   };
 
   const getColumnSearchProps = (dataIndex, placeholder) => ({
@@ -153,9 +164,18 @@ const SystemLogList = () => {
         columns={columns}
         dataSource={logsData}
         bordered
-        pagination={{position: ['bottomCenter', 'bottomCenter']}}
-        onChange={handleChangePage}
+        pagination={false}
+        loading={loadingTable}
       />
+      <div className="paginate-table">
+        <Pagination
+          defaultCurrent={currentPage}
+          total={total}
+          pageSize={dataPerPage}
+          onChange={handleChangePage}
+          onShowSizeChange={handleChangePageSize}
+        />
+      </div>
     </>
   );
 };

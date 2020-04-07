@@ -1,24 +1,49 @@
-import React, {useState, useRef} from 'react';
-import PropTypes from 'prop-types';
-import {Button, Input, Row, Table} from 'antd';
+import React, {useState, useRef, useEffect} from 'react';
+import {Button, Input, Pagination, Row, Table} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import {useDispatch} from 'react-redux';
 import AddEditModal from './AddEditModal';
 import DeleteModal from './DeleteModal';
 import ViewModal from './ViewModal';
-import {createManager} from '../../../api/admin/index';
+import {createManager, getAccountsPaginated} from '../../../api/admin/index';
 import {AUDIENCE} from '../../../util/constants';
 import {actions} from '../../../redux/notification';
 
-const BookManagerList = prop => {
+const BookManagerList = () => {
+  const [loadingTable, setLoadingTable] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [searchColumn, setSearchColumn] = useState('');
+  const [dataPerPage, setDataPerPage] = useState(10);
+  const [total, setTotal] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [bookManagerData, setBookManagerData] = useState([]);
   const dispatch = useDispatch();
   const searchInput = useRef();
 
   const setNotification = ({isSuccess, message}) => {
     dispatch(actions.setNotification({isSuccess, message}));
+  };
+
+  useEffect(() => {
+    getAccountsPaginated(currentPage, dataPerPage, AUDIENCE.BOOK_MANAGER).then(
+      res => {
+        const {data} = res;
+        setBookManagerData(data.accounts);
+        setTotal(data.meta.total);
+        setLoadingTable(false);
+      },
+    );
+  }, [currentPage, dataPerPage]);
+
+  const handleChangePage = page => {
+    setLoadingTable(true);
+    setCurrentPage(page);
+  };
+
+  const handleChangePageSize = (current, size) => {
+    setLoadingTable(true);
+    setDataPerPage(size);
   };
 
   const getColumnSearchProps = dataIndex => ({
@@ -174,16 +199,23 @@ const BookManagerList = prop => {
           return record._id;
         }}
         columns={columns}
-        dataSource={prop.data}
+        dataSource={bookManagerData}
         bordered
-        pagination={{position: ['bottomCenter', 'bottomCenter']}}
+        loading={loadingTable}
+        pagination={false}
       />
+
+      <div className="paginate-table">
+        <Pagination
+          defaultCurrent={currentPage}
+          total={total}
+          pageSize={dataPerPage}
+          onChange={handleChangePage}
+          onShowSizeChange={handleChangePageSize}
+        />
+      </div>
     </>
   );
-};
-
-BookManagerList.propType = {
-  data: PropTypes.array.isRequired,
 };
 
 export default BookManagerList;

@@ -5,6 +5,8 @@ import to from '../../util/to';
 
 const {Schema} = mongoose;
 const LibraryLog = require('./library_log');
+const Book = require('./book');
+const Review = require('./review');
 
 const validateEmail = email => {
   // eslint-disable-next-line no-useless-escape
@@ -62,14 +64,14 @@ accountSchema.statics.addAccount = (account, callback) => {
 };
 
 accountSchema.statics.findAllUsers = () => {
-  return to(Account.find().populate('bookHistory'));
+  return to(Account.find().populate('bookHistory reviewHistory'));
 };
 
 accountSchema.statics.findNonAdminUsers = () => {
   return to(
     Account.find({
       userType: AUDIENCE.USER,
-    }).populate('bookHistory'),
+    }).populate('bookHistory reviewHistory'),
   );
 };
 
@@ -77,7 +79,7 @@ accountSchema.statics.findUserByUsername = username => {
   return to(
     Account.findOne({
       username,
-    }).populate('bookHistory'),
+    }).populate('bookHistory reviewHistory'),
   );
 };
 
@@ -85,7 +87,7 @@ accountSchema.statics.findUserById = accountID => {
   return to(
     Account.findOne({
       _id: accountID,
-    }).populate('bookHistory'),
+    }).populate('bookHistory reviewHistory'),
   );
 };
 
@@ -93,7 +95,7 @@ accountSchema.statics.findUserByIdNumber = idNumber => {
   return to(
     Account.findOne({
       idNumber,
-    }).populate('bookHistory'),
+    }).populate('bookHistory reviewHistory'),
   );
 };
 

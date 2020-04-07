@@ -24,6 +24,7 @@ export const paginatedLogs = async (route, event, context, callback) => {
   SystemLog.find()
     .skip((page - 1) * limit)
     .limit(Number(limit))
+    .populate('account')
     .then(logs => {
       callback(null, CODE(200, 'Successfully got books!', {res: logs, meta}));
     });

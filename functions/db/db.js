@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 // Initialize connection to database
 const dbUrl =
   process.env.MONGODB_SECRET || 'mongodb://localhost:27017/locallibrary';
+// const dbUrl = 'mongodb+srv://admin:locallibraryadmin@librarydatabase-piwbt.gcp.mongodb.net/SECURDE?retryWrites=true&w=majority';
 const dbOptions = {
   useNewUrlParser: true,
   useFindAndModify: false,

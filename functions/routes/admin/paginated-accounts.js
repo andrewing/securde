@@ -48,6 +48,7 @@ export const paginatedAccounts = (route, event, context, callback) => {
       Account.find(query)
         .skip((page - 1) * limit)
         .limit(Number(limit))
+        .populate('bookHistory reviewHistory')
         .then(accounts => {
           callback(
             null,
