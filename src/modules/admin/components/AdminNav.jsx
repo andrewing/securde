@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Navbar, Nav} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {auth} from '../../../api/auth';
 
 const AdminPageNavbar = ({url}) => (
   <>
@@ -36,7 +37,12 @@ const AdminPageNavbar = ({url}) => (
           View Logs
         </NavLink>
       </Nav>
-      <NavLink to="/">
+      <NavLink
+        to="/"
+        onClick={() => {
+          auth.signout();
+        }}
+      >
         <Navbar.Brand>
           <img
             alt=""
