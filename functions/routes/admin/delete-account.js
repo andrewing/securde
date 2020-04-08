@@ -28,13 +28,13 @@ export const deleteAccount = (route, event, context, callback) => {
       const {user} = decoded;
 
       Account.deleteOne({
-        _id: body.id,
+        _id: body._id,
       })
         .then(() => {
           SystemLog.addLog(
             new SystemLog({
               action: 'DELETE ACCOUNT',
-              content: `Deleted account ${body.id}`,
+              content: `Deleted account ${body._id}`,
               account: user._id,
             }),
           );

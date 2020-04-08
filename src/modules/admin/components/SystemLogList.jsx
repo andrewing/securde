@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import Highlighter from 'react-highlight-words';
-import {Button, Input, Pagination, Table} from 'antd';
+import {Button, Input, Table} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
 import moment from 'moment';
 import {getSystemLogsPaginated} from '../../../api/admin/index';
@@ -158,24 +158,20 @@ const SystemLogList = () => {
   return (
     <>
       <Table
-        rowKey={record => {
-          return record._id;
-        }}
+        rowKey={record => record._id}
         columns={columns}
         dataSource={logsData}
         bordered
-        pagination={false}
         loading={loadingTable}
+        pagination={{
+          position: ['bottomCenter', 'bottomCenter'],
+          onChange: handleChangePage,
+          onShowSizeChange: handleChangePageSize,
+          defaultCurrent: currentPage,
+          total,
+          defaultPageSize: dataPerPage,
+        }}
       />
-      <div className="paginate-table">
-        <Pagination
-          defaultCurrent={currentPage}
-          total={total}
-          pageSize={dataPerPage}
-          onChange={handleChangePage}
-          onShowSizeChange={handleChangePageSize}
-        />
-      </div>
     </>
   );
 };

@@ -1,12 +1,17 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {Button, Input, Pagination, Row, Table} from 'antd';
+import {Button, Input, Row, Table} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import {useDispatch} from 'react-redux';
 import AddEditModal from './AddEditModal';
 import DeleteModal from './DeleteModal';
 import ViewModal from './ViewModal';
-import {createManager, getAccountsPaginated} from '../../../api/admin/index';
+import {
+  createManager,
+  getAccountsPaginated,
+  updateAccount,
+  deleteAccount,
+} from '../../../api/admin/index';
 import {AUDIENCE} from '../../../util/constants';
 import {actions} from '../../../redux/notification';
 
@@ -15,6 +20,7 @@ const BookManagerList = () => {
   const [searchText, setSearchText] = useState('');
   const [searchColumn, setSearchColumn] = useState('');
   const [dataPerPage, setDataPerPage] = useState(10);
+  const [triggerUpdate, setTriggerUpdate] = useState(false);
   const [total, setTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [bookManagerData, setBookManagerData] = useState([]);
@@ -34,7 +40,7 @@ const BookManagerList = () => {
         setLoadingTable(false);
       },
     );
-  }, [currentPage, dataPerPage]);
+  }, [triggerUpdate, currentPage, dataPerPage]);
 
   const handleChangePage = page => {
     setLoadingTable(true);
@@ -123,19 +129,29 @@ const BookManagerList = () => {
 
   const handleAdd = values => {
     // call to back end and pass the account to add
-    values = {...values};
-
+    setLoadingTable(true);
     createManager(values).then(res => {
+      setTriggerUpdate(!triggerUpdate);
       setNotification(res);
     });
   };
 
   const handleUpdate = values => {
     // call to back end and pass the account to update
+    setLoadingTable(true);
+    updateAccount(values, values._id).then(res => {
+      setTriggerUpdate(!triggerUpdate);
+      setNotification(res);
+    });
   };
 
   const handleDelete = values => {
     // call to back end passing the accountID to delete
+    setLoadingTable(true);
+    deleteAccount(values).then(res => {
+      setTriggerUpdate(!triggerUpdate);
+      setNotification(res);
+    });
   };
 
   const columns = [
@@ -195,25 +211,20 @@ const BookManagerList = () => {
       </div>
 
       <Table
-        rowKey={record => {
-          return record._id;
-        }}
+        rowKey={record => record._id}
         columns={columns}
         dataSource={bookManagerData}
         bordered
         loading={loadingTable}
-        pagination={false}
+        pagination={{
+          position: ['bottomCenter', 'bottomCenter'],
+          onChange: handleChangePage,
+          onShowSizeChange: handleChangePageSize,
+          defaultCurrent: currentPage,
+          total,
+          defaultPageSize: dataPerPage,
+        }}
       />
-
-      <div className="paginate-table">
-        <Pagination
-          defaultCurrent={currentPage}
-          total={total}
-          pageSize={dataPerPage}
-          onChange={handleChangePage}
-          onShowSizeChange={handleChangePageSize}
-        />
-      </div>
     </>
   );
 };

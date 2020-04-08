@@ -25,7 +25,7 @@ const DeleteModal = prop => {
    * This function handles deleting a book manager.
    */
   const handleDelete = () => {
-    prop.handleDelete(prop.user._id);
+    prop.handleDelete(prop.user);
   };
 
   return (

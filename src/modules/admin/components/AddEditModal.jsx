@@ -40,6 +40,7 @@ const AddEditModal = prop => {
       const user = {...prop.user};
       user.firstname = value.firstname;
       user.lastname = value.lastname;
+      user.username = value.username;
       user.password = value.password;
       user.email = value.email;
       user.idNumber = value.idNumber;

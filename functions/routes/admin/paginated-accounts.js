@@ -28,15 +28,15 @@ export const paginatedAccounts = (route, event, context, callback) => {
         return;
       }
 
-      const {page, limit, ...rest} = event.queryStringParameters;
+      const {page, limit, type} = event.queryStringParameters;
 
-      let query = {};
-      Object.keys(rest).forEach(key => {
-        query = {
-          ...query,
-          [key]: regexWildCard(rest[key]),
-        };
-      });
+      const query = {type};
+      // Object.keys(rest).forEach(key => {
+      //   query = {
+      //     ...query,
+      //     [key]: regexWildCard(rest[key]),
+      //   };
+      // });
 
       const num = await Account.find(query).countDocuments();
       const meta = {
