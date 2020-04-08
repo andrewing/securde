@@ -41,12 +41,12 @@ const bookColumns = ({
   {
     title: 'Author/s',
     className: 'column-style',
-    dataIndex: 'authors',
+    dataIndex: 'author',
     width: 250,
     align: 'left',
     ellipsis: true,
     ...getColumnSearchProps(
-      'authors',
+      'author',
       searchInput,
       handleSearch,
       handleReset,
@@ -90,51 +90,39 @@ const bookColumns = ({
           {record.publisher}
           <br />
           <small style={{fontStyle: 'italic'}}>
-            Published at {record.year_published}
+            Published at {record.yearOfPublication}
           </small>
         </div>
       );
     },
   },
   {
-    title: 'Status',
+    title: 'ISBN',
     className: 'column-style',
-    dataIndex: 'status',
+    dataIndex: 'ISBN',
     width: 150,
     ...getColumnSearchProps(
-      'status',
+      'ISBN',
       searchInput,
       handleSearch,
       handleReset,
       searchColumn,
       searchText,
     ),
-    render: record => {
-      if (record === 'Available') {
-        return <Tag color="green">{record}</Tag>;
-      }
-      return <Tag color="red">{record}</Tag>;
-    },
   },
   {
-    title: 'Available By',
+    title: 'Call Number',
     className: 'column-style',
-    dataIndex: 'available_by',
+    dataIndex: 'callNumber',
     width: 130,
     ...getColumnSearchProps(
-      'available_by',
+      'callNumber',
       searchInput,
       handleSearch,
       handleReset,
       searchColumn,
       searchText,
     ),
-    render: (text, record) => {
-      if (record.status === 'Reserved') {
-        return <span>{text}</span>;
-      }
-      return <span>-</span>;
-    },
   },
   {
     title: 'Actions',
@@ -148,14 +136,13 @@ const bookColumns = ({
               to={{
                 pathname: `/user/books/${record.title}`,
                 state: {
+                  id: record._id,
                   title: record.title,
-                  authors: record.authors,
+                  authors: record.author,
                   publisher: record.publisher,
-                  year_published: record.year_published,
+                  yearOfPublication: record.yearOfPublication,
                   ISBN: record.ISBN,
-                  call_number: record.call_number,
-                  status: record.status,
-                  available_by: record.available_by,
+                  callNumber: record.callNumber,
                 },
               }}
             >
