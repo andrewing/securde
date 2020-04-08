@@ -23,8 +23,8 @@ const Page = ({setNotification, ...props}) => {
   };
 
   const handleClose = () => {
-    setShowSignUp(false);
-    setShowForgotPassword(false);
+    // setShowSignUp(false);
+    // setShowForgotPassword(false);
   };
 
   const loginAccount = values => {
@@ -37,7 +37,7 @@ const Page = ({setNotification, ...props}) => {
       .then(res => {
         const {data} = res;
         setNotification(res);
-        setLoading(false);
+        // setLoading(false);
         const {access, refresh, type} = data;
         auth.authenticate(access, refresh, type);
         switch (data.type) {
@@ -54,7 +54,7 @@ const Page = ({setNotification, ...props}) => {
       })
       .catch(err => {
         setNotification({isSuccess: false, message: err.message});
-        setLoading(false);
+        // setLoading(false);
       });
     return props.history.push('/');
   };
@@ -70,11 +70,11 @@ const Page = ({setNotification, ...props}) => {
       .then(res => {
         const {data} = res;
         setNotification(res);
-        setLoading(false);
+        // setLoading(false);
       })
       .catch(err => {
         setNotification({isSuccess: false, message: err.message});
-        setLoading(false);
+        // setLoading(false);
       });
   };
 

@@ -10,20 +10,20 @@ const BookInfo = ({state, showBorrowBook}) => {
           {state.publisher}
         </Descriptions.Item>
         <Descriptions.Item label="Year Published">
-          {state.year_published}
+          {state.yearOfPublication}
         </Descriptions.Item>
         <Descriptions.Item label="ISBN">{state.ISBN}</Descriptions.Item>
         <Descriptions.Item label="Call Number">
-          {state.call_number}
+          {state.callNumber}
         </Descriptions.Item>
         <Descriptions.Item label="Status">
           {state.status === 'Available' ? (
-            <Tag color="green">{state.status}</Tag>
+            <Tag color="green">{state.id}</Tag>
           ) : (
-            <Tag color="red">{state.status}</Tag>
+            <Tag color="red">hello</Tag>
           )}
         </Descriptions.Item>
-        <Descriptions.Item label="Available By">
+        {/* <Descriptions.Item label="Available By">
           {state.available_by ? (
             <span>{state.available_by}</span>
           ) : (
@@ -39,7 +39,7 @@ const BookInfo = ({state, showBorrowBook}) => {
               Borrow Now
             </Button>
           )}
-        </Descriptions.Item>
+        </Descriptions.Item> */}
       </Descriptions>
       <Divider />
     </Container>

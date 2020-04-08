@@ -35,10 +35,10 @@ const ViewBook = ({props}) => {
       <Jumbotron bsPrefix="page-header" fluid>
         <div style={{paddingLeft: 70}}>
           <h1>{state.title}</h1>
-          <div title={state.authors}>
+          <div title={state.author}>
             <span>Authored By </span>
             {state.authors.map((item, i) => {
-              if (i === state.authors.length - 1) {
+              if (i === state.author.length - 1) {
                 return <span key={i}> {item} </span>;
               }
               return <span key={i}>{item}, </span>;
