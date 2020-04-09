@@ -1,18 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Tabs, List, Table} from 'antd';
-import reviewsData from './reviewsData';
 import borrowedBooksColumns from './table/borrowedBooksColumns';
 import borrowedBookData from './table/borrowedBookData';
-// import {getReviewHistory} from '../../../api/user/history/index';
+import {
+  getReviewHistory,
+  getBookHistory,
+} from '../../../api/user/history/index';
 
-const PostedReviews = () => {
+const PostedReviews = ({reviewHistory}) => {
   return (
     <div
       style={{
         border: '1px solid #EFEFEF',
         marginBottom: 20,
         padding: 10,
-        height: 500,
+        maxHeight: 500,
         width: '100%',
         overflowY: 'auto',
         overflowX: 'hidden',
@@ -20,15 +22,16 @@ const PostedReviews = () => {
     >
       <List
         itemLayout="horizontal"
-        dataSource={reviewsData}
-        renderItem={(item, i) => (
-          <List.Item>
-            <List.Item.Meta
-              title="Title of the reviewed book"
-              description={item}
-            />
-          </List.Item>
-        )}
+        dataSource={reviewHistory}
+        renderItem={item => {
+          const {title} = item.book;
+
+          return (
+            <List.Item>
+              <List.Item.Meta title={title} description={item.content} />
+            </List.Item>
+          );
+        }}
       />
     </div>
   );
@@ -40,6 +43,7 @@ const BorrowedBooks = ({
   searchInput,
   handleSearch,
   handleReset,
+  bookHistory,
 }) => {
   return (
     <Table
@@ -64,6 +68,23 @@ const UserLogs = ({
   handleReset,
 }) => {
   const {TabPane} = Tabs;
+  const [reviewHistory, setReviewHistory] = useState([]);
+  const [bookHistory, setBookHistory] = useState([]);
+
+  useEffect(() => {
+    getReviewHistory().then(res => {
+      const {data} = res;
+      setReviewHistory(data.reviewHistory);
+    });
+  }, []);
+
+  useEffect(() => {
+    getBookHistory().then(res => {
+      const {data} = res;
+      setBookHistory(data);
+      // console.log(res);
+    });
+  }, []);
 
   return (
     <>
@@ -75,10 +96,11 @@ const UserLogs = ({
             searchInput={searchInput}
             handleSearch={handleSearch}
             handleReset={handleReset}
+            bookHistory={bookHistory}
           />
         </TabPane>
         <TabPane tab="Posted Reviews" key="2">
-          <PostedReviews />
+          <PostedReviews reviewHistory={reviewHistory} />
         </TabPane>
       </Tabs>
     </>

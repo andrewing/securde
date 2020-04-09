@@ -5,15 +5,14 @@ import moment from 'moment';
 const Reviews = ({reviews}) => {
   return reviews.map((item, i) => {
     return (
-      <>
+      <div key={item._id}>
         <Comment
-          key={i}
-          author="Rae"
-          content={item}
-          dateTime={<span>{moment().fromNow()}</span>}
+          content={item.content}
+          author={item.account}
+          datetime={<span>{moment(item.time).fromNow()}</span>}
         />
-        <Divider style={{margin: 5}} />
-      </>
+        {i !== reviews.length - 1 ? <Divider style={{margin: 5}} /> : ''}
+      </div>
     );
   });
 };
@@ -24,7 +23,7 @@ const ReviewList = ({reviews}) => {
       style={{
         border: '1px solid #EFEFEF',
         marginBottom: 20,
-        height: 500,
+        maxHeight: 500,
         width: '100%',
         overflowY: 'auto',
         overflowX: 'hidden',

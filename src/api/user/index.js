@@ -1,6 +1,8 @@
 import {request} from '../api';
 
 export * from './history';
+export const getUserDetails = () =>
+  request(`/user/details`, {method: 'GET'}, true);
 export const getQuestion = userId => request(`/user/get-question?q=${userId}`);
 export const forgotPassword = body =>
   request('/user/forgot-password', {method: 'POST', body});
