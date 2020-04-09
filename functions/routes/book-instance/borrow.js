@@ -51,6 +51,9 @@ export const borrow = (route, event, context, callback) => {
         return;
       }
       const book = await Book.findById(bookInstance.book);
+      if (!book) {
+        callback(null, CODE(409, `Book does not exist`));
+      }
       if (!bookInstance.isAvailable) {
         callback(null, CODE(409, `Book has already been borrowed`));
         return;
