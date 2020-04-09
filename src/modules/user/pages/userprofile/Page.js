@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {Jumbotron, Container} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 import UserInfo from '../../components/UserInfo';
 import UserLogs from '../../components/UserLogs';
 import ChangePasswordModal from '../../components/modals/ChangePasswordModal';
@@ -34,11 +34,6 @@ const Page = ({props}) => {
 
   return (
     <>
-      <Jumbotron bsPrefix="page-header" fluid>
-        <h1 style={{color: '#6C4CC5'}}>Username</h1>
-        <p>Welcome to your profile!</p>
-      </Jumbotron>
-      <br />
       <UserInfo showChangePassword={showChangePassword} />
       <h1 style={{paddingLeft: 130, margin: '15px 0'}}>Your Logs</h1>
       <Container>
