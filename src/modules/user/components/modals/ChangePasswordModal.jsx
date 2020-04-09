@@ -1,31 +1,44 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Modal, Form, Input} from 'antd';
+import {BeatLoader} from 'react-spinners';
 import {Button} from 'react-bootstrap';
+import {changePassword} from '../../../../api/user/index';
 
-const ChangePasswordModal = ({showModal, changePassword, handleClose}) => {
+const ChangePasswordModal = ({showModal, handleClose, setNotification}) => {
   const [form] = Form.useForm();
+  const [isLoading, setLoading] = useState(false);
 
   const onSubmit = () => {
-    form
-      .validateFields()
-      .then(values => {
-        values = {
-          oldPassword: values.oldPassword,
-          newPassword: values.newPassword,
-        };
+    form.validateFields().then(values => {
+      values = {
+        oldPassword: values.oldPassword,
+        newPassword: values.newPassword,
+      };
 
-        changePassword(values);
-        form.resetFields();
-        handleClose();
+      setLoading(true);
+      passwordChange(values);
+      form.resetFields();
+    });
+  };
+
+  const passwordChange = values => {
+    changePassword(values)
+      .then(res => {
+        const {data} = res;
+        setNotification(res);
+        setLoading(false);
+        // handleClose();
+        // console.log(data);
       })
-      .catch(info => {
-        // console.log('Validate Failed:', info);
+      .catch(err => {
+        setNotification({isSuccess: false, message: err.message});
+        setLoading(false);
       });
   };
 
   const matchPassword = (_, value) => {
     try {
-      if (value && form.getFieldValue('password') !== value)
+      if (value && form.getFieldValue('newPassword') !== value)
         throw new Error('Password do not match.');
     } catch (err) {
       return Promise.reject(err);
@@ -119,7 +132,7 @@ const ChangePasswordModal = ({showModal, changePassword, handleClose}) => {
           style={{margin: '0px 17px'}}
           onClick={onSubmit}
         >
-          Confirm
+          {isLoading ? <BeatLoader size={8} color="white" /> : 'Confirm'}
         </Button>
 
         <Button
