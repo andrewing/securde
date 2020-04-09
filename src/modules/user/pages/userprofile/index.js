@@ -1,6 +1,8 @@
 import React from 'react';
 import Page from './Page';
 
-export default () => {
-  return <Page />;
+const UserProfile = props => {
+  return <Page {...props} />;
 };
+
+export default UserProfile;

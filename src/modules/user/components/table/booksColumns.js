@@ -1,10 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {Row, Tooltip, Tag} from 'antd';
-import {EyeOutlined, BookOutlined} from '@ant-design/icons';
 import getColumnSearchProps from './getColumnSearchProps';
+import Status from './Status';
+import Actions from './Actions';
 
 const bookColumns = ({
+  currPage,
   showBorrowBook,
   handleSearch,
   handleReset,
@@ -111,56 +111,23 @@ const bookColumns = ({
     ),
   },
   {
-    title: 'Call Number',
+    title: 'Status',
     className: 'column-style',
-    dataIndex: 'callNumber',
+    dataIndex: '_id',
     width: 130,
-    ...getColumnSearchProps(
-      'callNumber',
-      searchInput,
-      handleSearch,
-      handleReset,
-      searchColumn,
-      searchText,
-    ),
+    render: record => <Status id={record} currPage={currPage} />,
   },
   {
     title: 'Actions',
     className: 'column-style',
     width: 100,
-    render: record => {
-      return (
-        <Row type="flex" justify="space-around">
-          <Tooltip title="View Book">
-            <Link
-              to={{
-                pathname: `/user/books/${record.title}`,
-                state: {
-                  id: record._id,
-                  title: record.title,
-                  authors: record.author,
-                  publisher: record.publisher,
-                  yearOfPublication: record.yearOfPublication,
-                  ISBN: record.ISBN,
-                  callNumber: record.callNumber,
-                },
-              }}
-            >
-              <EyeOutlined style={{color: '#6c63ff'}} />
-            </Link>
-          </Tooltip>
-
-          <Tooltip title="Borrow Book">
-            <BookOutlined
-              style={{color: '#6c63ff', padding: 3}}
-              onClick={() => {
-                showBorrowBook(record);
-              }}
-            />
-          </Tooltip>
-        </Row>
-      );
-    },
+    render: record => (
+      <Actions
+        record={record}
+        showBorrowBook={showBorrowBook}
+        currPage={currPage}
+      />
+    ),
   },
 ];
 
