@@ -43,7 +43,7 @@ const AddEditBook = ({
         title: data.title,
         author: data.author,
         publisher: data.publisher,
-        yearOfPublication: data.year_published,
+        yearOfPublication: data.yearOfPublication,
         ISBN: data.ISBN,
         callNumber: data.callNumber,
       });

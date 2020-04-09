@@ -33,7 +33,7 @@ const bookColumns = ({
   {
     title: 'Author/s',
     className: 'column-style',
-    dataIndex: 'authors',
+    dataIndex: 'author',
     width: 300,
     align: 'left',
     ellipsis: true,
@@ -80,9 +80,9 @@ const bookColumns = ({
   {
     title: 'Year Published',
     className: 'column-style',
-    dataIndex: 'year_published',
+    dataIndex: 'yearOfPublication',
     ...getColumnSearchProps(
-      'year_published',
+      'yearOfPublication',
       searchInput,
       handleSearch,
       handleReset,
@@ -106,7 +106,7 @@ const bookColumns = ({
   {
     title: 'Call Number',
     className: 'column-style',
-    dataIndex: 'call_number',
+    dataIndex: 'callNumber',
   },
   {
     title: 'Actions',
@@ -123,10 +123,10 @@ const bookColumns = ({
                   title: record.title,
                   authors: record.authors,
                   publisher: record.publisher,
-                  year_published: record.year_published,
+                  yearOfPublication: record.yearOfPublication,
                   ISBN: record.ISBN,
                   status: record.status,
-                  call_number: record.call_number,
+                  callNumber: record.callNumber,
                 },
               }}
             >

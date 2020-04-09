@@ -3,8 +3,8 @@ import {request} from '../api';
 export const getBookInstanceById = id => request(`/book-instance?q=${id}`);
 export const getBookInstanceByBook = bookId =>
   request(`/book-instance/by-book?q=${bookId}`);
-export const borrowBookInstance = id =>
-  request(`/book-instance/borrow?q=${id}`, {method: 'PUT'}, true);
+export const borrowBookInstance = (body, id) =>
+  request(`/book-instance/borrow?q=${id}`, {method: 'PUT', body}, true);
 export const returnBookInstance = id =>
   request(`/book-instance/return?q=${id}`, {method: 'PUT'}, true);
 export const editBookInstance = (id, body) =>

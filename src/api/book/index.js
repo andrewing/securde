@@ -9,5 +9,5 @@ export const createBook = body =>
   request('/book/create', {method: 'POST', body}, true);
 export const updateBook = (body, id) =>
   request(`/book/update?q=${id}`, {method: 'PUT', body}, true);
-export const getBookPaginated = (page, limit, rest) =>
+export const getBookPaginated = (page, limit, rest = '') =>
   request(`/book/paginated?page=${page}&limit=${limit}${rest}`);
