@@ -5,6 +5,7 @@ import bookColumns from '../../components/table/booksColumns';
 import BorrowBookModal from '../../components/modals/BorrowBookModal';
 import {borrowBookInstance} from '../../../../api/bookInstance/index';
 import {getBookPaginated} from '../../../../api/book/index';
+import {borrowBookInstance} from '../../../../api/bookInstance/index';
 
 const Page = ({props}) => {
   const [selectedBook, setSelectedBook] = useState();
