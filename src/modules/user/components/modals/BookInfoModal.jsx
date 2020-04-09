@@ -7,8 +7,8 @@ const BookInfoModal = ({data}) => {
       <Descriptions size="small" column={1} bordered>
         <Descriptions.Item label="Title">{data.title}</Descriptions.Item>
         <Descriptions.Item label="Author/s">
-          {data.authors.map((item, i) => {
-            if (i === data.authors.length - 1) {
+          {data.author.map((item, i) => {
+            if (i === data.author.length - 1) {
               return <span key={i}> {item} </span>;
             }
             return <span key={i}>{item}, </span>;
@@ -16,7 +16,7 @@ const BookInfoModal = ({data}) => {
         </Descriptions.Item>
         <Descriptions.Item label="ISBN">{data.ISBN}</Descriptions.Item>
         <Descriptions.Item label="Call Number">
-          {data.call_number}
+          {data.callNumber}
         </Descriptions.Item>
       </Descriptions>
     </>

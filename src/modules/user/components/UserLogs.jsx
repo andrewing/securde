@@ -3,6 +3,7 @@ import {Tabs, List, Table} from 'antd';
 import reviewsData from './reviewsData';
 import borrowedBooksColumns from './table/borrowedBooksColumns';
 import borrowedBookData from './table/borrowedBookData';
+// import {getReviewHistory} from '../../../api/user/history/index';
 
 const PostedReviews = () => {
   return (
