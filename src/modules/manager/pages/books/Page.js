@@ -1,15 +1,33 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {Jumbotron} from 'react-bootstrap';
 import {Table, Button, notification} from 'antd';
 import {CheckCircleTwoTone} from '@ant-design/icons';
 import bookColumns from '../../components/table/booksColumns';
-import bookData from '../../components/table/bookData';
 import AddEditBookModal from '../../components/modals/AddEditBook';
+import {getBookPaginated} from '../../../../api/book';
 
-const Page = ({props}) => {
+const Page = ({setNotification, props}) => {
   const [showAddBook, setShowAddBook] = useState(false);
   const [selectedAction, setSelectedAction] = useState('add');
   const [tableData, setTableData] = useState();
+
+  const [currPage, setPage] = useState(1);
+  const [meta, setMeta] = useState({});
+
+  const [bookData, setBookData] = useState([]);
+
+  useEffect(() => {
+    getBookPaginated(currPage, 10)
+      .then(res => {
+        const {data} = res;
+        const {res: books, meta: m} = data;
+        setBookData(books);
+        setMeta(m);
+      })
+      .catch(err => {
+        setNotification(err);
+      });
+  }, [currPage]);
 
   const showAddModal = () => {
     setSelectedAction('add');
@@ -91,6 +109,7 @@ const Page = ({props}) => {
         <Table
           bordered
           dataSource={bookData}
+          rowKey={data => data._id}
           columns={bookColumns({
             props,
             showEditModal,
@@ -101,6 +120,12 @@ const Page = ({props}) => {
             searchColumn,
             searchInput,
           })}
+          pagination={{
+            onChange: setPage,
+            defaultCurrent: 1,
+            defaultPageSize: 10,
+            total: meta.total || 0,
+          }}
         />
       </div>
 

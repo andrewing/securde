@@ -18,7 +18,7 @@ export const borrow = (route, event, context, callback) => {
     return;
   }
   const {q} = event.queryStringParameters;
-  const data = event.body;
+  const data = JSON.parse(event.body);
   const {authorization} = event.headers;
 
   jwt.verify(
@@ -54,7 +54,7 @@ export const borrow = (route, event, context, callback) => {
         callback(null, CODE(409, `Book has already been borrowed`));
         return;
       }
-      BookInstance.borrowBookInstance(q)
+      BookInstance.borrowBookInstance(q, data.days)
         .then(() => {
           const log = new LibraryLog({
             timeBorrowed: moment().format(),
