@@ -1,29 +1,42 @@
 /* eslint-disable react/destructuring-assignment */
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {Table, notification, Row, Button} from 'antd';
 import {CheckCircleTwoTone} from '@ant-design/icons';
 import {Jumbotron, Container} from 'react-bootstrap';
 import BookInfo from '../../components/BookInfo';
 import AddEditInstance from '../../components/modals/AddEditInstance';
 import bookInstancesColumns from '../../components/table/bookInstanceColumns';
-import bookInstanceData from '../../components/table/bookInstanceData';
+import {getBookInstanceByBook} from '../../../../api/bookInstance';
 
-const ViewBook = ({props}) => {
+const ViewBook = ({setNotification, props}) => {
   const {state} = props.location;
   const [showAddBook, setShowAddBook] = useState(false);
   const [selectedAction, setSelectedAction] = useState('add');
-  const [tableData, setTableData] = useState();
+  const [selectedData, setSelectedData] = useState();
+  const [bookInstanceData, setBookInstanceData] = useState([]);
+  const [currPage, setCurrPage] = useState(1);
+
+  useEffect(() => {
+    getBookInstanceByBook(state.id)
+      .then(res => {
+        const {bookInstances} = res.data;
+        setBookInstanceData(bookInstances);
+      })
+      .catch(err => {
+        setNotification(err);
+      });
+  }, [currPage]);
 
   const showAddModal = () => {
     setSelectedAction('add');
     setShowAddBook(true);
-    setTableData();
+    setSelectedData();
   };
 
   const showEditModal = data => {
     setSelectedAction('edit');
     setShowAddBook(true);
-    setTableData(data);
+    setSelectedData(data);
   };
 
   const deleteBook = data => {
@@ -75,10 +88,10 @@ const ViewBook = ({props}) => {
       <Jumbotron bsPrefix="page-header" fluid>
         <div style={{paddingLeft: 70}}>
           <h1>{state.title}</h1>
-          <div title={state.authors}>
+          <div title={state.author}>
             <span>Authored By </span>
-            {state.authors.map((item, i) => {
-              if (i === state.authors.length - 1) {
+            {state.author.map((item, i) => {
+              if (i === state.author.length - 1) {
                 return <span key={i}> {item} </span>;
               }
               return <span key={i}>{item}, </span>;
@@ -103,7 +116,6 @@ const ViewBook = ({props}) => {
           Add Book Instance
         </Button>
       </Row>
-
       <Container>
         <Table
           bordered
@@ -123,7 +135,7 @@ const ViewBook = ({props}) => {
         showAddBook={showAddBook}
         handleClose={handleClose}
         action={selectedAction}
-        data={tableData}
+        data={selectedData}
         onCreateBook={onCreateInstance}
         onEditBook={onEditInstance}
       />

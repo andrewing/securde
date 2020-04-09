@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {Row, Tooltip, Tag} from 'antd';
 import {EditOutlined} from '@ant-design/icons';
 import DeleteModal from '../modals/DeleteModal';
@@ -16,14 +17,14 @@ const bookColumns = ({
   {
     title: 'ID',
     className: 'column-style',
-    dataIndex: 'key',
+    dataIndex: '_id',
   },
   {
     title: 'Status',
     className: 'column-style',
-    dataIndex: 'status',
+    dataIndex: 'isAvailable',
     ...getColumnSearchProps(
-      'status',
+      'isAvailable',
       searchInput,
       handleSearch,
       handleReset,
@@ -31,18 +32,19 @@ const bookColumns = ({
       searchText,
     ),
     render: record => {
-      if (record === 'Available') {
-        return <Tag color="green">{record}</Tag>;
-      }
-      return <Tag color="red">{record}</Tag>;
+      return (
+        <Tag color={record ? 'green' : 'red'}>
+          {record ? 'Available' : 'Reserved'}
+        </Tag>
+      );
     },
   },
   {
     title: 'Date Available',
     className: 'column-style',
-    dataIndex: 'available_by',
+    dataIndex: 'dateAvailable',
     ...getColumnSearchProps(
-      'available_by',
+      'dateAvailable',
       searchInput,
       handleSearch,
       handleReset,
@@ -50,8 +52,8 @@ const bookColumns = ({
       searchText,
     ),
     render: (text, record) => {
-      if (record.status === 'Reserved') {
-        return <span>{text}</span>;
+      if (!record.isAvailable) {
+        return <span>{moment(text).fromNow()}</span>;
       }
       return <span>-</span>;
     },

@@ -10,11 +10,11 @@ const BookInfo = ({state}) => {
           {state.publisher}
         </Descriptions.Item>
         <Descriptions.Item label="Year Published">
-          {state.year_published}
+          {state.yearOfPublication}
         </Descriptions.Item>
         <Descriptions.Item label="ISBN">{state.ISBN}</Descriptions.Item>
         <Descriptions.Item label="Call Number">
-          {state.call_number}
+          {state.callNumber}
         </Descriptions.Item>
       </Descriptions>
       <Divider />

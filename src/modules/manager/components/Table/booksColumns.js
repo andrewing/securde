@@ -120,8 +120,9 @@ const bookColumns = ({
               to={{
                 pathname: `/manager/manage-books/${record.title}`,
                 state: {
+                  id: record._id,
                   title: record.title,
-                  authors: record.authors,
+                  author: record.author,
                   publisher: record.publisher,
                   yearOfPublication: record.yearOfPublication,
                   ISBN: record.ISBN,

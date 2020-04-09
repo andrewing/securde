@@ -18,6 +18,7 @@ export const borrow = (route, event, context, callback) => {
     return;
   }
   const {q} = event.queryStringParameters;
+
   const data = JSON.parse(event.body);
   const {authorization} = event.headers;
 
@@ -45,11 +46,11 @@ export const borrow = (route, event, context, callback) => {
       }
 
       const bookInstance = await BookInstance.findById(q);
-      const book = await Book.findById(bookInstance.book);
       if (!bookInstance) {
         callback(null, CODE(409, `Book does not exist`));
         return;
       }
+      const book = await Book.findById(bookInstance.book);
       if (!bookInstance.isAvailable) {
         callback(null, CODE(409, `Book has already been borrowed`));
         return;
