@@ -3,7 +3,6 @@ import {Jumbotron} from 'react-bootstrap';
 import {Table} from 'antd';
 import bookColumns from '../../components/table/booksColumns';
 import BorrowBookModal from '../../components/modals/BorrowBookModal';
-import {borrowBookInstance} from '../../../../api/bookInstance/index';
 import {getBookPaginated} from '../../../../api/book/index';
 import {borrowBookInstance} from '../../../../api/bookInstance/index';
 
