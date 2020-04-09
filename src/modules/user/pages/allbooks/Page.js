@@ -4,11 +4,12 @@ import {Table} from 'antd';
 import bookColumns from '../../components/table/booksColumns';
 import BorrowBookModal from '../../components/modals/BorrowBookModal';
 import {getBookPaginated} from '../../../../api/book/index';
+import {borrowBookInstance} from '../../../../api/bookInstance/index';
 
 const Page = ({props}) => {
   const [selectedBook, setSelectedBook] = useState();
   const [showModal, setShowModal] = useState(false); // showBorrow will go to borrow modal
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [allBooks, setAllBooks] = useState();
   const [currPage, setPage] = useState(1);
   const [metaTotal, setMetaTotal] = useState();
@@ -29,6 +30,7 @@ const Page = ({props}) => {
 
   const borrowBook = values => {
     // console.log(selectedBook, values);
+    borrowBookInstance(selectedBook._id);
   };
 
   const handleClose = () => {
@@ -70,6 +72,7 @@ const Page = ({props}) => {
           rowKey={record => record._id}
           dataSource={allBooks}
           columns={bookColumns({
+            currPage,
             props,
             showBorrowBook,
             handleSearch,

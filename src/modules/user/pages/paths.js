@@ -19,7 +19,7 @@ const subpages = [
   {
     key: '/profile',
     path: '/profile',
-    component: Userprofile,
+    component: props => <Userprofile props={props} />,
   },
   {
     key: '/*',

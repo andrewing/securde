@@ -37,7 +37,7 @@ const ViewBook = ({props}) => {
           <h1>{state.title}</h1>
           <div title={state.author}>
             <span>Authored By </span>
-            {state.authors.map((item, i) => {
+            {state.author.map((item, i) => {
               if (i === state.author.length - 1) {
                 return <span key={i}> {item} </span>;
               }

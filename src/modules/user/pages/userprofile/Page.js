@@ -4,8 +4,9 @@ import UserInfo from '../../components/UserInfo';
 import UserLogs from '../../components/UserLogs';
 import ChangePasswordModal from '../../components/modals/ChangePasswordModal';
 
-const Page = () => {
+const Page = ({props}) => {
   const [showModal, setShowModal] = useState(false);
+  const {setNotification} = props;
 
   const showChangePassword = () => {
     setShowModal(true);
@@ -13,10 +14,6 @@ const Page = () => {
 
   const handleClose = () => {
     setShowModal(false);
-  };
-
-  const changePassword = values => {
-    // console.log(values);
   };
 
   // for table filters
@@ -56,7 +53,7 @@ const Page = () => {
       <ChangePasswordModal
         showModal={showModal}
         handleClose={handleClose}
-        changePassword={changePassword}
+        setNotification={setNotification}
       />
     </>
   );
