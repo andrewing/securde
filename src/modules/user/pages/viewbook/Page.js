@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react';
 import {Jumbotron, Container} from 'react-bootstrap';
 import BookInfo from '../../components/BookInfo';
 import AddReview from '../../components/AddReview';
-// import reviewsData from '../../components/reviewsData';
 import ReviewList from '../../components/ReviewList';
 import BorrowBookModal from '../../components/modals/BorrowBookModal';
 import {createReview, getReviewByBookId} from '../../../../api/review/index';
