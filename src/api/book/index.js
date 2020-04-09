@@ -8,6 +8,6 @@ export const deleteBook = body =>
 export const createBook = body =>
   request('/book/create', {method: 'POST', body}, true);
 export const updateBook = (body, id) =>
-  request(`/book/update?q=${id}`, {method: 'PUT', body}, true);
-export const getBookPaginated = (page, limit, rest) =>
+  request(`/book/update?q=${id}`, {method: 'PUT', body});
+export const getBookPaginated = (page, limit, rest = '') =>
   request(`/book/paginated?page=${page}&limit=${limit}${rest}`);

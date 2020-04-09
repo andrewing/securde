@@ -1,14 +1,26 @@
-import React, {useState, useRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {Jumbotron} from 'react-bootstrap';
-import {Table, notification} from 'antd';
-import {CheckCircleTwoTone} from '@ant-design/icons';
+import {Table} from 'antd';
 import bookColumns from '../../components/table/booksColumns';
-import bookData from '../../components/table/bookData';
 import BorrowBookModal from '../../components/modals/BorrowBookModal';
+import {getBookPaginated} from '../../../../api/book/index';
 
 const Page = ({props}) => {
   const [selectedBook, setSelectedBook] = useState();
   const [showModal, setShowModal] = useState(false); // showBorrow will go to borrow modal
+  const [isLoading, setLoading] = useState(false);
+  const [allBooks, setAllBooks] = useState();
+  const [currPage, setPage] = useState(1);
+  const [metaTotal, setMetaTotal] = useState();
+
+  useEffect(() => {
+    getBookPaginated(currPage, 10).then(res => {
+      const {data} = res;
+      setAllBooks(data.res);
+      setMetaTotal(data.meta.total);
+      setLoading(false);
+    });
+  }, [currPage]);
 
   const showBorrowBook = record => {
     setShowModal(true);
@@ -32,11 +44,18 @@ const Page = ({props}) => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchColumn(dataIndex);
+    setLoading(false);
   };
 
   const handleReset = clearFilters => {
     clearFilters();
     setSearchText('');
+    setLoading(false);
+  };
+
+  const handlePage = page => {
+    setLoading(true);
+    setPage(page);
   };
 
   return (
@@ -48,7 +67,8 @@ const Page = ({props}) => {
       <div className="page-content">
         <Table
           bordered
-          dataSource={bookData}
+          rowKey={record => record._id}
+          dataSource={allBooks}
           columns={bookColumns({
             props,
             showBorrowBook,
@@ -58,6 +78,13 @@ const Page = ({props}) => {
             searchColumn,
             searchInput,
           })}
+          loading={isLoading}
+          pagination={{
+            onChange: handlePage,
+            defaultCurrent: 1,
+            defaultPageSize: 10,
+            total: metaTotal,
+          }}
         />
       </div>
       <BorrowBookModal
