@@ -18,7 +18,7 @@ const Status = ({id}) => {
         });
       }
     });
-  }, []);
+  }, [id]);
 
   return (
     <>

@@ -19,7 +19,7 @@ const Actions = ({record, showBorrowBook}) => {
         });
       }
     });
-  }, []);
+  }, [record]);
 
   return (
     <Row type="flex" justify="space-around">

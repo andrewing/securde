@@ -29,7 +29,7 @@ const BookInfo = ({state, showBorrowBook}) => {
 
       setDates(dates);
     });
-  }, []);
+  }, [state]);
 
   const getEarliestDate = () => {
     if (datesAvailable) {

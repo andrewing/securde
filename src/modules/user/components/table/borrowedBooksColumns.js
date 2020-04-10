@@ -1,5 +1,4 @@
 import React from 'react';
-import {Tag} from 'antd';
 import getColumnSearchProps from './getColumnSearchProps';
 
 const borrowedBooksColumns = ({

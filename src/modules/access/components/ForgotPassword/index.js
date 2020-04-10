@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, {useState, useRef, useEffect} from 'react';
-import {Form, Input, Modal, Row, Select, Divider, Steps} from 'antd';
+import {Form, Modal, Steps} from 'antd';
 import {
   UserOutlined,
   SolutionOutlined,
@@ -9,7 +9,6 @@ import {
   CheckCircleTwoTone,
   CheckCircleOutlined,
 } from '@ant-design/icons';
-import {Button, ProgressBar} from 'react-bootstrap';
 import {getId, checkAnswer, forgotPassword} from '../../../../api/user';
 import Username from './components/Username';
 import Question from './components/Question';
@@ -21,7 +20,6 @@ const {Step} = Steps;
 
 const ForgotPassword = ({visible, setVisibleForgot, setNotification}) => {
   const [form] = Form.useForm();
-  const {Option} = Select;
 
   const [isUsernameLoading, setUsernameLoading] = useState(false);
   const [isQuestionLoading, setQuestionLoading] = useState(false);
@@ -109,7 +107,7 @@ const ForgotPassword = ({visible, setVisibleForgot, setNotification}) => {
     });
   };
 
-  const onSubmit = event => {
+  const onSubmit = () => {
     form.validateFields().then(values => {
       values = {
         username: values.username,
@@ -123,24 +121,6 @@ const ForgotPassword = ({visible, setVisibleForgot, setNotification}) => {
       setVisibleForgot(false);
     });
   };
-
-  const matchPassword = (_, value) => {
-    try {
-      if (value && form.getFieldValue('password') !== value)
-        throw new Error('Password do not match.');
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve();
-  };
-
-  const questions = [
-    'In what city did you have your first ever birthday party?',
-    'What is the last name of your Science class teacher in high school?',
-    'Which company manufactured your first mobile phone?',
-    'Who was your childhood hero?',
-    'Where was your best family vacation?',
-  ];
 
   const step = currStep => {
     if (currStep < page) return 'finish';
