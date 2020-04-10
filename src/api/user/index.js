@@ -9,3 +9,4 @@ export const changePassword = body =>
 export const getId = username => request(`/user/get-id?q=${username}`, true);
 export const checkAnswer = body =>
   request(`/user/check-answer`, {method: 'POST', body});
+export const getDetails = () => request(`/user/details`);
