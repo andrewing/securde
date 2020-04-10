@@ -44,11 +44,15 @@ const getColumnSearchProps = (
   filterIcon: filtered => (
     <SearchOutlined style={{color: filtered ? '#1890ff' : undefined}} />
   ),
-  onFilter: (value, record) =>
-    record[dataIndex]
-      .toString()
-      .toLowerCase()
-      .includes(value.toLowerCase()),
+  onFilter: (value, record) => {
+    if (!Array.isArray(record[dataIndex]))
+      return record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes(value.toLowerCase());
+    const regex = new RegExp(record[dataIndex].join('|'), 'i');
+    return regex.test(value.toLowerCase());
+  },
   onFilterDropdownVisibleChange: visible => {
     if (visible) {
       setTimeout(() => searchInput.current.select());
