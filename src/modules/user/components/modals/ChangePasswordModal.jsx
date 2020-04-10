@@ -24,11 +24,9 @@ const ChangePasswordModal = ({showModal, handleClose, setNotification}) => {
   const passwordChange = values => {
     changePassword(values)
       .then(res => {
-        const {data} = res;
         setNotification(res);
         setLoading(false);
         // handleClose();
-        // console.log(data);
       })
       .catch(err => {
         setNotification({isSuccess: false, message: err.message});

@@ -1,21 +1,53 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Modal, Form, Input} from 'antd';
+import {BeatLoader} from 'react-spinners';
 import {Button} from 'react-bootstrap';
 import BookInfoModal from './BookInfoModal';
+import {
+  getBookInstanceByBook,
+  borrowBookInstance,
+} from '../../../../api/bookInstance/index';
 
-const BorrowBookModal = ({showModal, data, borrowBook, handleClose}) => {
+const BorrowBookModal = ({
+  showModal,
+  selectedBook,
+  handleClose,
+  setNotification,
+}) => {
   const [form] = Form.useForm();
+  const [allInstances, setInstances] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   const onSubmit = () => {
-    form
-      .validateFields()
-      .then(values => {
-        borrowBook(values);
-        form.resetFields();
+    form.validateFields().then(values => {
+      values = {
+        days: values.days,
+      };
+      setLoading(true);
+      borrowBook(values);
+      form.resetFields();
+    });
+  };
+
+  useEffect(() => {
+    if (selectedBook)
+      getBookInstanceByBook(selectedBook._id).then(res => {
+        const {data} = res;
+        setInstances(data.bookInstances);
+      });
+  }, [selectedBook]);
+
+  const borrowBook = values => {
+    const availableBook = allInstances.find(item => item.isAvailable);
+    borrowBookInstance(values, availableBook._id)
+      .then(res => {
+        setNotification(res);
+        setLoading(false);
         handleClose();
       })
-      .catch(info => {
-        // console.log('Validate Failed:', info);
+      .catch(err => {
+        setNotification({isSuccess: false, message: err.message});
+        setLoading(false);
       });
   };
 
@@ -31,7 +63,7 @@ const BorrowBookModal = ({showModal, data, borrowBook, handleClose}) => {
         handleClose();
       }}
     >
-      <BookInfoModal data={data} />
+      <BookInfoModal data={selectedBook} />
       <Form form={form}>
         <Form.Item
           label="Days it will be borrowed "
@@ -63,7 +95,7 @@ const BorrowBookModal = ({showModal, data, borrowBook, handleClose}) => {
           style={{margin: '0px 17px'}}
           onClick={onSubmit}
         >
-          Confirm
+          {isLoading ? <BeatLoader size={8} color="white" /> : 'Confirm'}
         </Button>
 
         <Button

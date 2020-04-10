@@ -28,7 +28,7 @@ const Actions = ({record, showBorrowBook}) => {
           to={{
             pathname: `/user/books/${record.title}`,
             state: {
-              id: record._id,
+              _id: record._id,
               title: record.title,
               author: record.author,
               publisher: record.publisher,

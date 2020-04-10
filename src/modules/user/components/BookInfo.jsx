@@ -8,7 +8,7 @@ const BookInfo = ({state, showBorrowBook}) => {
   const [isAvailable, setAvailability] = useState(null);
 
   useEffect(() => {
-    getBookInstanceByBook(state.id).then(res => {
+    getBookInstanceByBook(state._id).then(res => {
       const {data} = res;
       const instances = data.bookInstances;
 
@@ -27,13 +27,17 @@ const BookInfo = ({state, showBorrowBook}) => {
         <Descriptions.Item label="Publisher">
           {state.publisher}
         </Descriptions.Item>
+
         <Descriptions.Item label="Year Published">
           {state.yearOfPublication}
         </Descriptions.Item>
+
         <Descriptions.Item label="ISBN">{state.ISBN}</Descriptions.Item>
+
         <Descriptions.Item label="Call Number">
           {state.callNumber}
         </Descriptions.Item>
+
         <Descriptions.Item label="Status">
           {isAvailable ? (
             <Tag color="green">Available</Tag>
@@ -43,6 +47,7 @@ const BookInfo = ({state, showBorrowBook}) => {
             <Tag color="default">Not Available</Tag>
           )}
         </Descriptions.Item>
+
         <Descriptions.Item label="Available By">
           {isAvailable ? (
             <Button

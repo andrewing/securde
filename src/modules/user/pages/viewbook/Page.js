@@ -19,10 +19,10 @@ const ViewBook = ({props}) => {
   }, []);
 
   const postReview = content => {
-    const {id} = state;
+    const {_id} = state;
     const body = {
       ...content,
-      book: id,
+      book: _id,
     };
     setLoading(true);
     createReview(body)
@@ -38,7 +38,7 @@ const ViewBook = ({props}) => {
   };
 
   const getReviewList = () => {
-    getReviewByBookId(state.id).then(res => {
+    getReviewByBookId(state._id).then(res => {
       const {data} = res;
       setReviews(data.reviews);
     });
@@ -46,10 +46,6 @@ const ViewBook = ({props}) => {
 
   const showBorrowBook = () => {
     setShowModal(true);
-  };
-
-  const borrowBook = values => {
-    // console.log(state, values);
   };
 
   const handleClose = () => {
@@ -83,10 +79,10 @@ const ViewBook = ({props}) => {
       </Container>
 
       <BorrowBookModal
-        data={state}
+        selectedBook={state}
         showModal={showModal}
-        borrowBook={borrowBook}
         handleClose={handleClose}
+        setNotification={setNotification}
       />
     </>
   );
