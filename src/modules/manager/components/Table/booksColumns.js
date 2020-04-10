@@ -38,7 +38,7 @@ const bookColumns = ({
     align: 'left',
     ellipsis: true,
     ...getColumnSearchProps(
-      'authors',
+      'author',
       searchInput,
       handleSearch,
       handleReset,

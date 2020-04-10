@@ -20,7 +20,7 @@ export const remove = async (route, event, context, callback) => {
     authorization,
     SECRET,
     {audience: AUDIENCE.BOOK_MANAGER},
-    (err, decoded) => {
+    async (err, decoded) => {
       if (err) {
         callback(
           null,
@@ -29,9 +29,9 @@ export const remove = async (route, event, context, callback) => {
         return;
       }
       const {user} = decoded;
+      const book = await Book.findById(data.id);
       Book.deleteBook(data.id)
-        .then(async () => {
-          const book = await Book.findById(data.id);
+        .then(() => {
           SystemLog.addLog(
             new SystemLog({
               action: 'DELETE',
