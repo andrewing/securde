@@ -8,10 +8,12 @@ export const borrowBookInstance = (body, id) =>
 export const returnBookInstance = id =>
   request(`/book-instance/return?q=${id}`, {method: 'PUT'}, true);
 export const editBookInstance = (id, body) =>
-  request(`/book-instance/edit?q=${id}`, {method: 'PUT', body}, true);
+  request(`/book-instance/update?q=${id}`, {method: 'PUT', body}, true);
 export const deleteBookInstance = body =>
   request(`/book-instance/remove`, {method: 'DELETE', body}, true);
 export const getBookInstancePaginated = (page, limit, bookId) =>
   request(
     `/book-instance/paginated-by-book?limit=${limit}&page=${page}&book=${bookId}`,
   );
+export const createBookInstance = body =>
+  request(`/book-instance/create`, {method: 'POST', body}, true);

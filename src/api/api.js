@@ -1,5 +1,6 @@
 import normalize from 'normalize-url';
 import {auth} from './auth';
+import {notify} from '../util/notification';
 
 export const request = async (url, options = {}, tokenNeeded = false) => {
   const dummy = `http://dummy.com`;
@@ -43,6 +44,11 @@ export const refreshToken = async () => {
       auth.authenticate(access, refresh, type);
     })
     .catch(err => {
+      notify(
+        false,
+        'You have been signed out',
+        'Your authentication may have been expired or invalid. Please log in again',
+      );
       auth.signout();
     });
 };

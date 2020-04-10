@@ -53,7 +53,15 @@ const bookColumns = ({
     ),
     render: (text, record) => {
       if (!record.isAvailable) {
-        return <span>{moment(text).fromNow()}</span>;
+        return (
+          <div>
+            <span> {moment(text).format('MMMM D, YYYY')}</span>
+            <br />
+            <span style={{fontSize: '11px', color: '#808080'}}>
+              {moment(text).fromNow()}
+            </span>
+          </div>
+        );
       }
       return <span>-</span>;
     },
