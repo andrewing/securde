@@ -38,12 +38,12 @@ const borrowedBooksColumns = ({
   {
     title: 'Author/s',
     className: 'column-style',
-    dataIndex: 'authors',
+    dataIndex: 'author',
     width: 250,
     align: 'left',
     ellipsis: true,
     ...getColumnSearchProps(
-      'authors',
+      'author',
       searchInput,
       handleSearch,
       handleReset,
@@ -67,24 +67,18 @@ const borrowedBooksColumns = ({
     },
   },
   {
-    title: 'Days Left',
+    title: 'Time Borrowed',
     className: 'column-style',
-    dataIndex: 'days',
+    dataIndex: 'timeBorrowed',
     width: 150,
     ...getColumnSearchProps(
-      'days',
+      'timeBorrowed',
       searchInput,
       handleSearch,
       handleReset,
       searchColumn,
       searchText,
     ),
-    render: record => {
-      if (record === 'Returned') {
-        return <Tag color="green">{record}</Tag>;
-      }
-      return <Tag color="red">{record}</Tag>;
-    },
   },
 ];
 

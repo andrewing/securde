@@ -22,16 +22,16 @@ const ChangePasswordModal = ({showModal, handleClose, setNotification}) => {
   };
 
   const passwordChange = values => {
-    changePassword(values)
-      .then(res => {
+    changePassword(values).then(res => {
+      const {isSuccess} = res;
+      if (isSuccess) {
         setNotification(res);
+        handleClose();
+      } else {
+        setNotification({isSuccess: false, message: 'Incorrect Password'});
         setLoading(false);
-        // handleClose();
-      })
-      .catch(err => {
-        setNotification({isSuccess: false, message: err.message});
-        setLoading(false);
-      });
+      }
+    });
   };
 
   const matchPassword = (_, value) => {

@@ -1,25 +1,42 @@
 /* eslint-disable no-nested-ternary */
 import React, {useState, useEffect} from 'react';
+import moment from 'moment';
 import {Descriptions, Tag, Divider} from 'antd';
 import {Container, Button} from 'react-bootstrap';
 import {getBookInstanceByBook} from '../../../api/bookInstance/index';
 
 const BookInfo = ({state, showBorrowBook}) => {
   const [isAvailable, setAvailability] = useState(null);
+  const [datesAvailable, setDates] = useState([]);
 
   useEffect(() => {
     getBookInstanceByBook(state._id).then(res => {
       const {data} = res;
+      const dates = [];
       const instances = data.bookInstances;
 
       if (instances.length) {
         instances.map(item => {
-          if (item.isAvailable === false) return setAvailability(false);
+          if (item.isAvailable === false) {
+            dates.push(
+              moment(item.dateAvailable).format('MMMM Do YYYY, h:mm:ss a'),
+            );
+            return setAvailability(false);
+          }
           return setAvailability(true);
         });
       }
+
+      setDates(dates);
     });
   }, []);
+
+  const getEarliestDate = () => {
+    if (datesAvailable) {
+      return datesAvailable.sort()[0];
+    }
+    return null;
+  };
 
   return (
     <Container>
@@ -62,7 +79,7 @@ const BookInfo = ({state, showBorrowBook}) => {
               Borrow Now
             </Button>
           ) : isAvailable === false ? (
-            <span> earliest availability date</span>
+            <span>{getEarliestDate()}</span>
           ) : (
             <Tag color="default">Not Available</Tag>
           )}

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Tabs, List, Table} from 'antd';
+import moment from 'moment';
 import borrowedBooksColumns from './table/borrowedBooksColumns';
-import borrowedBookData from './table/borrowedBookData';
 import {
   getReviewHistory,
   getBookHistory,
@@ -38,6 +38,7 @@ const PostedReviews = ({reviewHistory}) => {
 };
 
 const BorrowedBooks = ({
+  isLoading,
   searchText,
   searchColumn,
   searchInput,
@@ -48,7 +49,9 @@ const BorrowedBooks = ({
   return (
     <Table
       bordered
-      dataSource={borrowedBookData}
+      loading={isLoading}
+      dataSource={bookHistory}
+      rowKey={item => item.key}
       columns={borrowedBooksColumns({
         handleSearch,
         handleReset,
@@ -70,6 +73,7 @@ const UserLogs = ({
   const {TabPane} = Tabs;
   const [reviewHistory, setReviewHistory] = useState([]);
   const [bookHistory, setBookHistory] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     getReviewHistory().then(res => {
@@ -81,8 +85,23 @@ const UserLogs = ({
   useEffect(() => {
     getBookHistory().then(res => {
       const {data} = res;
-      setBookHistory(data);
-      // console.log(res);
+      const temp = [];
+
+      setLoading(true);
+      data.bookHistory.map(item => {
+        const values = {
+          key: item._id,
+          title: item.book.title,
+          author: item.book.author,
+          timeBorrowed: moment(item.log.timeBorrowed).format(
+            'MMMM Do YYYY, h:mm:ss a',
+          ),
+        };
+        return temp.push(values);
+      });
+
+      setBookHistory(temp);
+      setLoading(false);
     });
   }, []);
 
@@ -91,6 +110,7 @@ const UserLogs = ({
       <Tabs defaultActiveKey="1">
         <TabPane tab="Borrowed Books" key="1">
           <BorrowedBooks
+            isLoading={isLoading}
             searchText={searchText}
             searchColumn={searchColumn}
             searchInput={searchInput}
