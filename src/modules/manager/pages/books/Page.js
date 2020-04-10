@@ -1,23 +1,41 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {Jumbotron} from 'react-bootstrap';
+import {BeatLoader} from 'react-spinners';
 import {Table, Button, notification} from 'antd';
 import {CheckCircleTwoTone} from '@ant-design/icons';
 import bookColumns from '../../components/table/booksColumns';
 import AddEditBookModal from '../../components/modals/AddEditBook';
-import {getBookPaginated} from '../../../../api/book';
+import {
+  getBookPaginated,
+  createBook,
+  updateBook,
+  deleteBook as removeBook,
+} from '../../../../api/book';
 
 const Page = ({setNotification, props}) => {
   const [showAddBook, setShowAddBook] = useState(false);
   const [selectedAction, setSelectedAction] = useState('add');
   const [tableData, setTableData] = useState();
+  const [isLoading, setLoading] = useState(false);
+  const [isGettingLoading, setGettingLoading] = useState(false);
 
   const [currPage, setPage] = useState(1);
   const [meta, setMeta] = useState({});
 
   const [bookData, setBookData] = useState([]);
 
+  // for filters
+  const [searchText, setSearchText] = useState('');
+  const [searchColumn, setSearchColumn] = useState('');
+  const searchInput = useRef();
+
   useEffect(() => {
-    getBookPaginated(currPage, 10)
+    setGettingLoading(true);
+    getBookPaginated(
+      currPage,
+      10,
+      searchColumn.length ? `&${searchColumn}=${searchText}` : '',
+    )
       .then(res => {
         const {data} = res;
         const {res: books, meta: m} = data;
@@ -26,8 +44,11 @@ const Page = ({setNotification, props}) => {
       })
       .catch(err => {
         setNotification(err);
+      })
+      .finally(() => {
+        setGettingLoading(false);
       });
-  }, [currPage]);
+  }, [currPage, isLoading, searchText, searchColumn]);
 
   const showAddModal = () => {
     setSelectedAction('add');
@@ -42,35 +63,50 @@ const Page = ({setNotification, props}) => {
   };
 
   const deleteBook = data => {
-    // console.log(data);
+    setLoading(true);
+    removeBook({id: data._id})
+      .then(res => {
+        setNotification(res);
+      })
+      .catch(err => {
+        setNotification(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const onCreateBook = values => {
-    notification.open({
-      icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
-      message: 'Successfully added a book!',
-      description: 'The book is automatically added in the table.',
-    });
-    // console.log(values);
+    setLoading(true);
+    createBook(values)
+      .then(res => {
+        setNotification(res);
+      })
+      .catch(err => {
+        setNotification(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const onEditBook = values => {
-    notification.open({
-      icon: <CheckCircleTwoTone twoToneColor="#52C41A" />,
-      message: 'Successfully edited a book!',
-      description: 'The book is automatically added in the table.',
-    });
-    // console.log(values);
+    setLoading(true);
+    updateBook(values, tableData._id)
+      .then(res => {
+        setNotification(res);
+      })
+      .catch(err => {
+        setNotification(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleClose = () => {
     setShowAddBook(false);
   };
-
-  // for filters
-  const [searchText, setSearchText] = useState('');
-  const [searchColumn, setSearchColumn] = useState('');
-  const searchInput = useRef();
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -103,7 +139,7 @@ const Page = ({setNotification, props}) => {
             style={{background: '#6C63FF', color: 'white'}}
             onClick={showAddModal}
           >
-            Add Book
+            {isLoading ? <BeatLoader size={8} color="white" /> : 'Add Book'}
           </Button>
         </div>
         <Table
@@ -126,6 +162,7 @@ const Page = ({setNotification, props}) => {
             defaultPageSize: 10,
             total: meta.total || 0,
           }}
+          loading={isGettingLoading}
         />
       </div>
 

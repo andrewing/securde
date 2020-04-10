@@ -36,7 +36,7 @@ export const changepassword = (route, event, context, callback) => {
 
       const found = await Account.findById(user._id);
 
-      Account.authenticate(found.username, oldPassword, found.salt)
+      Account.authenticate(found.username, oldPassword, found.salt, found.type)
         .then(({data: account}) => {
           if (!account) {
             SystemLog.addLog(
