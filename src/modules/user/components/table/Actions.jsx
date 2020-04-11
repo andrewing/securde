@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import React, {useState, useEffect} from 'react';
 import {Row, Tooltip} from 'antd';
 import {Link} from 'react-router-dom';
@@ -13,13 +14,14 @@ const Actions = ({record, showBorrowBook}) => {
       const instances = data.bookInstances;
 
       if (instances.length) {
-        instances.map(item => {
-          if (item.isAvailable === false) return setAvailability(false);
+        const itemAvailable = instances.find(item => item.isAvailable);
+        if (itemAvailable) {
           return setAvailability(true);
-        });
+        }
+        return setAvailability(false);
       }
     });
-  }, []);
+  }, [record]);
 
   return (
     <Row type="flex" justify="space-around">
@@ -28,7 +30,7 @@ const Actions = ({record, showBorrowBook}) => {
           to={{
             pathname: `/user/books/${record.title}`,
             state: {
-              id: record._id,
+              _id: record._id,
               title: record.title,
               author: record.author,
               publisher: record.publisher,

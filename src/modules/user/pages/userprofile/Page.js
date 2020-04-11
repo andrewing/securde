@@ -38,6 +38,7 @@ const Page = ({props}) => {
       <h1 style={{paddingLeft: 130, margin: '15px 0'}}>Your Logs</h1>
       <Container>
         <UserLogs
+          setNotification={setNotification}
           searchText={searchText}
           searchColumn={searchColumn}
           searchInput={searchInput}

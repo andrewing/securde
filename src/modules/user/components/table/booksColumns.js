@@ -113,9 +113,8 @@ const bookColumns = ({
   {
     title: 'Status',
     className: 'column-style',
-    dataIndex: '_id',
     width: 130,
-    render: record => <Status id={record} currPage={currPage} />,
+    render: record => <Status record={record} currPage={currPage} />,
   },
   {
     title: 'Actions',

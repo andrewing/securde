@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Row, Col} from 'antd';
+import {Form, Input, Row} from 'antd';
 import {Button} from 'react-bootstrap';
 import {BeatLoader} from 'react-spinners';
 

@@ -4,23 +4,18 @@ import {Table} from 'antd';
 import bookColumns from '../../components/table/booksColumns';
 import BorrowBookModal from '../../components/modals/BorrowBookModal';
 import {getBookPaginated} from '../../../../api/book/index';
-import {borrowBookInstance} from '../../../../api/bookInstance/index';
 
 const Page = ({props}) => {
+  const {setNotification} = props;
   const [selectedBook, setSelectedBook] = useState();
-  const [showModal, setShowModal] = useState(false); // showBorrow will go to borrow modal
+  const [showModal, setShowModal] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [allBooks, setAllBooks] = useState();
   const [currPage, setPage] = useState(1);
   const [metaTotal, setMetaTotal] = useState();
 
   useEffect(() => {
-    getBookPaginated(currPage, 10).then(res => {
-      const {data} = res;
-      setAllBooks(data.res);
-      setMetaTotal(data.meta.total);
-      setLoading(false);
-    });
+    refreshData();
   }, [currPage]);
 
   const showBorrowBook = record => {
@@ -28,13 +23,17 @@ const Page = ({props}) => {
     setSelectedBook(record);
   };
 
-  const borrowBook = values => {
-    // console.log(selectedBook, values);
-    borrowBookInstance(selectedBook._id);
-  };
-
   const handleClose = () => {
     setShowModal(false);
+  };
+
+  const refreshData = () => {
+    getBookPaginated(currPage, 10).then(res => {
+      const {data} = res;
+      setAllBooks(data.res);
+      setMetaTotal(data.meta.total);
+      setLoading(false);
+    });
   };
 
   // for filters
@@ -91,10 +90,11 @@ const Page = ({props}) => {
         />
       </div>
       <BorrowBookModal
-        data={selectedBook}
+        selectedBook={selectedBook}
         showModal={showModal}
-        borrowBook={borrowBook}
         handleClose={handleClose}
+        setNotification={setNotification}
+        refreshData={refreshData}
       />
     </>
   );

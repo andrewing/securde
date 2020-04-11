@@ -1,39 +1,26 @@
 /* eslint-disable no-nested-ternary */
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Descriptions, Tag, Divider} from 'antd';
 import {Container, Button} from 'react-bootstrap';
-import {getBookInstanceByBook} from '../../../api/bookInstance/index';
 
-const BookInfo = ({state, showBorrowBook}) => {
-  const [isAvailable, setAvailability] = useState(null);
-
-  useEffect(() => {
-    getBookInstanceByBook(state.id).then(res => {
-      const {data} = res;
-      const instances = data.bookInstances;
-
-      if (instances.length) {
-        instances.map(item => {
-          if (item.isAvailable === false) return setAvailability(false);
-          return setAvailability(true);
-        });
-      }
-    });
-  }, []);
-
+const BookInfo = ({state, showBorrowBook, isAvailable, getEarliestDate}) => {
   return (
     <Container>
       <Descriptions bordered size="small" column={2}>
         <Descriptions.Item label="Publisher">
           {state.publisher}
         </Descriptions.Item>
+
         <Descriptions.Item label="Year Published">
           {state.yearOfPublication}
         </Descriptions.Item>
+
         <Descriptions.Item label="ISBN">{state.ISBN}</Descriptions.Item>
+
         <Descriptions.Item label="Call Number">
           {state.callNumber}
         </Descriptions.Item>
+
         <Descriptions.Item label="Status">
           {isAvailable ? (
             <Tag color="green">Available</Tag>
@@ -43,6 +30,7 @@ const BookInfo = ({state, showBorrowBook}) => {
             <Tag color="default">Not Available</Tag>
           )}
         </Descriptions.Item>
+
         <Descriptions.Item label="Available By">
           {isAvailable ? (
             <Button
@@ -57,7 +45,7 @@ const BookInfo = ({state, showBorrowBook}) => {
               Borrow Now
             </Button>
           ) : isAvailable === false ? (
-            <span> earliest availability date</span>
+            <span>{getEarliestDate()}</span>
           ) : (
             <Tag color="default">Not Available</Tag>
           )}

@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import {Form, Input, Row, Col, Skeleton} from 'antd';
-import {Button} from 'react-bootstrap';
-import {BarLoader} from 'react-spinners';
-import {getQuestion, checkAnswer} from '../../../../../api/user';
+import {Form, Input, Row, Skeleton} from 'antd';
+import {getQuestion} from '../../../../../api/user';
 
 const Question = ({
   checkQuestion,

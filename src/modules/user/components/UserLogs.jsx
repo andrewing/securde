@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Tabs, List, Table} from 'antd';
+import moment from 'moment';
 import borrowedBooksColumns from './table/borrowedBooksColumns';
-import borrowedBookData from './table/borrowedBookData';
+import {returnBookInstance} from '../../../api/bookInstance/index';
 import {
   getReviewHistory,
   getBookHistory,
@@ -38,6 +39,8 @@ const PostedReviews = ({reviewHistory}) => {
 };
 
 const BorrowedBooks = ({
+  isLoading,
+  returnBook,
   searchText,
   searchColumn,
   searchInput,
@@ -48,8 +51,11 @@ const BorrowedBooks = ({
   return (
     <Table
       bordered
-      dataSource={borrowedBookData}
+      loading={isLoading}
+      dataSource={bookHistory}
+      rowKey={item => item.key}
       columns={borrowedBooksColumns({
+        returnBook,
         handleSearch,
         handleReset,
         searchText,
@@ -61,6 +67,7 @@ const BorrowedBooks = ({
 };
 
 const UserLogs = ({
+  setNotification,
   searchText,
   searchColumn,
   searchInput,
@@ -70,6 +77,7 @@ const UserLogs = ({
   const {TabPane} = Tabs;
   const [reviewHistory, setReviewHistory] = useState([]);
   const [bookHistory, setBookHistory] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     getReviewHistory().then(res => {
@@ -79,18 +87,57 @@ const UserLogs = ({
   }, []);
 
   useEffect(() => {
+    refreshData();
+  }, []);
+
+  const refreshData = () => {
     getBookHistory().then(res => {
       const {data} = res;
-      setBookHistory(data);
-      // console.log(res);
+      const temp = [];
+
+      setLoading(true);
+      data.bookHistory.map(item => {
+        const values = {
+          key: item._id,
+          title: item.book.title,
+          author: item.book.author,
+          instanceId: item.log.book,
+          timeBorrowed: moment(item.log.timeBorrowed).format(
+            'MMMM Do YYYY, h:mm:ss a',
+          ),
+          timeReturned: item.log.timeReturned
+            ? moment(item.log.timeReturned).format('MMMM Do YYYY, h:mm:ss a')
+            : 'return',
+        };
+        return temp.push(values);
+      });
+
+      setBookHistory(temp);
+      setLoading(false);
     });
-  }, []);
+  };
+
+  const returnBook = record => {
+    returnBookInstance(record.instanceId)
+      .then(res => {
+        const {isSuccess} = res;
+        if (isSuccess) {
+          setNotification(res);
+          refreshData();
+        }
+      })
+      .catch(err => {
+        setNotification({isSuccess: false, message: err.message});
+      });
+  };
 
   return (
     <>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Borrowed Books" key="1">
           <BorrowedBooks
+            isLoading={isLoading}
+            returnBook={returnBook}
             searchText={searchText}
             searchColumn={searchColumn}
             searchInput={searchInput}

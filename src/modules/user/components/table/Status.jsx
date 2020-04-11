@@ -1,24 +1,25 @@
-/* eslint-disable no-nested-ternary */
+/* eslint-disable consistent-return */ /* eslint-disable no-nested-ternary */
 import React, {useState, useEffect} from 'react';
 import {Tag} from 'antd';
 import {getBookInstanceByBook} from '../../../../api/bookInstance/index';
 
-const Status = ({id}) => {
+const Status = ({record}) => {
   const [isAvailable, setAvailability] = useState(null);
 
   useEffect(() => {
-    getBookInstanceByBook(id).then(res => {
+    getBookInstanceByBook(record._id).then(res => {
       const {data} = res;
       const instances = data.bookInstances;
 
       if (instances.length) {
-        instances.map(item => {
-          if (item.isAvailable === false) return setAvailability(false);
+        const itemAvailable = instances.find(item => item.isAvailable);
+        if (itemAvailable) {
           return setAvailability(true);
-        });
+        }
+        return setAvailability(false);
       }
     });
-  }, []);
+  }, [record]);
 
   return (
     <>

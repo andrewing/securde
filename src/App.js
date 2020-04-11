@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {Switch, Route} from 'react-router-dom';
 import routes from './routes/routes';
-import {request} from './api/api';
 import Login from './modules/access';
 import PageNotFound from './common/main-pages/PageNotFound';
 import PrivateRoute from './common/PrivateRoute';

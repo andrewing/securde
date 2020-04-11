@@ -1,8 +1,9 @@
 import React from 'react';
-import {Tag} from 'antd';
+import {Button} from 'react-bootstrap';
 import getColumnSearchProps from './getColumnSearchProps';
 
 const borrowedBooksColumns = ({
+  returnBook,
   handleSearch,
   handleReset,
   searchText,
@@ -38,12 +39,12 @@ const borrowedBooksColumns = ({
   {
     title: 'Author/s',
     className: 'column-style',
-    dataIndex: 'authors',
+    dataIndex: 'author',
     width: 250,
     align: 'left',
     ellipsis: true,
     ...getColumnSearchProps(
-      'authors',
+      'author',
       searchInput,
       handleSearch,
       handleReset,
@@ -67,12 +68,25 @@ const borrowedBooksColumns = ({
     },
   },
   {
-    title: 'Days Left',
+    title: 'Time Borrowed',
     className: 'column-style',
-    dataIndex: 'days',
+    dataIndex: 'timeBorrowed',
     width: 150,
     ...getColumnSearchProps(
-      'days',
+      'timeBorrowed',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
+  },
+  {
+    title: 'Time Returned',
+    className: 'column-style',
+    width: 150,
+    ...getColumnSearchProps(
+      'timeReturned',
       searchInput,
       handleSearch,
       handleReset,
@@ -80,10 +94,23 @@ const borrowedBooksColumns = ({
       searchText,
     ),
     render: record => {
-      if (record === 'Returned') {
-        return <Tag color="green">{record}</Tag>;
-      }
-      return <Tag color="red">{record}</Tag>;
+      return (
+        <>
+          {record.timeReturned === 'return' ? (
+            <Button
+              variant="link"
+              style={{
+                color: '#6c63ff',
+              }}
+              onClick={() => returnBook(record)}
+            >
+              Return Book
+            </Button>
+          ) : (
+            <span>{record.timeReturned}</span>
+          )}
+        </>
+      );
     },
   },
 ];

@@ -1,11 +1,13 @@
-/* eslint-disable react/destructuring-assignment */
+/* eslint-disable array-callback-return */ /* eslint-disable consistent-return */ /* eslint-disable react/destructuring-assignment */
 import React, {useState, useEffect} from 'react';
+import moment from 'moment';
 import {Jumbotron, Container} from 'react-bootstrap';
 import BookInfo from '../../components/BookInfo';
 import AddReview from '../../components/AddReview';
 import ReviewList from '../../components/ReviewList';
 import BorrowBookModal from '../../components/modals/BorrowBookModal';
 import {createReview, getReviewByBookId} from '../../../../api/review/index';
+import {getBookInstanceByBook} from '../../../../api/bookInstance/index';
 
 const ViewBook = ({props}) => {
   const {state} = props.location;
@@ -13,16 +15,31 @@ const ViewBook = ({props}) => {
   const [reviewsData, setReviews] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [isAvailable, setAvailability] = useState(null);
+  const [datesAvailable, setDates] = useState([]);
 
+  // for book info
+  useEffect(() => {
+    refreshData();
+  }, [state]);
+
+  const getEarliestDate = () => {
+    if (datesAvailable) {
+      return datesAvailable.sort()[0];
+    }
+    return null;
+  };
+
+  // for reviews
   useEffect(() => {
     getReviewList();
   }, []);
 
   const postReview = content => {
-    const {id} = state;
+    const {_id} = state;
     const body = {
       ...content,
-      book: id,
+      book: _id,
     };
     setLoading(true);
     createReview(body)
@@ -38,7 +55,7 @@ const ViewBook = ({props}) => {
   };
 
   const getReviewList = () => {
-    getReviewByBookId(state.id).then(res => {
+    getReviewByBookId(state._id).then(res => {
       const {data} = res;
       setReviews(data.reviews);
     });
@@ -48,12 +65,33 @@ const ViewBook = ({props}) => {
     setShowModal(true);
   };
 
-  const borrowBook = values => {
-    // console.log(state, values);
-  };
-
   const handleClose = () => {
     setShowModal(false);
+  };
+
+  const refreshData = () => {
+    getBookInstanceByBook(state._id).then(res => {
+      const {data} = res;
+      const dates = [];
+      const instances = data.bookInstances;
+
+      if (instances.length) {
+        const itemAvailable = instances.find(item => item.isAvailable);
+        if (itemAvailable) {
+          return setAvailability(true);
+        }
+
+        instances.map(item => {
+          if (item.dateAvailable) {
+            dates.push(
+              moment(item.dateAvailable).format('MMMM Do YYYY, h:mm:ss a'),
+            );
+          }
+        });
+        setDates(dates);
+        return setAvailability(false);
+      }
+    });
   };
 
   return (
@@ -73,7 +111,12 @@ const ViewBook = ({props}) => {
         </div>
       </Jumbotron>
       <br />
-      <BookInfo state={state} showBorrowBook={showBorrowBook} />
+      <BookInfo
+        state={state}
+        showBorrowBook={showBorrowBook}
+        isAvailable={isAvailable}
+        getEarliestDate={getEarliestDate}
+      />
 
       <h1 style={{paddingLeft: 130, margin: '15px 0'}}>Book Reviews</h1>
 
@@ -83,10 +126,11 @@ const ViewBook = ({props}) => {
       </Container>
 
       <BorrowBookModal
-        data={state}
+        selectedBook={state}
         showModal={showModal}
-        borrowBook={borrowBook}
         handleClose={handleClose}
+        setNotification={setNotification}
+        refreshData={refreshData}
       />
     </>
   );
