@@ -22,6 +22,7 @@ export const paginatedLogs = async (route, event, context, callback) => {
     currentPage: page,
   };
   SystemLog.find()
+    .sort('-time')
     .skip((page - 1) * limit)
     .limit(Number(limit))
     .populate('account')

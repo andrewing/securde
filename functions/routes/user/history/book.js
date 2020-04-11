@@ -27,6 +27,7 @@ export const book = (route, event, context, callback) => {
         .populate('bookHistory.book bookHistory.log')
         .then(account => {
           const {bookHistory} = account;
+          bookHistory.sort((a, b) => b.log.timeBorrowed - a.log.timeBorrowed);
           callback(
             null,
             CODE(200, `Successfully retrieved book history`, {bookHistory}),

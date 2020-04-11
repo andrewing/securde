@@ -17,6 +17,10 @@ const reviewSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Account',
   },
+  dateCreated: {
+    type: Date,
+    default: () => moment(),
+  },
 });
 
 reviewSchema.statics.addReview = (review, callback) => {

@@ -24,7 +24,6 @@ const def = async (route, event, context, callback) => {
     throw new ResponseError(405, 'Method not allowed!');
 
   const {q: bookId} = event.queryStringParameters;
-
   const {authorization} = event.headers;
   jwt.verify(
     authorization,
@@ -32,9 +31,11 @@ const def = async (route, event, context, callback) => {
     {audience: [AUDIENCE.USER_TEACHER, AUDIENCE.USER_STUDENT]},
     async (err, decoded) => {
       if (err) jwtError(err);
-      Review.findReviewsByBook(bookId)
-        .then(({data: reviews}) => {
-          callback(null, CODE(200, 'Successful in user reviews', {reviews}));
+      Review.find({book: bookId})
+        .populate('book')
+        .then(reviews => {
+          reviews.sort((a, b) => b.dateCreated - a.dateCreated);
+          callback(null, CODE(200, 'Success in getting reviews', {reviews}));
         })
         .catch(reviewErr => {
           const {code, message} = reviewErr;

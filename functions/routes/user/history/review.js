@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import moment from 'moment';
 import {CODE} from '../../../util/code';
 import {SECRET, jwtError} from '../../../util/jwt';
 import ResponseError from '../../../util/error';
@@ -34,7 +35,7 @@ export const review = (route, event, context, callback) => {
         })
         .then(account => {
           const {reviewHistory} = account;
-
+          reviewHistory.sort((a, b) => b.dateCreated - a.dateCreated);
           callback(
             null,
             CODE(200, `Successfully retrieved review history`, {reviewHistory}),
