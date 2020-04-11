@@ -38,12 +38,12 @@ const bookColumns = ({
   {
     title: 'Author/s',
     className: 'column-style',
-    dataIndex: 'authors',
+    dataIndex: 'author',
     width: 250,
     align: 'left',
     ellipsis: true,
     ...getColumnSearchProps(
-      'authors',
+      'author',
       searchInput,
       handleSearch,
       handleReset,
@@ -81,13 +81,13 @@ const bookColumns = ({
       searchColumn,
       searchText,
     ),
-    render: (text, record) => {
+    render: (_, record) => {
       return (
         <div>
           {record.publisher}
           <br />
           <small style={{fontStyle: 'italic'}}>
-            Published at {record.year_published}
+            Published at {record.yearOfPublication}
           </small>
         </div>
       );
@@ -112,7 +112,7 @@ const bookColumns = ({
   {
     title: 'Call Number',
     className: 'column-style',
-    dataIndex: 'call_number',
+    dataIndex: 'callNumber',
     width: 100,
     align: 'center',
     ellipsis: true,

@@ -1,10 +1,10 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {useRouteMatch} from 'react-router-dom';
 import {Jumbotron} from 'react-bootstrap';
 import {Table} from 'antd';
 import GuestNav from './components/GuestNav';
 import bookColumns from './components/table/booksColumns';
-import bookData from './components/table/bookData';
+import {getBookPaginated} from '../../api/book/index';
 
 const Page = () => {
   const {url} = useRouteMatch();
@@ -12,6 +12,28 @@ const Page = () => {
   const [searchText, setSearchText] = useState('');
   const [searchColumn, setSearchColumn] = useState('');
   const searchInput = useRef();
+  const [isLoading, setLoading] = useState(true);
+  const [allBooks, setAllBooks] = useState();
+  const [currPage, setPage] = useState(1);
+  const [metaTotal, setMetaTotal] = useState();
+
+  useEffect(() => {
+    getBookPaginated(
+      currPage,
+      10,
+      searchColumn.length ? `&${searchColumn}=${searchText}` : '',
+    ).then(res => {
+      const {data} = res;
+      setAllBooks(data.res);
+      setMetaTotal(data.meta.total);
+      setLoading(false);
+    });
+  }, [currPage, searchText, searchColumn]);
+
+  const handlePage = page => {
+    setLoading(true);
+    setPage(page);
+  };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -33,7 +55,7 @@ const Page = () => {
       <div className="page-content">
         <Table
           bordered
-          dataSource={bookData}
+          dataSource={allBooks}
           columns={bookColumns({
             handleSearch,
             handleReset,
@@ -41,6 +63,13 @@ const Page = () => {
             searchColumn,
             searchInput,
           })}
+          loading={isLoading}
+          pagination={{
+            onChange: handlePage,
+            defaultCurrent: 1,
+            defaultPageSize: 10,
+            total: metaTotal,
+          }}
         />
       </div>
     </>
