@@ -13,6 +13,7 @@ const BorrowBookModal = ({
   selectedBook,
   handleClose,
   setNotification,
+  refreshData,
 }) => {
   const [form] = Form.useForm();
   const [allInstances, setInstances] = useState([]);
@@ -43,6 +44,7 @@ const BorrowBookModal = ({
       .then(res => {
         setNotification(res);
         setLoading(false);
+        refreshData();
         handleClose();
       })
       .catch(err => {

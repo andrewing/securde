@@ -1,7 +1,9 @@
 import React from 'react';
+import {Button} from 'react-bootstrap';
 import getColumnSearchProps from './getColumnSearchProps';
 
 const borrowedBooksColumns = ({
+  returnBook,
   handleSearch,
   handleReset,
   searchText,
@@ -78,6 +80,38 @@ const borrowedBooksColumns = ({
       searchColumn,
       searchText,
     ),
+  },
+  {
+    title: 'Time Returned',
+    className: 'column-style',
+    width: 150,
+    ...getColumnSearchProps(
+      'timeReturned',
+      searchInput,
+      handleSearch,
+      handleReset,
+      searchColumn,
+      searchText,
+    ),
+    render: record => {
+      return (
+        <>
+          {record.timeReturned === 'return' ? (
+            <Button
+              variant="link"
+              style={{
+                color: '#6c63ff',
+              }}
+              onClick={() => returnBook(record)}
+            >
+              Return Book
+            </Button>
+          ) : (
+            <span>{record.timeReturned}</span>
+          )}
+        </>
+      );
+    },
   },
 ];
 

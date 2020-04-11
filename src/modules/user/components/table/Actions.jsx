@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import React, {useState, useEffect} from 'react';
 import {Row, Tooltip} from 'antd';
 import {Link} from 'react-router-dom';
@@ -13,10 +14,11 @@ const Actions = ({record, showBorrowBook}) => {
       const instances = data.bookInstances;
 
       if (instances.length) {
-        instances.map(item => {
-          if (item.isAvailable === false) return setAvailability(false);
+        const itemAvailable = instances.find(item => item.isAvailable);
+        if (itemAvailable) {
           return setAvailability(true);
-        });
+        }
+        return setAvailability(false);
       }
     });
   }, [record]);

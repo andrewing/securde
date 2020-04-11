@@ -1,43 +1,9 @@
 /* eslint-disable no-nested-ternary */
-import React, {useState, useEffect} from 'react';
-import moment from 'moment';
+import React from 'react';
 import {Descriptions, Tag, Divider} from 'antd';
 import {Container, Button} from 'react-bootstrap';
-import {getBookInstanceByBook} from '../../../api/bookInstance/index';
 
-const BookInfo = ({state, showBorrowBook}) => {
-  const [isAvailable, setAvailability] = useState(null);
-  const [datesAvailable, setDates] = useState([]);
-
-  useEffect(() => {
-    getBookInstanceByBook(state._id).then(res => {
-      const {data} = res;
-      const dates = [];
-      const instances = data.bookInstances;
-
-      if (instances.length) {
-        instances.map(item => {
-          if (item.isAvailable === false) {
-            dates.push(
-              moment(item.dateAvailable).format('MMMM Do YYYY, h:mm:ss a'),
-            );
-            return setAvailability(false);
-          }
-          return setAvailability(true);
-        });
-      }
-
-      setDates(dates);
-    });
-  }, [state]);
-
-  const getEarliestDate = () => {
-    if (datesAvailable) {
-      return datesAvailable.sort()[0];
-    }
-    return null;
-  };
-
+const BookInfo = ({state, showBorrowBook, isAvailable, getEarliestDate}) => {
   return (
     <Container>
       <Descriptions bordered size="small" column={2}>

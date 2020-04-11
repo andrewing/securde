@@ -15,12 +15,7 @@ const Page = ({props}) => {
   const [metaTotal, setMetaTotal] = useState();
 
   useEffect(() => {
-    getBookPaginated(currPage, 10).then(res => {
-      const {data} = res;
-      setAllBooks(data.res);
-      setMetaTotal(data.meta.total);
-      setLoading(false);
-    });
+    refreshData();
   }, [currPage]);
 
   const showBorrowBook = record => {
@@ -30,6 +25,15 @@ const Page = ({props}) => {
 
   const handleClose = () => {
     setShowModal(false);
+  };
+
+  const refreshData = () => {
+    getBookPaginated(currPage, 10).then(res => {
+      const {data} = res;
+      setAllBooks(data.res);
+      setMetaTotal(data.meta.total);
+      setLoading(false);
+    });
   };
 
   // for filters
@@ -90,6 +94,7 @@ const Page = ({props}) => {
         showModal={showModal}
         handleClose={handleClose}
         setNotification={setNotification}
+        refreshData={refreshData}
       />
     </>
   );
