@@ -7,6 +7,9 @@ import {getBookPaginated} from '../../../../api/book/index';
 
 const Page = ({props}) => {
   const {setNotification} = props;
+  const [searchText, setSearchText] = useState('');
+  const [searchColumn, setSearchColumn] = useState('');
+  const searchInput = useRef();
   const [selectedBook, setSelectedBook] = useState();
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setLoading] = useState(true);
@@ -16,7 +19,7 @@ const Page = ({props}) => {
 
   useEffect(() => {
     refreshData();
-  }, [currPage]);
+  }, [currPage, searchText, searchColumn]);
 
   const showBorrowBook = record => {
     setShowModal(true);
@@ -28,7 +31,11 @@ const Page = ({props}) => {
   };
 
   const refreshData = () => {
-    getBookPaginated(currPage, 10).then(res => {
+    getBookPaginated(
+      currPage,
+      10,
+      searchColumn.length ? `&${searchColumn}=${searchText}` : '',
+    ).then(res => {
       const {data} = res;
       setAllBooks(data.res);
       setMetaTotal(data.meta.total);
@@ -37,10 +44,6 @@ const Page = ({props}) => {
   };
 
   // for filters
-  const [searchText, setSearchText] = useState('');
-  const [searchColumn, setSearchColumn] = useState('');
-  const searchInput = useRef();
-
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
