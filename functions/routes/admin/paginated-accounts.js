@@ -46,6 +46,7 @@ export const paginatedAccounts = (route, event, context, callback) => {
       };
 
       Account.find(query)
+        .sort({firstname: 1})
         .skip((page - 1) * limit)
         .limit(Number(limit))
         .populate('bookHistory reviewHistory')
