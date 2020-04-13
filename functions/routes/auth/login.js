@@ -15,7 +15,8 @@ export const login = (route, event, context, callback) => {
   }
   const body = JSON.parse(event.body);
   const {username, password, type: loginType} = body;
-
+  console.log(process.env.AUTHSECRET, process.env.REFRESH_SECRET, process.env.MONGODB_SECRET )
+  console.log(SECRET, REFRESH_SECRET)
   Account.findUserByUsername(username)
     .then(({data: found}) => {
       if (!found) {
