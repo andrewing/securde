@@ -8,7 +8,7 @@ const dbUrl =
 const dbOptions = {
   useNewUrlParser: true,
   useFindAndModify: false,
-  useUnifiedTopology: true,
+  // useUnifiedTopology: false,
 };
 const ERROR = 'error';
 // Set DB from mongoose connection
