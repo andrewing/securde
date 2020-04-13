@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken';
 import {CODE} from '../../util/code';
 import Account from '../../db/models/account';
 import ResponseError from '../../util/error';
+import db from '../../db/db';
 
 export const getId = (route, event, context, callback) => {
   if (event.httpMethod !== 'GET') {

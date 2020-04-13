@@ -1,5 +1,6 @@
 import {CODE} from '../../util/code';
 import Account from '../../db/models/account';
+import db from '../../db/db';
 
 export const checkAnswer = (route, event, context, callback) => {
   if (event.httpMethod !== 'POST') {

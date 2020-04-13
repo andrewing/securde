@@ -1,5 +1,4 @@
 import {handlePath, getNextPath} from '../../../util/router';
-import ResponseError from '../../../util/error';
 import {book} from './book';
 import {review} from './review';
 import {CODE} from '../../../util/code';

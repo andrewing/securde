@@ -1,8 +1,6 @@
-import jwt from 'jsonwebtoken';
 import {CODE} from '../../util/code';
-import {SECRET, jwtError} from '../../util/jwt';
-import {AUDIENCE} from '../../util/constants';
 import Account from '../../db/models/account';
+import db from '../../db/db';
 
 export const getQuestion = (route, event, context, callback) => {
   if (event.httpMethod !== 'GET') {

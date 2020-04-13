@@ -1,8 +1,4 @@
-import jwt from 'jsonwebtoken';
 import {CODE} from '../../util/code';
-import {SECRET, jwtError} from '../../util/jwt';
-import ResponseError from '../../util/error';
-import {AUDIENCE} from '../../util/constants';
 import Book from '../../db/models/book';
 import db from '../../db/db';
 

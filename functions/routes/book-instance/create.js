@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken';
-import moment from 'moment';
 import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
-import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 import BookInstance from '../../db/models/book_instance';
 import Book from '../../db/models/book';

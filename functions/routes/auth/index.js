@@ -2,7 +2,6 @@ import {handlePath} from '../../util/router';
 import {login} from './login';
 import {register} from './register';
 import {CODE} from '../../util/code';
-import ResponseError from '../../util/error';
 
 export const auth = (route, ...rest) => {
   handlePath(

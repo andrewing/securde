@@ -1,7 +1,6 @@
 import router from './util/router';
 import {admin} from './routes/admin';
 import {CODE} from './util/code';
-import db from './db/db';
 
 export const handler = (event, context, callback) => {
   try {
