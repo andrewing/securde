@@ -1,4 +1,3 @@
-import moment from 'moment';
 import jwt from 'jsonwebtoken';
 import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
@@ -6,6 +5,7 @@ import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 import Account from '../../db/models/account';
 import SystemLog from '../../db/models/system_log';
+import db from '../../db/db';
 
 export const changepassword = (route, event, context, callback) => {
   if (event.httpMethod !== 'POST') {

@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
-import moment from 'moment';
 import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import Account from '../../db/models/account';
 import {AUDIENCE} from '../../util/constants';
 import SystemLog from '../../db/models/system_log';
+import db from '../../db/db';
 
 export const createManager = (route, event, context, callback) => {
   if (event.httpMethod !== 'POST') {

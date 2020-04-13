@@ -2,13 +2,13 @@ import jwt from 'jsonwebtoken';
 import moment from 'moment';
 import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
-import ResponseError from '../../util/error';
 import {AUDIENCE} from '../../util/constants';
 import {isMongooseId} from '../../util/mongoose';
 import BookInstance from '../../db/models/book_instance';
 import SystemLog from '../../db/models/system_log';
 import LibraryLog from '../../db/models/library_log';
 import Book from '../../db/models/book';
+import db from '../../db/db';
 
 export const ret = (route, event, context, callback) => {
   if (event.httpMethod !== 'PUT') {

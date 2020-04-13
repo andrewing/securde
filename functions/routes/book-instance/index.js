@@ -8,10 +8,8 @@ import {borrow} from './borrow';
 import {byBook} from './by-book';
 import {paginatedByBook} from './paginated-by-book';
 import {ret} from './return';
-import ResponseError from '../../util/error';
-import {SECRET, jwtError} from '../../util/jwt';
-import {AUDIENCE} from '../../util/constants';
 import BookInstance from '../../db/models/book_instance';
+import db from '../../db/db';
 
 export const bookInstance = (route, ...rest) => {
   handlePath(

@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import moment from 'moment';
 import {CODE} from '../../util/code';
 import {SECRET, REFRESH_SECRET, jwtError} from '../../util/jwt';
 import ResponseError from '../../util/error';
@@ -9,6 +8,7 @@ import db from '../../db/db';
 import SystemLog from '../../db/models/system_log';
 
 export const login = (route, event, context, callback) => {
+  context.callbackWaitsForEmptyEventLoop = false;
   if (event.httpMethod !== 'POST') {
     callback(null, CODE(405, 'Method not allowed'));
     return;
@@ -88,7 +88,6 @@ export const login = (route, event, context, callback) => {
       const {code, message} = err;
       callback(null, CODE(code || 500, message));
     });
-
   // const {data:user, err:authErr} = await
   // if(!user) throw new ResponseError(401, "Incorrect Password")
   // if(authErr) throw new ResponseError(500, authErr.message)

@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
-
 import {CODE} from '../../util/code';
 import {SECRET, jwtError} from '../../util/jwt';
 import {AUDIENCE} from '../../util/constants';

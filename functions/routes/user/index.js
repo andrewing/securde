@@ -1,5 +1,4 @@
-import {handlePath, getNextPath} from '../../util/router';
-import ResponseError from '../../util/error';
+import {handlePath} from '../../util/router';
 import {CODE} from '../../util/code';
 import {changepassword} from './changepassword';
 import {forgotpassword} from './forgotpassword';

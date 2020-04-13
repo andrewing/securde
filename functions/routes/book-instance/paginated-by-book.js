@@ -1,10 +1,5 @@
-import jwt from 'jsonwebtoken';
 import {CODE} from '../../util/code';
-import {SECRET, jwtError} from '../../util/jwt';
-import ResponseError from '../../util/error';
-import {AUDIENCE} from '../../util/constants';
 import BookInstance from '../../db/models/book_instance';
-import {regexWildCard} from '../../util/mongoose';
 import db from '../../db/db';
 
 export const paginatedByBook = async (route, event, context, callback) => {

@@ -4,6 +4,7 @@ import {SECRET, jwtError} from '../../util/jwt';
 import Account from '../../db/models/account';
 import {AUDIENCE} from '../../util/constants';
 import SystemLog from '../../db/models/system_log';
+import db from '../../db/db';
 
 export const deleteAccount = (route, event, context, callback) => {
   if (event.httpMethod !== 'POST') {

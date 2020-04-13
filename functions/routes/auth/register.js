@@ -1,10 +1,6 @@
-import jwt from 'jsonwebtoken';
-import moment from 'moment';
 import {CODE} from '../../util/code';
-import {SECRET} from '../../util/jwt';
 import ResponseError from '../../util/error';
 import Account from '../../db/models/account';
-import {AUDIENCE} from '../../util/constants';
 import db from '../../db/db';
 import SystemLog from '../../db/models/system_log';
 
@@ -21,7 +17,7 @@ export const register = (route, event, context, callback) => {
           new SystemLog({
             action: 'USER REGISTER ATTEMPT',
             content: `Anonymous user tried to register but ${body.username} already existed`,
-            account: null
+            account: null,
           }),
         );
         throw new ResponseError(409, 'Username already exists');
@@ -36,7 +32,7 @@ export const register = (route, event, context, callback) => {
         new SystemLog({
           action: 'USER REGISTER',
           content: `User ${body.username} registered`,
-          account: null
+          account: null,
         }),
       );
     })
