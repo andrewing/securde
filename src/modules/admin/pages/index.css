@@ -1,0 +1,76 @@
+/* GENERAL */
+.ant-table-thead > tr > th {
+  text-align: center;
+}
+.ant-table-cell {
+  text-align: center;
+}
+.ant-modal-header {
+  padding: 25px;
+}
+.ant-modal-footer {
+  padding: 20px;
+}
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  border-radius: 5px;
+}
+.ant-select-show-search.ant-select-multiple .ant-select-selector {
+  border-radius: 5px;
+}
+.ant-btn {
+  border-radius: 5px;
+}
+.anticon svg {
+  display: flex;
+}
+
+/* PAGE */
+.admin-container {
+  margin: auto;
+  max-width: 100%;
+  padding: 0px;
+}
+.inner-container {
+  padding: 0px;
+  margin: 0px 40px;
+}
+.content-container {
+  margin-top: 18px;
+  padding: 0px 60px;
+}
+.logout {
+  filter: brightness(0) invert(1);
+}
+
+/* BOOK MANAGERS */
+.header-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+.add-button {
+  width: 150px;
+  height: 40px;
+  border-radius: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  margin-left: auto;
+}
+.field {
+  margin: 0px;
+  border-radius: 5px;
+}
+.select-field {
+  display: flex;
+}
+.delete-header {
+  font-weight: bold;
+}
+.user-info {
+  margin-bottom: 20px;
+}
+.description-item {
+  padding: 10px !important;
+}
+
+/* SYSTEM LOGS */

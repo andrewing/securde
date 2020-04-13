@@ -1,0 +1,17 @@
+.custom-col {
+  display: flex;
+  justify-content: space-between;
+}
+
+.image-placement {
+  width: 600px;
+  height: 400px;
+  margin-right: 160px;
+  margin-top: -20px;
+}
+
+.input-fields {
+  font-size: 11pt;
+  padding: 3px 10px;
+  margin: 0px, 10px;
+}

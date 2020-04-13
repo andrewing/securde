@@ -1,26 +1,41 @@
 {
   "extends": ["airbnb", "prettier"],
-   "parserOptions": {
-     "ecmaVersion": 2018,
-     "sourceType": "module"
-   },
-   "env": {
-     "browser": true,
-     "node": true,
-     "es6": true,
-   },
-   "plugins": [],
-   "rules": {
-     "no-unused-vars": [
-       "warn",
-       {
-         "vars": "local",
-         "args": "none"
-       }
-     ],
-     "react/jsx-filename-extension": "off",
-     "no-use-before-define": "off",
-     "no-param-reassign": "off",
-     "import/prefer-default-export": "off"
-   }
- }
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "plugins": [],
+  "rules": {
+    "no-unused-vars": [
+      "off",
+      {
+        "vars": "local",
+        "args": "none"
+      }
+    ],
+    "no-console": "error",
+    "react/jsx-filename-extension": "off",
+    "no-use-before-define": "off",
+    "no-param-reassign": "off",
+    "import/prefer-default-export": "off",
+    "no-underscore-dangle": "off",
+    "no-unused-expressions": "off",
+    "prefer-promise-reject-errors": "off",
+    "import/no-named-as-default-member": "off",
+    "import/no-named-as-default": "off",
+    "import/no-unresolved": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-curly-newline": "off",
+    "react/jsx-boolean-value": "off",
+    "react/prop-types": "off",
+    "react/no-array-index-key": "off"
+  }
+}
