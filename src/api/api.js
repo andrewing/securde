@@ -8,7 +8,7 @@ export const request = async (url, options = {}, tokenNeeded = false) => {
   options = normalizeOpts(options);
 
   if (tokenNeeded) await refreshToken();
-  return timeoutIn(fetch(url, options), 10000);
+  return timeoutIn(fetch(url, options), 60000);
 };
 
 const normalizeOpts = options => {

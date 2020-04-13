@@ -15,8 +15,6 @@ export const login = (route, event, context, callback) => {
   }
   const body = JSON.parse(event.body);
   const {username, password, type: loginType} = body;
-  console.log(process.env.AUTHSECRET, process.env.REFRESH_SECRET, process.env.MONGODB_SECRET )
-  console.log(SECRET, REFRESH_SECRET)
   Account.findUserByUsername(username)
     .then(({data: found}) => {
       if (!found) {
@@ -24,7 +22,7 @@ export const login = (route, event, context, callback) => {
           new SystemLog({
             action: 'LOG IN ATTEMPT',
             content: `Anonymous user tried ${username} but it did not exist`,
-            account: null
+            account: null,
           }),
         );
         throw new ResponseError(404, 'User Not Found');
@@ -42,7 +40,7 @@ export const login = (route, event, context, callback) => {
               new SystemLog({
                 action: 'LOG IN ATTEMPT',
                 content: `${username} tried to log in`,
-                account: null
+                account: null,
               }),
             );
             throw new ResponseError(401, 'Incorrect Password');
