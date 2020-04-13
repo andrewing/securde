@@ -7,7 +7,7 @@ const bookSchema = new Schema({
   title: String,
   author: [String],
   publisher: String,
-  yearOfPublication: Number,
+  yearOfPublication: String,
   ISBN: String,
   callNumber: String,
 });

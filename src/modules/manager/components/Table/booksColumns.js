@@ -95,7 +95,7 @@ const bookColumns = ({
     className: 'column-style',
     dataIndex: 'ISBN',
     ...getColumnSearchProps(
-      'title',
+      'ISBN',
       searchInput,
       handleSearch,
       handleReset,
