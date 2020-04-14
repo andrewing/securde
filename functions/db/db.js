@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 // const dbUrl =
 //   process.env.MONGODB_SECRET || 'mongodb://localhost:27017/locallibrary';
 const dbUrl =
-  'mongodb://admin:locallibraryadmin@librarydatabase-shard-00-00-piwbt.gcp.mongodb.net:27017,librarydatabase-shard-00-01-piwbt.gcp.mongodb.net:27017,librarydatabase-shard-00-02-piwbt.gcp.mongodb.net:27017/SECURDE?ssl=true&replicaSet=LibraryDatabase-shard-0&authSource=admin&retryWrites=true&w=majority';
+  'mongodb+srv://admin:locallibraryadmin@librarydatabase-piwbt.gcp.mongodb.net/test?retryWrites=true&w=majority';
 const dbOptions = {
   useNewUrlParser: true,
   useFindAndModify: false,
