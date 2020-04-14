@@ -10,13 +10,13 @@ const dbOptions = {
   useFindAndModify: false,
   // useUnifiedTopology: false,
 };
-const ERROR = 'error';
+// const ERROR = 'error';
 // Set DB from mongoose connection
 mongoose.connect(dbUrl, dbOptions);
 const db = mongoose.connection;
-db.on(ERROR, err => {
-  // eslint-disable-next-line no-console
-  console.log(err);
-});
+// db.on(ERROR, err => {
+//   // eslint-disable-next-line no-console
+//   console.log(err);
+// });
 
 export default db;
