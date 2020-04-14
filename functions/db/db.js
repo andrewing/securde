@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 // const dbUrl =
 //   process.env.MONGODB_SECRET || 'mongodb://localhost:27017/locallibrary';
 const dbUrl =
-  'mongodb+srv://admin:locallibraryadmin@librarydatabase-piwbt.gcp.mongodb.net/test?retryWrites=true&w=majority';
+  'mongodb://uvhzji8iwtsacblx2yjs:wnhhaTah8v5poCUBFy89@bv9wjyqjtkvgm59-mongodb.services.clever-cloud.com:27017/bv9wjyqjtkvgm59';
 const dbOptions = {
   useNewUrlParser: true,
   useFindAndModify: false,

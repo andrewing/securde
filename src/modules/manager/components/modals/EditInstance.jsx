@@ -4,7 +4,6 @@ import {Button} from 'react-bootstrap';
 import {BeatLoader} from 'react-spinners';
 import moment from 'moment';
 import {editBookInstance} from '../../../../api/bookInstance';
-import {auth} from '../../../../api/auth';
 
 const AddEditInstance = ({
   editVisible,
@@ -22,6 +21,7 @@ const AddEditInstance = ({
   useEffect(() => {
     setValues();
     setDateDisable(data.isAvailable);
+    // eslint-disable-next-line
   }, [editVisible]);
 
   const onSubmit = () => {
