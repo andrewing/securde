@@ -19,6 +19,7 @@ const Page = ({props}) => {
 
   useEffect(() => {
     refreshData();
+    // eslint-disable-next-line
   }, [currPage, searchText, searchColumn]);
 
   const showBorrowBook = record => {

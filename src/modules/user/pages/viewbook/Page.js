@@ -21,6 +21,7 @@ const ViewBook = ({props}) => {
   // for book info
   useEffect(() => {
     refreshData();
+    // eslint-disable-next-line
   }, [state]);
 
   const getEarliestDate = () => {
@@ -33,6 +34,7 @@ const ViewBook = ({props}) => {
   // for reviews
   useEffect(() => {
     getReviewList();
+    // eslint-disable-next-line
   }, []);
 
   const postReview = content => {

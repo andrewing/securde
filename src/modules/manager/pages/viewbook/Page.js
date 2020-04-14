@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React, {useState, useRef, useEffect} from 'react';
-import {Table, notification, Row, Button} from 'antd';
+import {Table, Row, Button} from 'antd';
 import {Jumbotron, Container} from 'react-bootstrap';
 import {BeatLoader} from 'react-spinners';
 import BookInfo from '../../components/BookInfo';
@@ -15,12 +15,11 @@ import {
 const ViewBook = ({setNotification, props}) => {
   const {state} = props.location;
   const [editVisible, setEditVisible] = useState(false);
-  const [selectedAction, setSelectedAction] = useState('add');
+  const [selectedAction] = useState('add');
   const [selectedData, setSelectedData] = useState();
   const [bookInstanceData, setBookInstanceData] = useState([]);
-  const [currPage, setCurrPage] = useState(1);
+  const [currPage] = useState(1);
   const [isLoading, setLoading] = useState(false);
-
   // for filters
   const [searchText, setSearchText] = useState('');
   const [searchColumn, setSearchColumn] = useState('');
@@ -35,6 +34,7 @@ const ViewBook = ({setNotification, props}) => {
       .catch(err => {
         setNotification(err);
       });
+    // eslint-disable-next-line
   }, [currPage, isLoading]);
 
   const addBookInstance = () => {

@@ -81,6 +81,7 @@ const AddEditModal = prop => {
           });
         }
       }
+      // eslint-disable-next-line
     }, [prop.command]);
 
     return (
