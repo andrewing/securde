@@ -1,5 +1,2 @@
-[build]
-  functions = "lambda/"
-
 [context.production]
   environment = {NODE_VERSION = "12.16.1"}

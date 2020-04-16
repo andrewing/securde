@@ -12,10 +12,7 @@
     "crypto": "^1.0.1",
     "faker": "^4.1.0",
     "http-proxy-middleware": "^1.0.3",
-    "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
-    "mongoose": "^5.9.5",
-    "netlify-lambda": "^1.6.3",
     "normalize-url": "^5.0.0",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
@@ -26,8 +23,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-spinners": "^0.8.1",
-    "redux": "^4.0.5",
-    "saslprep": "^1.0.3"
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
@@ -43,13 +39,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "set \"CI=false\" && react-scripts build",
-    "prod": "npm run build && npm run lambda-build",
+    "build": "react-scripts build",
+    "prod": "npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "lint-staged",
-    "lambda-serve": "netlify-lambda serve functions",
-    "lambda-build": "netlify-lambda build functions"
+    "precommit": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
