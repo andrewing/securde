@@ -1,10 +1,10 @@
 import normalize from 'normalize-url';
 import {auth} from './auth';
 import {notify} from '../util/notification';
+import {BASEURL} from '../util/constants';
 
 export const request = async (url, options = {}, tokenNeeded = false) => {
-  const dummy = `http://dummy.com`;
-  url = normalize(`${dummy}/.netlify/functions${url}`).substring(dummy.length);
+  url = normalize(`${BASEURL}${url}`);
   options = normalizeOpts(options);
 
   if (tokenNeeded) await refreshToken();
