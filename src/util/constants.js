@@ -5,4 +5,5 @@ export const AUDIENCE = {
   ADMIN: 'ADMIN',
 };
 
-export const BASEURL = 'http://localhost:9000' || process.env.REACT_APP_BASEURL;
+export const BASEURL =
+  'https://locallibraryapi.herokuapp.com' || process.env.REACT_APP_BASEURL;
