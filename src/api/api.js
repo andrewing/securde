@@ -29,7 +29,7 @@ const normalizeOpts = options => {
 };
 
 export const refreshToken = async () => {
-  await fetch('/.netlify/functions/refresh-token', {
+  await fetch(`${BASEURL}/refresh-token`, {
     method: 'POST',
     headers: {
       Authorization: auth.refreshToken,

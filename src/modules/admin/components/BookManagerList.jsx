@@ -36,7 +36,7 @@ const BookManagerList = () => {
       res => {
         const {data} = res;
         setBookManagerData(data.accounts);
-        setTotal(data.meta.total);
+        setTotal(data.meta && data.meta.total);
         setLoadingTable(false);
       },
     );
