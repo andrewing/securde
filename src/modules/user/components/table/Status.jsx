@@ -11,7 +11,7 @@ const Status = ({record}) => {
       const {data} = res;
       const instances = data.bookInstances;
 
-      if (instances.length) {
+      if (instances && instances.length) {
         const itemAvailable = instances.find(item => item.isAvailable);
         if (itemAvailable) {
           return setAvailability(true);

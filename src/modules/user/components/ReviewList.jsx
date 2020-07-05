@@ -8,7 +8,7 @@ const Reviews = ({reviews}) => {
       <div key={item._id}>
         <Comment
           content={item.content}
-          author={item.account}
+          author={`${item.account.firstname} ${item.account.lastname}`}
           datetime={<span>{moment(item.time).fromNow()}</span>}
         />
         {i !== reviews.length - 1 ? <Divider style={{margin: 5}} /> : ''}

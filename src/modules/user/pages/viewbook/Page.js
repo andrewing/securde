@@ -77,7 +77,7 @@ const ViewBook = ({props}) => {
       const dates = [];
       const instances = data.bookInstances;
 
-      if (instances.length) {
+      if (instances && instances.length) {
         const itemAvailable = instances.find(item => item.isAvailable);
         if (itemAvailable) {
           return setAvailability(true);

@@ -5,4 +5,4 @@ export const AUDIENCE = {
   ADMIN: 'ADMIN',
 };
 
-export const BASEURL = 'http://localhost:9000' || process.env.BASEURL;
+export const BASEURL = 'http://localhost:9000' || process.env.REACT_APP_BASEURL;

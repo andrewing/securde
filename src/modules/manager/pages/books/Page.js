@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import {Jumbotron} from 'react-bootstrap';
 import {BeatLoader} from 'react-spinners';
 import {Table, Button} from 'antd';
-import bookColumns from '../../components/table/booksColumns';
+import bookColumns from '../../components/Table/booksColumns';
 import AddEditBookModal from '../../components/modals/AddEditBook';
 import {
   getBookPaginated,
