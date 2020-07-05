@@ -1,14 +1,14 @@
 import normalize from 'normalize-url';
 import {auth} from './auth';
 import {notify} from '../util/notification';
+import {BASEURL} from '../util/constants';
 
 export const request = async (url, options = {}, tokenNeeded = false) => {
-  const dummy = `http://dummy.com`;
-  url = normalize(`${dummy}/.netlify/functions${url}`).substring(dummy.length);
+  url = normalize(`${BASEURL}${url}`);
   options = normalizeOpts(options);
 
   if (tokenNeeded) await refreshToken();
-  return timeoutIn(fetch(url, options), 10000);
+  return timeoutIn(fetch(url, options), 60000);
 };
 
 const normalizeOpts = options => {
@@ -29,7 +29,7 @@ const normalizeOpts = options => {
 };
 
 export const refreshToken = async () => {
-  await fetch('/.netlify/functions/refresh-token', {
+  await fetch(`${BASEURL}/refresh-token`, {
     method: 'POST',
     headers: {
       Authorization: auth.refreshToken,

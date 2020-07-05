@@ -4,3 +4,5 @@ export const AUDIENCE = {
   BOOK_MANAGER: 'BOOK_MANAGER',
   ADMIN: 'ADMIN',
 };
+
+export const BASEURL = 'http://localhost:9000' || process.env.BASEURL;

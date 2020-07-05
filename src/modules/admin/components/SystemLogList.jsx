@@ -1,7 +1,8 @@
 import React, {useState, useRef, useEffect} from 'react';
 import Highlighter from 'react-highlight-words';
-import {Button, Input, Table} from 'antd';
+import {Button, Input, Table, Tag} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
+import randomColor from 'randomcolor';
 import moment from 'moment';
 import {getSystemLogsPaginated} from '../../../api/admin/index';
 
@@ -95,8 +96,14 @@ const SystemLogList = () => {
         setTimeout(() => searchInput.current.select());
       }
     },
-    render: text =>
-      searchColumn === dataIndex ? (
+    render: text => {
+      if (dataIndex === 'action')
+        return (
+          <Tag color={randomColor({seed: text, luminosity: 'dark'})}>
+            {text}
+          </Tag>
+        );
+      return searchColumn === dataIndex ? (
         <Highlighter
           highlightStyle={{backgroundColor: '#ffc069', padding: 0}}
           searchWords={[searchText]}
@@ -109,7 +116,8 @@ const SystemLogList = () => {
         />
       ) : (
         text
-      ),
+      );
+    },
   });
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {

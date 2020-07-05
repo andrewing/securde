@@ -10,12 +10,11 @@
     "antd": "^4.1.0",
     "bootstrap": "^4.4.1",
     "crypto": "^1.0.1",
+    "faker": "^4.1.0",
     "http-proxy-middleware": "^1.0.3",
-    "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
-    "mongoose": "^5.9.5",
-    "netlify-lambda": "^1.6.3",
     "normalize-url": "^5.0.0",
+    "randomcolor": "^0.5.4",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.13.0",
@@ -42,12 +41,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "prod": "npm run build && npm run lambda-build",
+    "prod": "npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "lint-staged",
-    "lambda-serve": "netlify-lambda serve functions",
-    "lambda-build": "netlify-lambda build functions"
+    "precommit": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"

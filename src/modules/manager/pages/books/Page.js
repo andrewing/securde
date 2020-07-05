@@ -1,8 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {Jumbotron} from 'react-bootstrap';
 import {BeatLoader} from 'react-spinners';
-import {Table, Button, notification} from 'antd';
-import {CheckCircleTwoTone} from '@ant-design/icons';
+import {Table, Button} from 'antd';
 import bookColumns from '../../components/table/booksColumns';
 import AddEditBookModal from '../../components/modals/AddEditBook';
 import {
@@ -48,6 +47,7 @@ const Page = ({setNotification, props}) => {
       .finally(() => {
         setGettingLoading(false);
       });
+    // eslint-disable-next-line
   }, [currPage, isLoading, searchText, searchColumn]);
 
   const showAddModal = () => {
