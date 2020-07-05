@@ -5,7 +5,7 @@ import {Jumbotron, Container} from 'react-bootstrap';
 import {BeatLoader} from 'react-spinners';
 import BookInfo from '../../components/BookInfo';
 import EditInstance from '../../components/modals/EditInstance';
-import bookInstancesColumns from '../../components/Table/bookInstanceColumns';
+import bookInstancesColumns from '../../components/table/bookInstanceColumns';
 import {
   getBookInstanceByBook,
   createBookInstance,
